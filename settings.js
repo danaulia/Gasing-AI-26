@@ -455,10 +455,20 @@ class ZenithSettings {
       statusText.textContent = isLogged ? (t.status_online || 'Aman') : (t.status_offline || 'Belum Masuk');
     }
 
-    // Settings title
-    const settingsTitle = document.querySelector('.settings-title');
-    if (settingsTitle && t.settings_title) settingsTitle.textContent = t.settings_title;
-    
+    // Settings labels & inputs
+    const setLabel = (selector, key) => {
+      const el = document.querySelector(selector);
+      if (el && t[key]) el.textContent = t[key];
+    };
+    setLabel('.settings-group-label[data-lang-label]', 'settings_lang');
+    setLabel('.settings-group-label[data-theme-label]', 'settings_theme');
+    setLabel('.settings-group-label[data-music-label]', 'settings_music');
+    setLabel('.settings-group-label[data-scene-label]', 'settings_scene');
+
+    // Chat sidebar tabs
+    setLabel('.chat-tab-btn[data-tab="global"]', 'chat_global');
+    setLabel('.chat-tab-btn[data-tab="friend"]', 'chat_friend');
+
     if (window.initIcons) window.initIcons();
   }
 

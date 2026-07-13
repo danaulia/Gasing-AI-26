@@ -372,14 +372,6 @@
             </div>
             <div class="agent-name">Danny</div>
             <div class="agent-role">Chief Administrator</div>
-            <div class="agent-fraction-badge">Zenith Prime          <!-- Danny -->
-          <div class="agent-card glass-panel" onclick="window.aetheriaApp.openAgentModal('danny')">
-            <div class="agent-avatar-ring">
-              <div class="avatar-gradient-ring"></div>
-              <div class="agent-photo-placeholder" style="background:linear-gradient(135deg,#f43f5e,#a78bfa);">DN</div>
-            </div>
-            <div class="agent-name">Danny</div>
-            <div class="agent-role">Chief Administrator</div>
             <div class="agent-fraction-badge">Zenith Prime Labs</div>
             <div class="agent-status-tag">
               <span class="pulse-dot green"></span> Online — Lab Alpha
@@ -996,15 +988,15 @@
 
     <!-- Settings Tabs -->
     <div class="settings-tabs-nav">
-      <button class="settings-tab-btn active" data-tab="lang">🌐 Bahasa</button>
-      <button class="settings-tab-btn" data-tab="theme">🌸 Tema</button>
-      <button class="settings-tab-btn" data-tab="music">🎵 Musik</button>
-      <button class="settings-tab-btn" data-tab="scene">🖼️ Latar</button>
+      <button class="settings-tab-btn active" data-tab="lang" data-lang-tab-btn>🌐 Bahasa</button>
+      <button class="settings-tab-btn" data-tab="theme" data-theme-tab-btn>🌸 Tema</button>
+      <button class="settings-tab-btn" data-tab="music" data-music-tab-btn>🎵 Musik</button>
+      <button class="settings-tab-btn" data-tab="scene" data-scene-tab-btn>🖼️ Latar</button>
     </div>
 
     <!-- Lang Tab -->
     <div id="settings-tab-lang" class="settings-tab-pane active">
-      <div class="settings-section-label">Pilih Bahasa Antarmuka</div>
+      <div class="settings-section-label" data-lang-label>Pilih Bahasa Antarmuka</div>
       <div class="lang-options-grid">
         <button class="lang-option-btn active" data-lang="id">🇮🇩 Indonesia</button>
         <button class="lang-option-btn" data-lang="en_uk">🇬🇧 English UK</button>
@@ -1019,7 +1011,7 @@
 
     <!-- Theme Tab -->
     <div id="settings-tab-theme" class="settings-tab-pane">
-      <div class="settings-section-label">Pilih Tema Musim</div>
+      <div class="settings-section-label" data-theme-label>Pilih Tema Musim</div>
       <div class="season-options-grid">
         <button class="season-option-btn active" data-season="spring">
           <div class="season-preview spring-prev">🌸</div>
@@ -1051,7 +1043,7 @@
 
     <!-- Music Tab -->
     <div id="settings-tab-music" class="settings-tab-pane">
-      <div class="settings-section-label">Player Musik</div>
+      <div class="settings-section-label" data-music-label>Player Musik</div>
       <div class="music-controls">
         <button id="music-prev-btn" class="music-ctrl-btn"><i data-lucide="skip-back" style="width:16px;height:16px;"></i></button>
         <button id="music-play-pause-btn" class="music-ctrl-btn play-btn"><i data-lucide="play" style="width:20px;height:20px;"></i></button>
@@ -1076,7 +1068,7 @@
 
     <!-- Scene Tab -->
     <div id="settings-tab-scene" class="settings-tab-pane">
-      <div class="settings-section-label">Pilih Latar Belakang</div>
+      <div class="settings-section-label" data-scene-label>Pilih Latar Belakang</div>
       <div id="scene-options-grid" class="scene-options-grid"></div>
       <!-- Admin upload section -->
       <div id="scene-admin-section" class="admin-only-show" style="display:none;margin-top:1rem;">
@@ -1137,37 +1129,37 @@
 
   <!-- ═════════════ PROFILE MODAL ═════════════ -->
   <div id="profile-modal" class="modal-wrapper">
-    <div class="modal-content-card glass-panel" style="max-width:480px;padding:0;overflow:hidden;">
+    <div class="modal-content-card glass-panel" style="max-width:600px;padding:0;overflow:hidden;width:95vw;">
       <button class="close-modal close-profile-modal" aria-label="Tutup" id="close-profile-modal-btn">&times;</button>
       <!-- Cover Photo -->
-      <div class="profile-cover" id="profile-cover-area" style="background-image:url('assets/scene_nte_night.png');background-size:cover;height:120px;position:relative;">
-        <div class="profile-cover-overlay" style="position:absolute;inset:0;background:rgba(0,0,0,0.3);"></div>
-        <label class="profile-cover-edit" title="Ganti foto cover" id="profile-cover-edit-btn" style="position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,0.6);padding:4px 8px;border-radius:4px;color:#fff;cursor:pointer;font-size:0.7rem;display:flex;align-items:center;gap:4px;">
-          <i data-lucide="camera" style="width:12px;height:12px;"></i> Ubah Cover
+      <div class="profile-cover" id="profile-cover-area" style="background-image:url('assets/scene_nte_night.png');background-size:cover;height:140px;position:relative;">
+        <div class="profile-cover-overlay" style="position:absolute;inset:0;background:rgba(0,0,0,0.35);"></div>
+        <label class="profile-cover-edit" title="Ganti foto cover" id="profile-cover-edit-btn" style="position:absolute;bottom:10px;right:10px;background:rgba(0,0,0,0.6);padding:5px 10px;border-radius:4px;color:#fff;cursor:pointer;font-size:0.75rem;display:flex;align-items:center;gap:4px;">
+          <i data-lucide="camera" style="width:14px;height:14px;"></i> Ubah Cover
           <input type="file" id="profile-cover-input" accept="image/*" style="display:none;">
         </label>
       </div>
       <!-- Avatar -->
-      <div class="profile-avatar-area" style="margin-top:-40px;padding:0 20px;display:flex;align-items:flex-end;gap:12px;position:relative;z-index:2;">
-        <div class="profile-avatar-ring" style="width:80px;height:80px;border-radius:50%;border:3px solid var(--bg-card);overflow:hidden;background:#a78bfa;">
-          <div id="profile-avatar-display" class="profile-avatar" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:800;color:#fff;background:linear-gradient(135deg, var(--season-accent), var(--season-accent2));">US</div>
+      <div class="profile-avatar-area" style="margin-top:-50px;padding:0 25px;display:flex;align-items:flex-end;gap:12px;position:relative;z-index:2;">
+        <div class="profile-avatar-ring" style="width:90px;height:90px;border-radius:50%;border:3px solid var(--bg-card);overflow:hidden;background:#a78bfa;">
+          <div id="profile-avatar-display" class="profile-avatar" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:800;color:#fff;background:linear-gradient(135deg, var(--season-accent), var(--season-accent2));">US</div>
         </div>
-        <label class="profile-avatar-edit" title="Ganti foto profil" id="profile-avatar-edit-btn" style="background:rgba(0,0,0,0.6);padding:4px;border-radius:50%;color:#fff;cursor:pointer;margin-bottom:4px;margin-left:-25px;display:flex;align-items:center;justify-content:center;width:24px;height:24px;">
-          <i data-lucide="camera" style="width:10px;height:10px;"></i>
+        <label class="profile-avatar-edit" title="Ganti foto profil" id="profile-avatar-edit-btn" style="background:rgba(0,0,0,0.6);padding:6px;border-radius:50%;color:#fff;cursor:pointer;margin-bottom:6px;margin-left:-25px;display:flex;align-items:center;justify-content:center;width:28px;height:28px;">
+          <i data-lucide="camera" style="width:12px;height:12px;"></i>
           <input type="file" id="profile-avatar-input" accept="image/*" style="display:none;">
         </label>
       </div>
       
-      <div class="profile-info" style="padding:20px;">
+      <div class="profile-info" style="padding:25px;">
         <!-- Editable Name & Bio -->
         <div class="form-group" style="margin-bottom:0.75rem;">
-          <label class="form-label" style="font-size:0.7rem;color:var(--text-faint);">Nama Lengkap</label>
-          <input type="text" id="profile-edit-name" class="form-input" style="font-size:1.1rem;font-weight:700;padding:0.35rem 0.65rem;" value="User Utama">
+          <label class="form-label" style="font-size:0.75rem;color:var(--text-faint);">Nama Lengkap</label>
+          <input type="text" id="profile-edit-name" class="form-input" style="font-size:1.15rem;font-weight:700;padding:0.45rem 0.75rem;" value="User Utama">
         </div>
 
-        <div class="form-group" style="margin-bottom:1.25rem;">
-          <label class="form-label" style="font-size:0.7rem;color:var(--text-faint);">Bio Deskripsi (Max 300 Karakter)</label>
-          <textarea id="profile-edit-bio" class="form-input" style="font-size:0.85rem;line-height:1.6;min-height:90px;padding:0.5rem 0.75rem;width:100%;resize:vertical;" maxlength="300" placeholder="Tulis bio singkat Anda..."></textarea>
+        <div class="form-group" style="margin-bottom:1.5rem;">
+          <label class="form-label" style="font-size:0.75rem;color:var(--text-faint);">Bio Deskripsi (Max 300 Karakter)</label>
+          <textarea id="profile-edit-bio" class="form-input" style="font-size:0.9rem;line-height:1.6;min-height:140px;padding:0.6rem 0.85rem;width:100%;resize:vertical;" maxlength="300" placeholder="Tulis bio singkat Anda..."></textarea>
           <div id="profile-bio-charcount" style="font-size:0.65rem;color:var(--text-faint);text-align:right;margin-top:0.25rem;">0 / 300</div>
         </div>
 
