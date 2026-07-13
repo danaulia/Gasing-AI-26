@@ -896,17 +896,30 @@
 
     </main>
 
-    <!-- Floating Audio HUD -->
-    <div id="cyber-audio-hub"></div>
+    <!-- Floating Audio HUD (Zenith Settings Music Player) -->
+    <div id="cyber-audio-hub">
+      <div class="audio-hud glass-panel" style="position:fixed;bottom:1.5rem;left:1.5rem;z-index:90;display:flex;align-items:center;gap:0.75rem;padding:0.6rem 1.25rem;border-radius:99px;font-size:0.8rem;background:rgba(20,16,40,0.85);backdrop-filter:blur(8px);border:1px solid var(--border-soft);">
+        <button id="music-hud-prev" class="ctrl-btn" style="background:none;border:none;color:var(--text-muted);cursor:pointer;"><i class="lucide-skip-back" style="width:14px;height:14px;"></i></button>
+        <button id="music-hud-play" class="ctrl-btn play-btn" style="background:none;border:none;color:var(--season-accent);cursor:pointer;"><i class="lucide-play" style="width:16px;height:16px;"></i></button>
+        <button id="music-hud-next" class="ctrl-btn" style="background:none;border:none;color:var(--text-muted);cursor:pointer;"><i class="lucide-skip-forward" style="width:14px;height:14px;"></i></button>
+        <div class="audio-info" style="display:flex;flex-direction:column;max-width:140px;">
+          <span id="hud-track-name" style="font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Moonlight Sonata</span>
+          <span id="hud-track-artist" style="font-size:0.65rem;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Beethoven</span>
+        </div>
+      </div>
+    </div>
 
   </div><!-- end #app-shell -->
 
   <!-- ═════════════ CHAT SIDEBAR (Right) ═════════════ -->
   <div id="chat-sidebar-right" class="chat-sidebar-right">
     <div class="chat-sidebar-header">
-      <div class="chat-sidebar-title">
-        <i data-lucide="message-circle" style="width:16px;height:16px;"></i>
-        Pesan
+      <div style="display:flex;justify-content:space-between;align-items:center;width:100%;margin-bottom:0.5rem;">
+        <div class="chat-sidebar-title">
+          <i data-lucide="message-circle" style="width:16px;height:16px;"></i>
+          Pesan
+        </div>
+        <button id="close-chat-btn" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:1.2rem;padding:0.25rem;">&times;</button>
       </div>
       <div class="chat-tabs">
         <button id="chat-tab-global" class="chat-tab-btn active">

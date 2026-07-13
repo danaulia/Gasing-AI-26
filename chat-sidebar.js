@@ -96,6 +96,11 @@ class ZenithChatSidebar {
     if (this.backBtn) {
       this.backBtn.addEventListener('click', () => this.showFriendList());
     }
+    
+    const closeChatBtn = document.getElementById('close-chat-btn');
+    if (closeChatBtn) {
+      closeChatBtn.addEventListener('click', () => this.closeSidebar());
+    }
 
     // Close sidebar clicking outside
     document.addEventListener('click', (e) => {

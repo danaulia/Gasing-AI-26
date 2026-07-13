@@ -226,7 +226,8 @@ class CyberAudioPlayer {
   }
 }
 
-// Initialise on load
+// Initialise on load - DISABLED to prevent conflict with ZenithSettings music player
 document.addEventListener('DOMContentLoaded', () => {
-  window.cyberAudio = new CyberAudioPlayer();
+  // window.cyberAudio = new CyberAudioPlayer();
+  console.log('[ZPL-Audio] Legacy audio player disabled. Using settings.js ZenithSettings.');
 });
