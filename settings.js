@@ -219,13 +219,10 @@ const SCENES = [
   { id: 'zenith_lab', name: 'Zenith Lab', icon: '🔬', url: 'assets/scene_zenith_lab.png' },
 ];
 
-// ─────────────────────────────────────────
-// DEFAULT MUSIC TRACKS (placeholder)
-// ─────────────────────────────────────────
 const DEFAULT_TRACKS = [
-  { id: '1', name: 'Moonlight Sonata (Beethoven)', artist: 'Ludwig van Beethoven', duration: '5:36', src: 'https://archive.org/download/MoonlightSonata_827/LudwigVanBeethoven-MoonlightSonataFirstMovement.mp3' },
-  { id: '2', name: 'Symphony No. 5 (Beethoven)', artist: 'Ludwig van Beethoven', duration: '7:21', src: 'https://archive.org/download/BeethovenSymphonyNo.5_201905/01_Beethoven_Symphony_No._5_in_C_minor_Op._67_-_I._Allegro_con_brio.mp3' },
-  { id: '3', name: 'Fur Elise (Beethoven)', artist: 'Ludwig van Beethoven', duration: '3:04', src: 'https://archive.org/download/BeethovenFurElise_201806/Beethoven%20-%20Fur%20Elise.mp3' }
+  { id: '1', name: 'Moonlight Sonata (Beethoven)', artist: 'Ludwig van Beethoven', duration: '5:36', src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
+  { id: '2', name: 'Symphony No. 5 (Beethoven)', artist: 'Ludwig van Beethoven', duration: '7:21', src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3' },
+  { id: '3', name: 'Fur Elise (Beethoven)', artist: 'Ludwig van Beethoven', duration: '3:04', src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3' }
 ];
 
 // ─────────────────────────────────────────
@@ -246,12 +243,16 @@ class ZenithSettings {
 
     this.audioEl = new Audio();
     this.audioEl.volume = 0.4;
+    if (this.allTracks && this.allTracks.length > 0) {
+      this.audioEl.src = this.allTracks[0].src;
+    }
 
     this.initDOM();
     this.applyLang(this.currentLang);
     this.applySeason(this.currentSeason);
     this.applyScene(this.currentScene);
     this.bindEvents();
+    this.updateMusicHUD();
   }
 
   get allTracks() {
@@ -468,7 +469,7 @@ class ZenithSettings {
     const scene = allScenes.find(s => s.id === sceneId);
     if (scene && scene.url) {
       overlay.style.backgroundImage = `url('${scene.url}')`;
-      overlay.style.opacity = '1';
+      overlay.style.opacity = '0.42';
     } else {
       overlay.style.opacity = '0';
     }

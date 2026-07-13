@@ -1,3 +1,18 @@
+// app.js — Zenith Prime Labs Main Application
+// Router, Carousel, Counter, Theme, Project Virtual UI, Gallery Lightbox
+
+window.initIcons = () => {
+  document.querySelectorAll('i[class*="lucide-"]').forEach(el => {
+    const lucideClass = Array.from(el.classList).find(c => c.startsWith('lucide-') && c !== 'lucide-icon');
+    if (lucideClass) {
+      el.setAttribute('data-lucide', lucideClass.replace('lucide-', ''));
+      el.classList.remove(lucideClass);
+      el.classList.add('lucide-icon');
+    }
+  });
+  if (window.lucide) window.lucide.createIcons();
+};
+
 // ─── PROJECT SPECIFICATION MODALS ──────────────────────────
 const PROJECT_MODALS = {
   'stealth-recon': {
@@ -72,6 +87,10 @@ class AetheriaApp {
         this.navigate(targetPage);
         if (this.navContainer.classList.contains('mobile-active')) {
           this.navContainer.classList.remove('mobile-active');
+        }
+        // Automatically close right chat sidebar when moving pages
+        if (window.zenithChat && window.zenithChat.isOpen) {
+          window.zenithChat.closeSidebar();
         }
       });
     });

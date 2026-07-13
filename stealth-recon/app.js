@@ -404,8 +404,25 @@ function renderPlatforms(platforms) {
 }
 
 function renderImages(images, name, photoDataUrl) {
-  // Image results (link-based, since CORS blocks embedding)
   els.imageResultsGrid.innerHTML = '';
+  
+  // If user uploaded a target photo, render it as the first item in the grid
+  if (photoDataUrl) {
+    const targetCard = document.createElement('div');
+    targetCard.className = 'image-result-card';
+    targetCard.innerHTML = `
+      <div class="image-result-thumb">
+        <img src="${photoDataUrl}" alt="Target Upload" style="width:100%;height:100%;object-fit:cover;">
+      </div>
+      <div class="image-result-meta">
+        <div class="image-source-tag">Target Wajah (Upload)</div>
+        <div class="image-confidence" style="color:#34D399;">100% Cocok</div>
+        <div style="font-size:0.68rem;color:#475569;margin-top:0.2rem;">Sumber data primer</div>
+      </div>
+    `;
+    els.imageResultsGrid.appendChild(targetCard);
+  }
+
   images.forEach(img => {
     const card = document.createElement('div');
     card.className = 'image-result-card';

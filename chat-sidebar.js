@@ -105,8 +105,6 @@ class ZenithChatSidebar {
     // Close sidebar clicking outside
     document.addEventListener('click', (e) => {
       if (this.isOpen && this.sidebar && !this.sidebar.contains(e.target) && !this.toggleBtn.contains(e.target)) {
-        // Don't auto close on mobile
-        if (window.innerWidth > 900) return;
         this.closeSidebar();
       }
     });
