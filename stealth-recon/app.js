@@ -415,9 +415,6 @@ function renderResults() {
 
   // Report
   renderReport();
-
-  // Scroll to results
-  els.resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function renderSummaryStats(r) {
@@ -659,14 +656,23 @@ els.newSearchBtn.addEventListener('click', () => {
   // Show search panel page fully
   els.searchPanel.style.display = 'block';
   
+  // Hide history panel if open, and reset toggle button text
+  const histPanel = document.getElementById('history-panel');
+  if (histPanel) histPanel.style.display = 'none';
+  const toggleHistBtn = document.getElementById('toggle-history-btn');
+  if (toggleHistBtn) {
+    toggleHistBtn.innerHTML = `
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="9"/></svg>
+      Histori Pencarian
+    `;
+  }
+  
   clearPhoto();
   els.targetName.value = ''; 
   els.targetAlias.value = '';
   els.targetPhone.value = '';
   els.targetEmail.value = '';
   els.searcherNotes.value = '';
-  
-  els.searchPanel.scrollIntoView({ behavior: 'smooth' });
 });
 
 // ─── EXPORT PDF (delegate to pdf-report.js) ─────────────
@@ -682,16 +688,28 @@ const histPanel = document.getElementById('history-panel');
 
 if (toggleHistBtn && histPanel) {
   toggleHistBtn.addEventListener('click', () => {
-    // If results section is shown, hide it first
+    // History is a separate screen view!
+    // Hide results section and main search panel
     els.resultsSection.style.display = 'none';
-    els.searchPanel.style.display = 'block';
-
-    const isHidden = histPanel.style.display === 'none';
-    histPanel.style.display = isHidden ? 'block' : 'none';
     
-    if (isHidden) {
+    const isHistoryActive = histPanel.style.display === 'block';
+    if (isHistoryActive) {
+      // If history is currently shown, hide it and go back to main search panel
+      histPanel.style.display = 'none';
+      els.searchPanel.style.display = 'block';
+      toggleHistBtn.innerHTML = `
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="9"/></svg>
+        Histori Pencarian
+      `;
+    } else {
+      // Show history panel only, hide search panel
+      els.searchPanel.style.display = 'none';
+      histPanel.style.display = 'block';
       updateHistoryUI();
-      histPanel.scrollIntoView({ behavior: 'smooth' });
+      toggleHistBtn.innerHTML = `
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 15-6-6-6 6"/></svg>
+        Kembali Cari Target
+      `;
     }
   });
 }
