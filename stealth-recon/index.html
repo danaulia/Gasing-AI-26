@@ -30,18 +30,41 @@
           <div class="logo-sub">OSINT Intelligence · Zenith Prime Labs</div>
         </div>
       </div>
-      <div class="header-right">
+      
+      <!-- HEADER RIGHT (Order: Scan, History, Home, Account) -->
+      <div class="header-right" style="gap:1rem;display:flex;align-items:center;">
+        
+        <!-- Scan Button (resets state) -->
+        <button id="nav-scan-btn" class="back-link" style="background:transparent;cursor:pointer;display:flex;align-items:center;gap:6px;font-weight:700;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          Scan Target
+        </button>
+
+        <!-- History Button -->
         <button id="toggle-history-btn" class="back-link" style="background:transparent;cursor:pointer;display:flex;align-items:center;gap:6px;">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="9"/></svg>
-          Histori Pencarian
+          History
         </button>
-        <span class="system-status">
-          <span class="pulse-dot green"></span>
-          SISTEM AKTIF
-        </span>
-        <a href="../index.html" class="back-link">
-          ← Kembali ke ZPL Portal
+
+        <!-- Home Button -->
+        <a href="../index.html" class="back-link" style="display:flex;align-items:center;gap:6px;font-weight:700;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          ZPL Home
         </a>
+
+        <!-- Account (User Avatar Info) -->
+        <div id="header-user-profile" class="back-link" style="display:flex;align-items:center;gap:6px;cursor:pointer;background:rgba(255,255,255,0.02);">
+          <div id="header-avatar" style="width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--rose));display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:bold;color:#fff;overflow:hidden;">UA</div>
+          <span id="header-username" style="font-size:0.8rem;font-weight:600;font-family:'DM Mono',monospace;">Operator</span>
+        </div>
+
+        <!-- Localized languages switcher (English / Indonesia only) -->
+        <div class="lang-switch-mini" style="display:flex;gap:4px;margin-left:0.5rem;font-size:0.75rem;font-family:'DM Mono',monospace;">
+          <span id="lang-btn-id" style="cursor:pointer;color:var(--violet-light);font-weight:bold;">ID</span>
+          <span style="color:var(--text-faint);">|</span>
+          <span id="lang-btn-en" style="cursor:pointer;color:var(--text-muted);">EN</span>
+        </div>
+
       </div>
     </header>
 

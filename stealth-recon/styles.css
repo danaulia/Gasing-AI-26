@@ -154,6 +154,24 @@ h1,h2,h3 { font-family: 'Nunito', sans-serif; }
 .new-search-btn { padding: 0.6rem 1.25rem; border-radius: var(--radius-full); background: transparent; border: 1.5px solid var(--card-border); color: var(--text-muted); font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.25s; }
 .new-search-btn:hover { border-color: var(--violet); color: var(--violet-light); }
 
+/* Lock height on results view to avoid unnecessary page scrolling */
+body.view-results { overflow: hidden; height: 100vh; }
+body.view-results #app { height: 100vh; overflow: hidden; }
+body.view-results .sr-main { height: calc(100vh - 70px); display: flex; flex-direction: column; overflow: hidden; padding: 1.5rem 2rem; }
+body.view-results #results-section { display: flex; flex-direction: column; height: 100%; overflow: hidden; }
+body.view-results .platform-results-grid, 
+body.view-results .image-results-grid,
+body.view-results .ai-analysis-card,
+body.view-results .report-preview-wrapper { 
+  overflow-y: auto; 
+  max-height: calc(100vh - 380px); 
+  padding-bottom: 2rem;
+}
+body.view-results .tab-pane { 
+  overflow-y: auto; 
+  flex: 1;
+}
+
 /* ─── SUMMARY STATS ─── */
 .summary-stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
 .summary-stat-card { padding: 1.25rem 1.5rem; border-radius: var(--radius); background: var(--card); border: 1px solid var(--card-border); }
@@ -204,6 +222,10 @@ h1,h2,h3 { font-family: 'Nunito', sans-serif; }
 .reverse-search-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.85rem; }
 .reverse-search-btn { display: flex; align-items: center; gap: 0.75rem; padding: 0.85rem 1.1rem; border-radius: var(--radius-sm); background: var(--card); border: 1px solid var(--card-border); color: var(--text); text-decoration: none; transition: all 0.25s; font-size: 0.85rem; font-weight: 600; }
 .reverse-search-btn:hover { border-color: var(--violet); color: var(--violet-light); transform: translateY(-1px); }
+
+/* ─── AI ANALYSIS ─── */
+.ai-analysis-card { padding: 2rem; }
+.ai-analysis-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; }(-1px); }
 
 /* ─── AI ANALYSIS ─── */
 .ai-analysis-card { padding: 2rem; }

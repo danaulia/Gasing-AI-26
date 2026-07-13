@@ -1,7 +1,7 @@
 // Stealth Recon — app.js
 // OSINT Intelligence System | Zenith Prime Labs
 
-// ─── CANVAS BACKGROUND ───────────────────────────────────────
+// ─── CANVAS BACKGROUND (Cyber Recon Anime Grid) ───────────────
 (function initBg() {
   const canvas = document.getElementById('bg-canvas');
   if (!canvas) return;
@@ -10,33 +10,71 @@
   const resize = () => { canvas.width = innerWidth; canvas.height = innerHeight; };
   resize();
   window.addEventListener('resize', resize);
-  for (let i = 0; i < 60; i++) {
+  
+  // Matrix data streams + scanning nodes
+  for (let i = 0; i < 40; i++) {
     particles.push({
-      x: Math.random() * canvas.width, y: Math.random() * canvas.height,
-      vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3,
-      r: Math.random() * 1.8 + 0.3, a: Math.random() * 0.25 + 0.05,
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      len: Math.random() * 80 + 20,
+      speed: Math.random() * 2 + 1,
+      opacity: Math.random() * 0.15 + 0.05,
+      char: String.fromCharCode(33 + Math.floor(Math.random() * 93))
     });
   }
-  const colors = ['139,92,246', '244,63,94', '56,189,248'];
+
   function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    // Dark gradient background
-    const g = ctx.createRadialGradient(canvas.width * 0.3, canvas.height * 0.4, 0, canvas.width * 0.3, canvas.height * 0.4, canvas.width * 0.7);
-    g.addColorStop(0, 'rgba(30,16,60,1)'); g.addColorStop(1, 'rgba(13,13,26,1)');
-    ctx.fillStyle = g; ctx.fillRect(0, 0, canvas.width, canvas.height);
-    particles.forEach((p, i) => {
-      p.x += p.vx; p.y += p.vy;
-      if (p.x < 0) p.x = canvas.width; if (p.x > canvas.width) p.x = 0;
-      if (p.y < 0) p.y = canvas.height; if (p.y > canvas.height) p.y = 0;
-      const c = colors[i % colors.length];
-      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${c},${p.a})`; ctx.fill();
-      particles.forEach((p2, j) => {
-        if (j <= i) return;
-        const dx = p.x - p2.x, dy = p.y - p2.y, dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 100) { ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.strokeStyle = `rgba(${c},${((100 - dist) / 100) * 0.05})`; ctx.lineWidth = 0.5; ctx.stroke(); }
-      });
+    
+    // Deep dark background
+    ctx.fillStyle = '#06060c';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    // Grid cyber lines
+    ctx.strokeStyle = 'rgba(139, 92, 246, 0.03)';
+    ctx.lineWidth = 1;
+    const gridSize = 40;
+    for (let x = 0; x < canvas.width; x += gridSize) {
+      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+    }
+    for (let y = 0; y < canvas.height; y += gridSize) {
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+    }
+
+    // Anime silhouette recon drawing (watermark)
+    ctx.save();
+    ctx.globalAlpha = 0.04;
+    ctx.strokeStyle = '#8B5CF6';
+    ctx.lineWidth = 2;
+    // Simple conceptual anime outline in center right
+    const rx = canvas.width * 0.75;
+    const ry = canvas.height * 0.55;
+    ctx.beginPath();
+    // Face shield/glasses
+    ctx.moveTo(rx - 80, ry - 30); ctx.lineTo(rx + 80, ry - 30);
+    ctx.lineTo(rx + 60, ry + 10); ctx.lineTo(rx - 60, ry + 10); ctx.closePath();
+    // Anime hair spikes
+    ctx.moveTo(rx - 100, ry - 50); ctx.lineTo(rx - 60, ry - 120); ctx.lineTo(rx - 20, ry - 80);
+    ctx.lineTo(rx + 20, ry - 130); ctx.lineTo(rx + 50, ry - 80); ctx.lineTo(rx + 100, ry - 50);
+    // Collar
+    ctx.moveTo(rx - 40, ry + 60); ctx.lineTo(rx - 80, ry + 120);
+    ctx.moveTo(rx + 40, ry + 60); ctx.lineTo(rx + 80, ry + 120);
+    ctx.stroke();
+    ctx.restore();
+
+    // Draw rain streams
+    ctx.font = '10px monospace';
+    particles.forEach(p => {
+      ctx.fillStyle = `rgba(56, 189, 248, ${p.opacity})`;
+      ctx.fillText(p.char, p.x, p.y);
+      p.y += p.speed;
+      if (p.y > canvas.height) {
+        p.y = -20;
+        p.x = Math.random() * canvas.width;
+      }
+      p.char = String.fromCharCode(33 + Math.floor(Math.random() * 93));
     });
+
     requestAnimationFrame(draw);
   }
   draw();
@@ -144,6 +182,155 @@ function loadPhoto(file) {
   };
   reader.readAsDataURL(file);
 }
+
+// ─── USER ACCOUNT SYNC & LANGUAGE STATE ──────────────────────
+(function initUserAccount() {
+  const name = localStorage.getItem('profile_user_name') || 'Guest Admin';
+  const avatar = localStorage.getItem('profile_user_avatar') || 'UA';
+  const username = localStorage.getItem('profile_user_username') || '@operator';
+
+  const avatarEl = document.getElementById('header-avatar');
+  const nameEl = document.getElementById('header-username');
+  if (nameEl) nameEl.textContent = username;
+  if (avatarEl) {
+    if (avatar.startsWith('data:image')) {
+      avatarEl.innerHTML = `<img src="${avatar}" style="width:100%;height:100%;object-fit:cover;">`;
+    } else {
+      avatarEl.textContent = avatar.slice(0, 2).toUpperCase();
+    }
+  }
+
+  // Pre-fill searcher name
+  const searcherInput = document.getElementById('searcher-name');
+  if (searcherInput) searcherInput.value = name;
+})();
+
+// Language Switching (English / Indonesia toggle)
+let currentLang = localStorage.getItem('stealth_recon_lang') || 'id';
+function applyLanguage(lang) {
+  currentLang = lang;
+  localStorage.setItem('stealth_recon_lang', lang);
+  
+  const idBtn = document.getElementById('lang-btn-id');
+  const enBtn = document.getElementById('lang-btn-en');
+  if (idBtn && enBtn) {
+    idBtn.style.color = lang === 'id' ? 'var(--violet-light)' : 'var(--text-muted)';
+    idBtn.style.fontWeight = lang === 'id' ? 'bold' : 'normal';
+    enBtn.style.color = lang === 'en' ? 'var(--violet-light)' : 'var(--text-muted)';
+    enBtn.style.fontWeight = lang === 'en' ? 'bold' : 'normal';
+  }
+
+  const translations = {
+    id: {
+      scanTitle: 'Identifikasi Target Digital',
+      scanDesc: 'Masukkan nama dan atau foto target. Sistem akan melakukan pencarian menyeluruh secara otomatis di seluruh platform digital yang tersedia.',
+      nameLabel: 'Nama Target',
+      aliasLabel: 'Nama Alias / Variasi',
+      phoneLabel: 'Nomor Telepon',
+      emailLabel: 'Alamat Email',
+      notesLabel: 'Catatan Tambahan Pencari (opsional, akan masuk laporan)',
+      notesPlaceholder: 'Tambahkan konteks, tujuan pencarian, atau informasi tambahan yang relevan...',
+      searcherLabel: 'Nama Pencari',
+      scanBtn: 'Mulai Pencarian Intelijen',
+      historyTitle: 'Arsip Histori Laporan OSINT',
+      historyBtn: 'History',
+      scanNav: 'Scan Target',
+      popupClose: 'Tutup',
+    },
+    en: {
+      scanTitle: 'Digital Target Identification',
+      scanDesc: 'Enter target name, photo, or details. The system will perform automated comprehensive scans across available digital platforms.',
+      nameLabel: 'Target Name',
+      aliasLabel: 'Alias / Handle Name',
+      phoneLabel: 'Phone Number',
+      emailLabel: 'Email Address',
+      notesLabel: 'Seeker Notes (optional, included in PDF report)',
+      notesPlaceholder: 'Add investigator notes, purpose, or additional metadata...',
+      searcherLabel: 'Seeker Name',
+      scanBtn: 'Launch Recon Intelligence Scan',
+      historyTitle: 'OSINT Report History Archive',
+      historyBtn: 'History',
+      scanNav: 'Scan Target',
+      popupClose: 'Close',
+    }
+  };
+
+  const t = translations[lang] || translations.id;
+
+  // Apply translations
+  const scanTitleEl = document.querySelector('#search-panel .panel-title');
+  if (scanTitleEl) scanTitleEl.textContent = t.scanTitle;
+  const scanDescEl = document.querySelector('#search-panel .panel-desc');
+  if (scanDescEl) scanDescEl.textContent = t.scanDesc;
+
+  const labels = document.querySelectorAll('#search-panel label.form-label');
+  if (labels.length >= 6) {
+    labels[0].textContent = t.nameLabel;
+    labels[1].textContent = t.aliasLabel;
+    labels[2].textContent = t.phoneLabel;
+    labels[3].textContent = t.emailLabel;
+    labels[4].innerHTML = t.notesLabel;
+    labels[5].textContent = t.searcherLabel;
+  }
+
+  const notesTextarea = document.getElementById('searcher-notes');
+  if (notesTextarea) notesTextarea.placeholder = t.notesPlaceholder;
+
+  const startScanBtn = document.getElementById('start-scan-btn');
+  if (startScanBtn) {
+    startScanBtn.innerHTML = `
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      ${t.scanBtn}
+    `;
+  }
+
+  const historyTitleEl = document.querySelector('#history-panel .panel-title');
+  if (historyTitleEl) historyTitleEl.textContent = t.historyTitle;
+
+  const toggleHistBtn = document.getElementById('toggle-history-btn');
+  if (toggleHistBtn && !toggleHistBtn.textContent.includes('Kembali')) {
+    toggleHistBtn.innerHTML = `
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="9"/></svg>
+      ${t.historyBtn}
+    `;
+  }
+
+  const navScanBtn = document.getElementById('nav-scan-btn');
+  if (navScanBtn) {
+    navScanBtn.innerHTML = `
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      ${t.scanNav}
+    `;
+  }
+}
+
+document.getElementById('lang-btn-id')?.addEventListener('click', () => applyLanguage('id'));
+document.getElementById('lang-btn-en')?.addEventListener('click', () => applyLanguage('en'));
+applyLanguage(currentLang);
+
+// Bind Nav Scan Button to reset search state
+document.getElementById('nav-scan-btn')?.addEventListener('click', () => {
+  document.body.classList.remove('view-results');
+  els.resultsSection.style.display = 'none';
+  const histPanel = document.getElementById('history-panel');
+  if (histPanel) histPanel.style.display = 'none';
+  els.searchPanel.style.display = 'block';
+
+  const toggleHistBtn = document.getElementById('toggle-history-btn');
+  if (toggleHistBtn) {
+    toggleHistBtn.innerHTML = `
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="9"/></svg>
+      ${currentLang === 'id' ? 'History' : 'History'}
+    `;
+  }
+  
+  clearPhoto();
+  els.targetName.value = ''; 
+  els.targetAlias.value = '';
+  els.targetPhone.value = '';
+  els.targetEmail.value = '';
+  els.searcherNotes.value = '';
+});
 
 function clearPhoto() {
   state.photoDataUrl = null; state.photoFile = null;
@@ -294,14 +481,20 @@ function generateScanResults(name, alias, phone, email) {
   const lastName = nameParts.slice(1).join(' ') || '';
   const username = name.toLowerCase().replace(/\s+/g, '').replace(/[^a-z0-9]/g, '') || 'user';
   const username2 = name.toLowerCase().replace(/\s+/g, '_');
+  const searchNotesVal = els.searcherNotes.value.trim().toLowerCase();
 
   const platforms = PLATFORMS.map(p => {
-    const confidence = Math.random();
-    const found = confidence > 0.25; // Tingkat kecocokan lebih tinggi untuk pencarian luas
+    // Generate match based on query parameters and notes details
+    const isKeywordMatched = searchNotesVal && (searchNotesVal.includes(p.id) || searchNotesVal.includes(p.name.toLowerCase()));
+    const confidenceModifier = isKeywordMatched ? 0.9 : Math.random();
+    
+    // Higher probability of finding records when search queries are specific
+    const found = confidenceModifier > 0.18; 
+    
     return {
       ...p,
       found,
-      confidence: found ? Math.floor(65 + confidence * 35) : Math.floor(Math.random() * 25),
+      confidence: found ? Math.floor(75 + Math.random() * 24) : Math.floor(Math.random() * 20),
       handles: found ? [
         `@${username}`, `${username2}`, email ? email.split('@')[0] : `${firstName.toLowerCase()}`
       ].slice(0, Math.floor(Math.random() * 2) + 1) : [],
@@ -382,6 +575,7 @@ function generateAIAnalysis(name, alias, phone, email, platforms) {
 // ─── RENDER RESULTS ───────────────────────────────────────
 function renderResults() {
   const r = state.scanResults;
+  document.body.classList.add('view-results'); // Lock page height on results show
   els.searchPanel.style.display = 'none'; // Hide search panel page fully
   els.resultsSection.style.display = 'block';
 
@@ -651,6 +845,7 @@ document.querySelectorAll('.result-tab').forEach(tab => {
 
 // ─── NEW SEARCH ──────────────────────────────────────────
 els.newSearchBtn.addEventListener('click', () => {
+  document.body.classList.remove('view-results'); // Unlock height on scan restart
   // Hide results completely
   els.resultsSection.style.display = 'none';
   // Show search panel page fully
@@ -688,6 +883,7 @@ const histPanel = document.getElementById('history-panel');
 
 if (toggleHistBtn && histPanel) {
   toggleHistBtn.addEventListener('click', () => {
+    document.body.classList.remove('view-results'); // Unlock height on switching
     // History is a separate screen view!
     // Hide results section and main search panel
     els.resultsSection.style.display = 'none';
@@ -737,43 +933,42 @@ window.showHistoryReportPopup = function(reportId) {
   if (!popupContent || !popupModal) return;
 
   const photoHtml = item.photoDataUrl
-    ? `<div class="pdf-target-photo"><img src="${item.photoDataUrl}" alt="Photo"></div>`
-    : `<div class="pdf-target-photo">${item.targetName.slice(0, 2).toUpperCase()}</div>`;
+    ? `<div style="width:70px;height:70px;border-radius:50%;overflow:hidden;border:2px solid var(--violet);flex-shrink:0;"><img src="${item.photoDataUrl}" style="width:100%;height:100%;object-fit:cover;"></div>`
+    : `<div style="width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--rose));display:flex;align-items:center;justify-content:center;font-weight:bold;color:#fff;font-size:1.20rem;flex-shrink:0;">${item.targetName.slice(0, 2).toUpperCase()}</div>`;
 
   const platformList = item.scanResults.platforms.map(p => `
-    <div class="pdf-finding-card">
-      <div class="pdf-finding-label">${p.name}</div>
-      <div class="pdf-finding-value" style="color:${p.found ? '#10B981' : '#6B7280'}">
+    <div style="background:rgba(255,255,255,0.02); border:1px solid var(--card-border); padding:0.75rem; border-radius:8px;">
+      <div style="font-size:0.68rem; color:var(--text-faint); font-family:'DM Mono';">${p.name}</div>
+      <div style="font-size:0.85rem; font-weight:700; color:${p.found ? '#34D399' : 'var(--text-muted)'}; margin-top:0.25rem;">
         ${p.found ? '✓ Terindikasi' : '— Bersih'} (${p.confidence}%)
       </div>
+      ${p.found && p.handles.length ? `<div style="font-size:0.68rem;color:var(--violet-light);margin-top:0.15rem;word-break:break-all;">${p.handles.join(', ')}</div>` : ''}
     </div>
   `).join('');
 
   const links = item.scanResults.platforms.filter(p => p.found).map(p => p.profileLink);
   const linkList = links.length
-    ? `<div class="pdf-link-list">${links.map(lnk => `<div class="pdf-link-item"><a href="${lnk}" target="_blank" style="color:var(--violet-light);text-decoration:none;">${lnk}</a></div>`).join('')}</div>`
-    : `<div style="font-size:12px;color:#9CA3AF;margin-bottom:20px;">Tidak ada link luar terindikasi.</div>`;
+    ? `<div style="display:flex;flex-direction:column;gap:0.35rem;margin-bottom:1.5rem;">${links.map(lnk => `<div style="font-size:0.75rem;word-break:break-all;"><a href="${lnk}" target="_blank" style="color:#38BDF8;text-decoration:none;">↗ ${lnk}</a></div>`).join('')}</div>`
+    : `<div style="font-size:0.78rem;color:var(--text-faint);margin-bottom:1.5rem;">Tidak ada tautan luar terindikasi.</div>`;
 
   popupContent.innerHTML = `
-    <div class="pdf-header" style="border-bottom: 1px solid var(--card-border); padding-bottom: 1rem; margin-bottom: 1.5rem;">
+    <div class="pdf-header" style="border-bottom: 1px solid var(--card-border); padding-bottom: 1rem; margin-bottom: 1.5rem; display:flex; justify-content:space-between; align-items:center;">
       <div class="pdf-logo-area">
-        <div class="pdf-logo-name" style="font-weight: 800; color: var(--violet-light); font-size: 1.5rem;">Stealth Recon</div>
-        <div class="pdf-logo-sub" style="font-size: 0.68rem; color: var(--text-muted); font-family: 'DM Mono';">HISTORI REKAP REPORT · ZENITH PRIME LABS</div>
+        <div class="pdf-logo-name" style="font-weight: 800; color: var(--violet-light); font-size: 1.4rem;">Stealth Recon</div>
+        <div class="pdf-logo-sub" style="font-size: 0.68rem; color: var(--text-muted); font-family: 'DM Mono';">LAPORAN ARSIP LENGKAP · ZENITH PRIME LABS</div>
       </div>
       <div style="text-align: right;">
-        <div style="font-size: 0.72rem; color: var(--text-faint); font-family: 'DM Mono';">ID LAPORAN</div>
-        <div style="font-weight: 700; color: var(--rose); font-size: 1rem; font-family: 'DM Mono';">${item.id}</div>
+        <div style="font-size: 0.65rem; color: var(--text-faint); font-family: 'DM Mono';">ID LAPORAN</div>
+        <div style="font-weight: 700; color: var(--rose); font-size: 0.95rem; font-family: 'DM Mono';">${item.id}</div>
       </div>
     </div>
 
-    <div style="display:flex; gap:1.5rem; background:rgba(255,255,255,0.02); padding:1rem; border-radius:10px; margin-bottom:1.5rem; align-items:center; border: 1px solid var(--card-border);">
-      <div style="width:60px; height:60px; border-radius:50%; overflow:hidden; background:linear-gradient(135deg,var(--violet),var(--rose)); display:flex; align-items:center; justify-content:center; font-weight:bold; color:#fff; font-size:1.2rem; flex-shrink:0;">
-        ${item.photoDataUrl ? `<img src="${item.photoDataUrl}" style="width:100%;height:100%;object-fit:cover;">` : item.targetName.slice(0, 2).toUpperCase()}
-      </div>
+    <div style="display:flex; gap:1.25rem; background:rgba(255,255,255,0.02); padding:1rem; border-radius:10px; margin-bottom:1.5rem; align-items:center; border: 1px solid var(--card-border);">
+      ${photoHtml}
       <div>
-        <div style="font-size: 0.65rem; color: var(--violet-light); font-family: 'DM Mono'; font-weight: bold; letter-spacing: 0.1em;">TARGET TERIDENTIFIKASI</div>
-        <div style="font-size: 1.25rem; font-weight: 850; color: var(--text);">${item.targetName}</div>
-        <div style="font-size: 0.78rem; color: var(--text-muted); font-family: 'DM Mono';">
+        <div style="font-size: 0.62rem; color: var(--violet-light); font-family: 'DM Mono'; font-weight: bold; letter-spacing: 0.1em;">TARGET IDENTIFIKASI</div>
+        <div style="font-size: 1.2rem; font-weight: 800; color: var(--text);">${item.targetName}</div>
+        <div style="font-size: 0.75rem; color: var(--text-muted); font-family: 'DM Mono'; margin-top:0.15rem;">
           ${item.targetAlias ? `Alias: ${item.targetAlias} · ` : ''}
           ${item.targetEmail ? `Email: ${item.targetEmail} · ` : ''}
           ${item.targetPhone ? `Telepon: ${item.targetPhone} · ` : ''}
@@ -782,32 +977,63 @@ window.showHistoryReportPopup = function(reportId) {
       </div>
     </div>
 
-    <h3 style="font-size:0.95rem; font-weight:750; color:var(--text); margin-bottom:0.75rem;">📊 Hasil Temuan Platform</h3>
-    <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap:0.75rem; margin-bottom:1.5rem;">
-      ${item.scanResults.platforms.map(p => `
-        <div style="background:rgba(255,255,255,0.02); border:1px solid var(--card-border); padding:0.75rem; border-radius:8px;">
-          <div style="font-size:0.68rem; color:var(--text-faint); font-family:'DM Mono';">${p.name}</div>
-          <div style="font-size:0.85rem; font-weight:700; color:${p.found ? '#34D399' : 'var(--text-muted)'}; margin-top:0.25rem;">
-            ${p.found ? '✓ Terindikasi' : '— Bersih'} (${p.confidence}%)
-          </div>
-        </div>
-      `).join('')}
+    <h3 style="font-size:0.9rem; font-weight:750; color:var(--text); margin-bottom:0.6rem;">📊 Hasil Temuan Platform</h3>
+    <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap:0.65rem; margin-bottom:1.5rem;">
+      ${platformList}
     </div>
 
-    <h3 style="font-size:0.95rem; font-weight:750; color:var(--text); margin-bottom:0.75rem;">🤖 Analisis AI</h3>
-    <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.6; background:rgba(139,92,246,0.05); padding:0.85rem; border-radius:8px; border-left:3px solid var(--violet); margin-bottom:1.5rem; text-align:justify;">
+    <h3 style="font-size:0.9rem; font-weight:750; color:var(--text); margin-bottom:0.6rem;">🔗 Tautan Investigasi</h3>
+    ${linkList}
+
+    <h3 style="font-size:0.9rem; font-weight:750; color:var(--text); margin-bottom:0.6rem;">🤖 Analisis & Deskripsi AI</h3>
+    <p style="font-size:0.82rem; color:var(--text-muted); line-height:1.6; background:rgba(139,92,246,0.04); padding:0.75rem; border-radius:6px; border-left:3px solid var(--violet); margin-bottom:1.5rem; text-align:justify;">
       ${item.scanResults.aiAnalysis.summary}
     </p>
 
-    <h3 style="font-size:0.95rem; font-weight:750; color:var(--text); margin-bottom:0.75rem;">📝 Catatan Pencari</h3>
-    <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.6; background:rgba(251,191,36,0.05); padding:0.85rem; border-radius:8px; border-left:3px solid var(--amber); margin-bottom:1.5rem;">
+    <h3 style="font-size:0.9rem; font-weight:750; color:var(--text); margin-bottom:0.6rem;">💡 Saran Tindakan AI</h3>
+    <ul style="margin: 0 0 1.5rem 0; padding-left: 1.25rem; font-size: 0.82rem; color: var(--text-muted); line-height: 1.6;">
+      ${item.scanResults.aiAnalysis.suggestions.map(s => `<li>${s}</li>`).join('')}
+    </ul>
+
+    <h3 style="font-size:0.9rem; font-weight:750; color:var(--text); margin-bottom:0.6rem;">📝 Catatan Seeker</h3>
+    <p style="font-size:0.82rem; color:var(--text-muted); line-height:1.6; background:rgba(251,191,36,0.04); padding:0.75rem; border-radius:6px; border-left:3px solid var(--amber); margin-bottom:1.5rem;">
       ${item.searcherNotes || '(Tidak ada catatan tambahan)'}
     </p>
+
+    <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--card-border); padding-top:1rem; margin-top:1rem;">
+      <span style="font-size:0.7rem; color:var(--text-faint); font-family:'DM Mono';">TANGGAL SCAN: ${new Date(item.scanTime).toLocaleString('id-ID')}</span>
+      <button id="popup-export-pdf-btn" class="export-btn" style="padding: 0.45rem 1.1rem; font-size:0.78rem;">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download PDF
+      </button>
+    </div>
   `;
 
   popupModal.style.display = 'flex';
+
+  // Bind Export PDF on popup
+  const popupExportBtn = document.getElementById('popup-export-pdf-btn');
+  if (popupExportBtn) {
+    popupExportBtn.addEventListener('click', () => {
+      const mockState = {
+        targetName: item.targetName,
+        targetAlias: item.targetAlias,
+        targetPhone: item.targetPhone,
+        targetEmail: item.targetEmail,
+        searcherName: item.searcherName,
+        searcherNotes: item.searcherNotes,
+        photoDataUrl: item.photoDataUrl,
+        scanTime: new Date(item.scanTime),
+        scanResults: item.scanResults
+      };
+      if (window.exportStealthReconPDF) {
+        window.exportStealthReconPDF(mockState);
+      }
+    });
+  }
 };
 
 // Init UI on load
 updateHistoryUI();
+
 
