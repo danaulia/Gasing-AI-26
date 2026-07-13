@@ -154,6 +154,14 @@ function clearPhoto() {
 }
 
 // ─── SCAN ───────────────────────────────────────────────
+// Search history array
+let searchHistory = [];
+try {
+  searchHistory = JSON.parse(localStorage.getItem('stealth_recon_history')) || [];
+} catch(e) {
+  searchHistory = [];
+}
+
 els.startScanBtn.addEventListener('click', startScan);
 
 async function startScan() {
@@ -177,7 +185,60 @@ async function startScan() {
   await runScanAnimation();
   state.scanResults = generateScanResults(state.targetName, alias, phone, email);
   hideScanningOverlay();
+  
+  // Add to local history list
+  saveToHistory(state);
+
+  // Switch pages: hide search panel, show results panel fully
+  els.searchPanel.style.display = 'none';
+  // Hide history panel if open
+  const histPanel = document.getElementById('history-panel');
+  if (histPanel) histPanel.style.display = 'none';
+
   renderResults();
+}
+
+function saveToHistory(s) {
+  const historyItem = {
+    id: 'REP-' + Math.floor(100000 + Math.random() * 900000),
+    targetName: s.targetName,
+    targetAlias: s.targetAlias,
+    targetPhone: s.targetPhone,
+    targetEmail: s.targetEmail,
+    searcherName: s.searcherName,
+    searcherNotes: s.searcherNotes,
+    photoDataUrl: s.photoDataUrl,
+    scanTime: s.scanTime.toISOString(),
+    scanResults: s.scanResults
+  };
+  searchHistory.unshift(historyItem);
+  localStorage.setItem('stealth_recon_history', JSON.stringify(searchHistory));
+  updateHistoryUI();
+}
+
+function updateHistoryUI() {
+  const container = document.getElementById('history-list-container');
+  if (!container) return;
+  if (searchHistory.length === 0) {
+    container.innerHTML = `<div style="color:var(--text-muted);font-size:0.88rem;text-align:center;padding:2rem;">Belum ada riwayat pencarian.</div>`;
+    return;
+  }
+  container.innerHTML = searchHistory.map(item => `
+    <div class="glass-card" style="padding:1.25rem;margin-bottom:1rem;display:flex;align-items:center;justify-content:space-between;border-color:var(--card-border);">
+      <div style="display:flex;align-items:center;gap:1rem;">
+        <div style="width:40px;height:40px;border-radius:50%;overflow:hidden;background:linear-gradient(135deg,var(--violet),var(--rose));display:flex;align-items:center;justify-content:center;font-weight:bold;color:#fff;font-size:0.9rem;">
+          ${item.photoDataUrl ? `<img src="${item.photoDataUrl}" style="width:100%;height:100%;object-fit:cover;">` : item.targetName.slice(0,2).toUpperCase()}
+        </div>
+        <div>
+          <div style="font-weight:700;font-size:0.92rem;color:var(--text);">${item.targetName}</div>
+          <div style="font-size:0.75rem;color:var(--text-muted);font-family:'DM Mono',monospace;">ID: ${item.id} · ${new Date(item.scanTime).toLocaleString('id-ID')}</div>
+        </div>
+      </div>
+      <button class="action-btn" onclick="showHistoryReportPopup('${item.id}')" style="padding:0.4rem 1rem;font-size:0.78rem;background:var(--violet-faint);border:1px solid rgba(139,92,246,0.3);color:var(--violet-light);border-radius:var(--radius-full);cursor:pointer;">
+        🔍 Detail Rekap
+      </button>
+    </div>
+  `).join('');
 }
 
 function showScanningOverlay() {
@@ -321,6 +382,7 @@ function generateAIAnalysis(name, alias, phone, email, platforms) {
 // ─── RENDER RESULTS ───────────────────────────────────────
 function renderResults() {
   const r = state.scanResults;
+  els.searchPanel.style.display = 'none'; // Hide search panel page fully
   els.resultsSection.style.display = 'block';
 
   // Header
@@ -592,13 +654,18 @@ document.querySelectorAll('.result-tab').forEach(tab => {
 
 // ─── NEW SEARCH ──────────────────────────────────────────
 els.newSearchBtn.addEventListener('click', () => {
+  // Hide results completely
   els.resultsSection.style.display = 'none';
+  // Show search panel page fully
+  els.searchPanel.style.display = 'block';
+  
   clearPhoto();
   els.targetName.value = ''; 
   els.targetAlias.value = '';
   els.targetPhone.value = '';
   els.targetEmail.value = '';
   els.searcherNotes.value = '';
+  
   els.searchPanel.scrollIntoView({ behavior: 'smooth' });
 });
 
@@ -608,3 +675,121 @@ els.exportPdfBtn.addEventListener('click', () => {
     window.exportStealthReconPDF(state);
   }
 });
+
+// ─── HISTORY PANEL TOGGLE & EVENT LISTENERS ─────────────
+const toggleHistBtn = document.getElementById('toggle-history-btn');
+const histPanel = document.getElementById('history-panel');
+
+if (toggleHistBtn && histPanel) {
+  toggleHistBtn.addEventListener('click', () => {
+    // If results section is shown, hide it first
+    els.resultsSection.style.display = 'none';
+    els.searchPanel.style.display = 'block';
+
+    const isHidden = histPanel.style.display === 'none';
+    histPanel.style.display = isHidden ? 'block' : 'none';
+    
+    if (isHidden) {
+      updateHistoryUI();
+      histPanel.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+}
+
+// Close report modal popup
+const closePopupBtn = document.getElementById('close-report-popup-btn');
+const popupModal = document.getElementById('report-popup-modal');
+if (closePopupBtn && popupModal) {
+  closePopupBtn.addEventListener('click', () => {
+    popupModal.style.display = 'none';
+  });
+  popupModal.addEventListener('click', (e) => {
+    if (e.target === popupModal) {
+      popupModal.style.display = 'none';
+    }
+  });
+}
+
+// Global function to trigger history popup detail
+window.showHistoryReportPopup = function(reportId) {
+  const item = searchHistory.find(h => h.id === reportId);
+  if (!item) return;
+
+  const popupContent = document.getElementById('report-popup-content-inner');
+  if (!popupContent || !popupModal) return;
+
+  const photoHtml = item.photoDataUrl
+    ? `<div class="pdf-target-photo"><img src="${item.photoDataUrl}" alt="Photo"></div>`
+    : `<div class="pdf-target-photo">${item.targetName.slice(0, 2).toUpperCase()}</div>`;
+
+  const platformList = item.scanResults.platforms.map(p => `
+    <div class="pdf-finding-card">
+      <div class="pdf-finding-label">${p.name}</div>
+      <div class="pdf-finding-value" style="color:${p.found ? '#10B981' : '#6B7280'}">
+        ${p.found ? '✓ Terindikasi' : '— Bersih'} (${p.confidence}%)
+      </div>
+    </div>
+  `).join('');
+
+  const links = item.scanResults.platforms.filter(p => p.found).map(p => p.profileLink);
+  const linkList = links.length
+    ? `<div class="pdf-link-list">${links.map(lnk => `<div class="pdf-link-item"><a href="${lnk}" target="_blank" style="color:var(--violet-light);text-decoration:none;">${lnk}</a></div>`).join('')}</div>`
+    : `<div style="font-size:12px;color:#9CA3AF;margin-bottom:20px;">Tidak ada link luar terindikasi.</div>`;
+
+  popupContent.innerHTML = `
+    <div class="pdf-header" style="border-bottom: 1px solid var(--card-border); padding-bottom: 1rem; margin-bottom: 1.5rem;">
+      <div class="pdf-logo-area">
+        <div class="pdf-logo-name" style="font-weight: 800; color: var(--violet-light); font-size: 1.5rem;">Stealth Recon</div>
+        <div class="pdf-logo-sub" style="font-size: 0.68rem; color: var(--text-muted); font-family: 'DM Mono';">HISTORI REKAP REPORT · ZENITH PRIME LABS</div>
+      </div>
+      <div style="text-align: right;">
+        <div style="font-size: 0.72rem; color: var(--text-faint); font-family: 'DM Mono';">ID LAPORAN</div>
+        <div style="font-weight: 700; color: var(--rose); font-size: 1rem; font-family: 'DM Mono';">${item.id}</div>
+      </div>
+    </div>
+
+    <div style="display:flex; gap:1.5rem; background:rgba(255,255,255,0.02); padding:1rem; border-radius:10px; margin-bottom:1.5rem; align-items:center; border: 1px solid var(--card-border);">
+      <div style="width:60px; height:60px; border-radius:50%; overflow:hidden; background:linear-gradient(135deg,var(--violet),var(--rose)); display:flex; align-items:center; justify-content:center; font-weight:bold; color:#fff; font-size:1.2rem; flex-shrink:0;">
+        ${item.photoDataUrl ? `<img src="${item.photoDataUrl}" style="width:100%;height:100%;object-fit:cover;">` : item.targetName.slice(0, 2).toUpperCase()}
+      </div>
+      <div>
+        <div style="font-size: 0.65rem; color: var(--violet-light); font-family: 'DM Mono'; font-weight: bold; letter-spacing: 0.1em;">TARGET TERIDENTIFIKASI</div>
+        <div style="font-size: 1.25rem; font-weight: 850; color: var(--text);">${item.targetName}</div>
+        <div style="font-size: 0.78rem; color: var(--text-muted); font-family: 'DM Mono';">
+          ${item.targetAlias ? `Alias: ${item.targetAlias} · ` : ''}
+          ${item.targetEmail ? `Email: ${item.targetEmail} · ` : ''}
+          ${item.targetPhone ? `Telepon: ${item.targetPhone} · ` : ''}
+          Operator: ${item.searcherName}
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-size:0.95rem; font-weight:750; color:var(--text); margin-bottom:0.75rem;">📊 Hasil Temuan Platform</h3>
+    <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap:0.75rem; margin-bottom:1.5rem;">
+      ${item.scanResults.platforms.map(p => `
+        <div style="background:rgba(255,255,255,0.02); border:1px solid var(--card-border); padding:0.75rem; border-radius:8px;">
+          <div style="font-size:0.68rem; color:var(--text-faint); font-family:'DM Mono';">${p.name}</div>
+          <div style="font-size:0.85rem; font-weight:700; color:${p.found ? '#34D399' : 'var(--text-muted)'}; margin-top:0.25rem;">
+            ${p.found ? '✓ Terindikasi' : '— Bersih'} (${p.confidence}%)
+          </div>
+        </div>
+      `).join('')}
+    </div>
+
+    <h3 style="font-size:0.95rem; font-weight:750; color:var(--text); margin-bottom:0.75rem;">🤖 Analisis AI</h3>
+    <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.6; background:rgba(139,92,246,0.05); padding:0.85rem; border-radius:8px; border-left:3px solid var(--violet); margin-bottom:1.5rem; text-align:justify;">
+      ${item.scanResults.aiAnalysis.summary}
+    </p>
+
+    <h3 style="font-size:0.95rem; font-weight:750; color:var(--text); margin-bottom:0.75rem;">📝 Catatan Pencari</h3>
+    <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.6; background:rgba(251,191,36,0.05); padding:0.85rem; border-radius:8px; border-left:3px solid var(--amber); margin-bottom:1.5rem;">
+      ${item.searcherNotes || '(Tidak ada catatan tambahan)'}
+    </p>
+  `;
+
+  popupModal.style.display = 'flex';
+};
+
+// Init UI on load
+updateHistoryUI();
+
