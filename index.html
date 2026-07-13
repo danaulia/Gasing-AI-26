@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NCN Group — Nusantara Cyber Nexus</title>
+
+  <!-- SEO Meta -->
+  <meta name="description" content="Nusantara Cyber Nexus (NCN Group) — Holding company integrating cyber defense, space telemetry, quantum cryptography, and smart energy infrastructure.">
+  <meta name="keywords" content="NCN Group, Nusantara Cyber Nexus, Cyber Security, Aether Orbitals, Quantum Nusantara, EcoTech">
+  <meta name="author" content="NCN Group Admin">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="index.css">
+
+  <!-- CDNs -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- App Scripts -->
+  <script src="canvas-bg.js" defer></script>
+  <script src="audio-player.js" defer></script>
+  <script src="auth-chat.js" defer></script>
+  <script src="gallery-ai.js" defer></script>
+  <script src="security-dashboard.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+
+  <!-- Cosmic Canvas Background -->
+  <canvas id="cosmic-canvas"></canvas>
+
+  <div id="app-shell">
+
+    <!-- ═══════════════════ HEADER ═══════════════════ -->
+    <header>
+      <!-- Logo -->
+      <div class="logo-container">
+        <div class="logo-icon">
+          <i class="lucide-hexagon" style="width:26px;height:26px;"></i>
+        </div>
+        <span class="logo-text">NCN <span>Group</span></span>
+      </div>
+
+      <!-- Navigation pill -->
+      <nav>
+        <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Menu">
+          <i class="lucide-menu" style="width:20px;height:20px;"></i>
+        </button>
+        <ul id="nav-menu-links">
+          <li><a class="nav-link active" data-target="home">Beranda</a></li>
+          <li><a class="nav-link" data-target="affiliation">Afiliasi</a></li>
+          <li><a class="nav-link" data-target="agent">Agen</a></li>
+          <li><a class="nav-link" data-target="project">Proyek</a></li>
+          <li><a class="nav-link" data-target="gallery">Galeri</a></li>
+          <li><a class="nav-link" data-target="dashboard">Dasbor</a></li>
+        </ul>
+      </nav>
+
+      <!-- Right actions -->
+      <div class="header-actions">
+        <div id="user-status-indicator" class="status-align-right">
+          <span class="pulse-dot red"></span>
+          <span class="text-xxs font-mono opacity-70">Belum Masuk</span>
+        </div>
+
+        <button id="theme-toggle-btn" class="action-btn" title="Ganti Tema">
+          <i class="lucide-moon" style="width:14px;height:14px;"></i>
+        </button>
+
+        <button id="portal-login-btn" class="action-btn">
+          <i class="lucide-shield" style="width:14px;height:14px;"></i>
+          Portal Login
+        </button>
+      </div>
+    </header>
+
+    <!-- ═══════════════════ MAIN ═══════════════════ -->
+    <main>
+
+      <!-- ───────────── 1. HOME ───────────── -->
+      <section id="home" class="app-page active">
+
+        <div class="page-title-section">
+          <span class="section-eyebrow">Holding Company</span>
+          <h1 class="page-title">Nusantara Cyber Nexus</h1>
+          <p class="page-subtitle">Ekosistem teknologi keamanan siber, antariksa, dan infrastruktur digital Indonesia</p>
+        </div>
+
+        <!-- Hero Grid -->
+        <div class="hero-grid" style="margin-bottom:2.5rem;">
+
+          <!-- Carousel Slider -->
+          <div class="carousel-viewport">
+            <div class="carousel-slide active" style="background-image:url('assets/home_slide_1.png');">
+              <div class="slide-caption-wrapper">
+                <h3 class="slide-title">Markas Korporasi NCN</h3>
+                <p class="slide-desc">Pusat operasional holding group Nusantara Cyber Nexus, mengintegrasikan keamanan, ruang, dan energi.</p>
+              </div>
+            </div>
+            <div class="carousel-slide" style="background-image:url('assets/home_slide_2.png');">
+              <div class="slide-caption-wrapper">
+                <h3 class="slide-title">Tim Aether Orbitals</h3>
+                <p class="slide-desc">Anak perusahaan telemetri satelit yang memimpin transmisi data aman berbasis orbit rendah.</p>
+              </div>
+            </div>
+            <div class="carousel-slide" style="background-image:url('assets/home_slide_3.png');">
+              <div class="slide-caption-wrapper">
+                <h3 class="slide-title">Quantum Nusantara Labs</h3>
+                <p class="slide-desc">Laboratorium kriptografi kuantum untuk mengamankan infrastruktur digital nasional masa depan.</p>
+              </div>
+            </div>
+            <div class="carousel-navigation">
+              <button class="carousel-dot active" data-slide-to="0" aria-label="Slide 1"></button>
+              <button class="carousel-dot" data-slide-to="1" aria-label="Slide 2"></button>
+              <button class="carousel-dot" data-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+          </div>
+
+          <!-- Company Info Card -->
+          <div class="company-core-panel glass-panel">
+            <div>
+              <div class="company-badge">
+                <i class="lucide-zap" style="width:11px;height:11px;"></i>
+                NCN GROUP
+              </div>
+              <h2 class="company-title">Ekosistem Teknologi Terpadu</h2>
+              <p class="company-intro">
+                NCN Group menaungi empat anak perusahaan strategis di bidang keamanan siber, telemetri antariksa, kriptografi kuantum, dan jaringan energi cerdas — bersinergi untuk kedaulatan digital Indonesia.
+              </p>
+            </div>
+            <div class="metric-container">
+              <div class="metric-label">
+                <span class="pulse-dot green"></span>
+                Koneksi Aktif Real-Time
+              </div>
+              <div class="live-user-ticker">
+                <span id="realtime-user-count">742</span>
+                <span class="metric-unit">node aktif</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Subsidiary Quick Links -->
+        <div class="section-label">Subsidiaries</div>
+        <div class="sub-quick-grid">
+          <div class="quick-card glass-panel" onclick="window.aetheriaApp.navigate('affiliation')">
+            <div class="quick-card-icon rose">
+              <i class="lucide-shield-check" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="quick-title">Nusa Cyber Security</div>
+            <p class="quick-desc">Perlindungan perimeter, threat intelligence, dan respon insiden 24/7.</p>
+          </div>
+          <div class="quick-card glass-panel" onclick="window.aetheriaApp.navigate('affiliation')">
+            <div class="quick-card-icon sky">
+              <i class="lucide-satellite" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="quick-title">Aether Orbitals</div>
+            <p class="quick-desc">Transmisi data terenkripsi berbasis konstelasi satelit orbit rendah.</p>
+          </div>
+          <div class="quick-card glass-panel" onclick="window.aetheriaApp.navigate('affiliation')">
+            <div class="quick-card-icon violet">
+              <i class="lucide-lock" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="quick-title">Quantum Nusantara Labs</div>
+            <p class="quick-desc">R&D kriptografi pasca-kuantum untuk keamanan data tingkat militer.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ───────────── 2. AFFILIATION ───────────── -->
+      <section id="affiliation" class="app-page">
+        <div class="page-title-section">
+          <span class="section-eyebrow">Jaringan Korporasi</span>
+          <h1 class="page-title">Afiliasi &amp; Anak Perusahaan</h1>
+          <p class="page-subtitle">Empat pilar teknologi yang memperkuat ekosistem NCN Group</p>
+        </div>
+
+        <div class="affiliation-grid">
+
+          <!-- NCS -->
+          <div class="subsidiary-card glass-panel">
+            <div class="sub-color-strip strip-rose"></div>
+            <div class="sub-icon-row">
+              <div class="sub-icon-badge badge-rose">NCS</div>
+              <span class="sub-status-chip">
+                <span class="pulse-dot green" style="width:5px;height:5px;"></span> AKTIF
+              </span>
+            </div>
+            <div class="sub-name">Nusa Cyber Security</div>
+            <div class="sub-sector">Cyber Defense &amp; Intelligence</div>
+            <p class="sub-body">Melindungi infrastruktur digital nasional melalui analisis threat intelligence OpenCTI, deteksi intrusi otomatis, audit penetrasi, dan mitigasi DDoS real-time.</p>
+            <div class="sub-stats-row">
+              <div class="stat-item">
+                <span class="stat-val">99.99%</span>
+                <span class="stat-lbl">Uptime</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-val">30ms</span>
+                <span class="stat-lbl">Resp. Delay</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-val">8.4K+</span>
+                <span class="stat-lbl">Insiden/Bulan</span>
+              </div>
+            </div>
+            <a href="https://cybersec.example.com" target="_blank" class="action-btn sub-action-btn">
+              Buka Website
+              <i class="lucide-external-link" style="width:13px;height:13px;"></i>
+            </a>
+          </div>
+
+          <!-- Aether Orbitals -->
+          <div class="subsidiary-card glass-panel">
+            <div class="sub-color-strip strip-sky"></div>
+            <div class="sub-icon-row">
+              <div class="sub-icon-badge badge-sky">AO</div>
+              <span class="sub-status-chip">
+                <span class="pulse-dot green" style="width:5px;height:5px;"></span> AKTIF
+              </span>
+            </div>
+            <div class="sub-name">Aether Orbitals</div>
+            <div class="sub-sector">Space Telemetry &amp; Secure Comms</div>
+            <p class="sub-body">Mengoperasikan konstelasi 12 satelit orbit rendah dengan transmisi data terenkripsi kuantum — menghubungkan command center Indonesia dengan kecepatan 4.8 Gbps.</p>
+            <div class="sub-stats-row">
+              <div class="stat-item">
+                <span class="stat-val">12</span>
+                <span class="stat-lbl">Satelit Aktif</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-val">4.8 Gbps</span>
+                <span class="stat-lbl">Bandwidth</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-val">LEO</span>
+                <span class="stat-lbl">Orbit Class</span>
+              </div>
+            </div>
+            <a href="https://orbitals.example.com" target="_blank" class="action-btn sub-action-btn">
+              Buka Website
+              <i class="lucide-external-link" style="width:13px;height:13px;"></i>
+            </a>
+          </div>
+
+          <!-- Quantum Nusantara Labs -->
+          <div class="subsidiary-card glass-panel">
+            <div class="sub-color-strip strip-violet"></div>
+            <div class="sub-icon-row">
+              <div class="sub-icon-badge badge-violet">QNL</div>
+              <span class="sub-status-chip">
+                <span class="pulse-dot green" style="width:5px;height:5px;"></span> AKTIF
+              </span>
+            </div>
+            <div class="sub-name">Quantum Nusantara Labs</div>
+            <div class="sub-sector">Quantum Cryptography &amp; R&D</div>
+            <p class="sub-body">Mengembangkan algoritma kriptografi tahan-kuantum (PQC) dan distribusi kunci kuantum (QKD) untuk memproteksi data keuangan dan data negara dari ancaman komputasi kuantum.</p>
+            <div class="sub-stats-row">
+              <div class="stat-item">
+                <span class="stat-val">Qubit v4</span>
+                <span class="stat-lbl">Arsitektur</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-val">AES-Q512</span>
+                <span class="stat-lbl">Enkripsi</span>
+              </div>
+            </div>
+            <a href="https://quantum.example.com" target="_blank" class="action-btn sub-action-btn">
+              Buka Website
+              <i class="lucide-external-link" style="width:13px;height:13px;"></i>
+            </a>
+          </div>
+
+          <!-- EcoTech CyberGrid -->
+          <div class="subsidiary-card glass-panel">
+            <div class="sub-color-strip strip-amber"></div>
+            <div class="sub-icon-row">
+              <div class="sub-icon-badge badge-amber">ECG</div>
+              <span class="sub-status-chip">
+                <span class="pulse-dot green" style="width:5px;height:5px;"></span> AKTIF
+              </span>
+            </div>
+            <div class="sub-name">EcoTech CyberGrid</div>
+            <div class="sub-sector">Industrial IoT &amp; Smart Energy</div>
+            <p class="sub-body">Mengintegrasikan SCADA dan Industrial IoT dengan jaringan energi pintar terbarukan — seluruh transmisi diproteksi mesh VPN militer berbasis HSM.</p>
+            <div class="sub-stats-row">
+              <div class="stat-item">
+                <span class="stat-val">140+</span>
+                <span class="stat-lbl">Smart Nodes</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-val">Zero</span>
+                <span class="stat-lbl">Outage</span>
+              </div>
+            </div>
+            <a href="https://cybergrid.example.com" target="_blank" class="action-btn sub-action-btn">
+              Buka Website
+              <i class="lucide-external-link" style="width:13px;height:13px;"></i>
+            </a>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ───────────── 3. AGENT ───────────── -->
+      <section id="agent" class="app-page">
+        <div class="page-title-section">
+          <span class="section-eyebrow">Direktori Personel</span>
+          <h1 class="page-title">Administrator &amp; Agen</h1>
+          <p class="page-subtitle">Pemimpin dan pengelola sistem Nusantara Cyber Nexus</p>
+        </div>
+
+        <div class="agent-grid">
+
+          <!-- CEO -->
+          <div class="agent-card glass-panel">
+            <div class="agent-avatar-ring">
+              <div class="avatar-gradient-ring"></div>
+              <div class="agent-photo-placeholder">EM</div>
+            </div>
+            <div class="agent-name">Evelyn Mercer</div>
+            <div class="agent-role">Chief Executive Officer</div>
+            <div class="agent-status-tag">
+              <span class="pulse-dot green"></span> Online — Command Room
+            </div>
+            <p class="agent-desc">Mengomandoi visi teknologi NCN Group. 15+ tahun di bidang manajemen kapital ventura dan tata kelola perusahaan teknologi antariksa.</p>
+            <div class="agent-pgp-block">
+              <button class="action-btn copy-pgp-btn"
+                data-pgp="-----BEGIN PGP PUBLIC KEY BLOCK-----&#10;mQINBFT3SgUBEADU4s2mCx...&#10;-----END PGP PUBLIC KEY BLOCK-----">
+                <i class="lucide-copy" style="width:13px;height:13px;"></i> Salin PGP Key
+              </button>
+            </div>
+          </div>
+
+          <!-- CISO -->
+          <div class="agent-card glass-panel">
+            <div class="agent-avatar-ring">
+              <div class="avatar-gradient-ring"></div>
+              <div class="agent-photo-placeholder">BH</div>
+            </div>
+            <div class="agent-name">Prof. Budi Hartono</div>
+            <div class="agent-role">Chief Information Security Officer</div>
+            <div class="agent-status-tag" style="background:rgba(244,63,94,0.07);border-color:rgba(244,63,94,0.2);color:var(--rose-400);">
+              <span class="pulse-dot red"></span> Sibuk — War Room Aktif
+            </div>
+            <p class="agent-desc">Pakar kriptografi kuantum dan arsitek utama Garuda Shield Cyber Mesh. Mantan penasihat keamanan siber institusi pertahanan nasional.</p>
+            <div class="agent-pgp-block">
+              <button class="action-btn copy-pgp-btn"
+                data-pgp="-----BEGIN PGP PUBLIC KEY BLOCK-----&#10;mQINBFT99aUBEAD12z2xCx...&#10;-----END PGP PUBLIC KEY BLOCK-----">
+                <i class="lucide-copy" style="width:13px;height:13px;"></i> Salin PGP Key
+              </button>
+            </div>
+          </div>
+
+          <!-- AI KRONOS -->
+          <div class="agent-card glass-panel">
+            <div class="agent-avatar-ring">
+              <div class="avatar-gradient-ring"></div>
+              <div class="agent-photo-placeholder" style="font-size:1rem;">AI</div>
+            </div>
+            <div class="agent-name">KRONOS-V.9</div>
+            <div class="agent-role">System Intelligence AI</div>
+            <div class="agent-status-tag" style="background:rgba(167,139,250,0.08);border-color:rgba(167,139,250,0.2);color:var(--violet-400);">
+              <span class="pulse-dot green"></span> AI Core Active
+            </div>
+            <p class="agent-desc">Entitas AI terpusat yang memantau anomali lalu lintas data, mendeteksi vektor ancaman asing secara real-time, dan menjaga integritas ekosistem NCN.</p>
+            <div class="agent-pgp-block">
+              <button class="action-btn copy-pgp-btn"
+                data-pgp="-----BEGIN PGP PUBLIC KEY BLOCK-----&#10;AI-KRONOS-V9-DIGITAL-SIGNATURE-KEY&#10;-----END PGP PUBLIC KEY BLOCK-----">
+                <i class="lucide-cpu" style="width:13px;height:13px;"></i> Salin Digital Sign
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ───────────── 4. PROJECT ───────────── -->
+      <section id="project" class="app-page">
+        <div class="page-title-section">
+          <span class="section-eyebrow">Status Pengerjaan</span>
+          <h1 class="page-title">Proyek Aktif</h1>
+          <p class="page-subtitle">Klik kartu untuk melihat detail dokumen dan status teknis proyek</p>
+        </div>
+
+        <div class="project-grid">
+
+          <div class="project-card glass-panel">
+            <div class="project-header">
+              <h2 class="project-title">Garuda Shield v4</h2>
+              <span class="project-code-tag">SECURITY</span>
+            </div>
+            <p class="project-desc">Sistem pertahanan perimeter komprehensif berbasis AI yang mendeteksi dan merespons serangan Zero-Day secara otomatis di seluruh anak perusahaan NCN.</p>
+            <div class="project-progress-wrapper">
+              <div class="progress-header">
+                <span>Progress Integrasi</span>
+                <span class="progress-percent">87%</span>
+              </div>
+              <div class="progress-bar-outer">
+                <div class="progress-bar-inner striped" style="width:87%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-card glass-panel">
+            <div class="project-header">
+              <h2 class="project-title">Satria Quantum</h2>
+              <span class="project-code-tag">SPACE R&D</span>
+            </div>
+            <p class="project-desc">Jalur komunikasi serat optik udara aman dengan modul penerimaan satelit berbasis distribusi kunci kuantum (QKD) untuk eliminasi ancaman man-in-the-middle.</p>
+            <div class="project-progress-wrapper">
+              <div class="progress-header">
+                <span>Progress Integrasi</span>
+                <span class="progress-percent">62%</span>
+              </div>
+              <div class="progress-bar-outer">
+                <div class="progress-bar-inner striped" style="width:62%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-card glass-panel">
+            <div class="project-header">
+              <h2 class="project-title">Nusantara Green Grid</h2>
+              <span class="project-code-tag">INFRASTRUCTURE</span>
+            </div>
+            <p class="project-desc">Pemasangan 140+ sensor cerdas di jaringan transmisi listrik EcoTech — seluruh komunikasi diproteksi enkripsi berbasis Hardware Security Module (HSM).</p>
+            <div class="project-progress-wrapper">
+              <div class="progress-header">
+                <span>Progress Integrasi</span>
+                <span class="progress-percent">95%</span>
+              </div>
+              <div class="progress-bar-outer">
+                <div class="progress-bar-inner striped" style="width:95%;"></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ───────────── 5. GALLERY ───────────── -->
+      <section id="gallery" class="app-page">
+        <div class="page-title-section">
+          <span class="section-eyebrow">Dokumentasi Kegiatan</span>
+          <h1 class="page-title">Galeri &amp; Pemindai AI</h1>
+          <p class="page-subtitle">Klik "Deteksi AI" untuk mengaktifkan scanner identitas berbasis kecerdasan buatan</p>
+        </div>
+
+        <div class="gallery-grid">
+
+          <div class="gallery-card glass-panel" id="gallery-item-1">
+            <div class="gallery-image-viewport">
+              <img src="assets/gallery_1.png" alt="NCN Cyber Command Center" class="gallery-img">
+              <div class="scanner-overlay">
+                <div class="scan-line"></div>
+                <div class="bounding-boxes-container"></div>
+              </div>
+            </div>
+            <div class="gallery-info-panel">
+              <div>
+                <div class="gallery-photo-title">NCN Command War Room</div>
+                <div class="gallery-photo-desc">Aktivitas mitigasi insiden siber nasional — Tim NCS</div>
+              </div>
+              <div class="scan-console-hud">
+                <div class="scan-console-output text-xxs font-mono" style="color:var(--text-faint);">
+                  SCANNER STANDBY — Menunggu inisiasi pemindaian...
+                </div>
+              </div>
+              <div class="gallery-actions">
+                <button class="action-btn gallery-action-btn start-scan-btn">
+                  <i class="lucide-scan-face" style="width:14px;height:14px;"></i> Deteksi AI
+                </button>
+                <button class="action-btn gallery-action-btn reset-scan-btn hidden" style="background:var(--bg-input);color:var(--text-muted);">
+                  <i class="lucide-rotate-ccw" style="width:14px;height:14px;"></i> Reset
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="gallery-card glass-panel" id="gallery-item-2">
+            <div class="gallery-image-viewport">
+              <img src="assets/gallery_2.png" alt="Quantum Laboratory" class="gallery-img">
+              <div class="scanner-overlay">
+                <div class="scan-line"></div>
+                <div class="bounding-boxes-container"></div>
+              </div>
+            </div>
+            <div class="gallery-info-panel">
+              <div>
+                <div class="gallery-photo-title">Quantum Laboratory Inspection</div>
+                <div class="gallery-photo-desc">Audit berkala reaktor komputasi kuantum QNL</div>
+              </div>
+              <div class="scan-console-hud">
+                <div class="scan-console-output text-xxs font-mono" style="color:var(--text-faint);">
+                  SCANNER STANDBY — Menunggu inisiasi pemindaian...
+                </div>
+              </div>
+              <div class="gallery-actions">
+                <button class="action-btn gallery-action-btn start-scan-btn">
+                  <i class="lucide-scan-face" style="width:14px;height:14px;"></i> Deteksi AI
+                </button>
+                <button class="action-btn gallery-action-btn reset-scan-btn hidden" style="background:var(--bg-input);color:var(--text-muted);">
+                  <i class="lucide-rotate-ccw" style="width:14px;height:14px;"></i> Reset
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ───────────── 6. DASHBOARD ───────────── -->
+      <section id="dashboard" class="app-page">
+        <div class="page-title-section">
+          <span class="section-eyebrow">OpenCTI Live</span>
+          <h1 class="page-title">Dasbor Ancaman Siber</h1>
+          <p class="page-subtitle">Deteksi serangan real-time, grafik frekuensi, dan rekap bulanan</p>
+        </div>
+
+        <!-- Stats cards -->
+        <div class="security-stats-row">
+          <div class="stat-card glass-panel">
+            <div class="stat-icon-wrapper icon-rose">
+              <i class="lucide-shield-alert" style="width:20px;height:20px;"></i>
+            </div>
+            <div>
+              <div class="stat-label">Total Ancaman Ditangkal</div>
+              <div class="stat-value rose" id="total-threats-count">14,382</div>
+            </div>
+          </div>
+          <div class="stat-card glass-panel">
+            <div class="stat-icon-wrapper icon-violet">
+              <i class="lucide-activity" style="width:20px;height:20px;"></i>
+            </div>
+            <div>
+              <div class="stat-label">Insiden Aktif Sekarang</div>
+              <div class="stat-value" id="active-incidents-count">0</div>
+            </div>
+          </div>
+          <div class="stat-card glass-panel">
+            <div class="stat-icon-wrapper icon-mint">
+              <i class="lucide-shield-check" style="width:20px;height:20px;"></i>
+            </div>
+            <div>
+              <div class="stat-label">Tingkat Keberhasilan Mitigasi</div>
+              <div class="stat-value green" id="mitigation-rate-percent">99.98%</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Charts + Radar -->
+        <div class="dashboard-grid">
+          <div class="dashboard-center-panel">
+
+            <div class="chart-row">
+              <div class="chart-card glass-panel">
+                <div class="chart-header">
+                  <span>Frekuensi Serangan Minggu Ini</span>
+                  <span class="pulse-dot green"></span>
+                </div>
+                <div class="chart-viewport">
+                  <canvas id="threat-frequency-chart"></canvas>
+                </div>
+              </div>
+              <div class="chart-card glass-panel">
+                <div class="chart-header">
+                  <span>Metode Serangan Bulan Ini</span>
+                </div>
+                <div class="chart-viewport">
+                  <canvas id="threat-vector-chart"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <!-- Incident Feed -->
+            <div class="incident-table-card glass-panel">
+              <div class="chart-header">
+                <span>Feed Deteksi Serangan Real-Time</span>
+                <span class="sub-status-chip">
+                  <span class="pulse-dot green" style="width:5px;height:5px;"></span> LIVE
+                </span>
+              </div>
+              <div class="table-scroll-container">
+                <table class="incident-table">
+                  <thead>
+                    <tr>
+                      <th>Waktu</th>
+                      <th>IP Sumber</th>
+                      <th>Target Subsidiari</th>
+                      <th>Vektor Serangan</th>
+                      <th>Bahaya</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="security-incident-feed"></tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Radar Sidebar -->
+          <div class="radar-sidebar">
+
+            <div class="radar-card glass-panel">
+              <div class="radar-label">Radar Aktivitas Siber</div>
+              <div class="radar-viewport">
+                <div class="radar-sweep"></div>
+                <div class="radar-circle c1"></div>
+                <div class="radar-circle c2"></div>
+                <div class="radar-crosshair-x"></div>
+                <div class="radar-crosshair-y"></div>
+                <div class="radar-blip b1"></div>
+                <div class="radar-blip b2"></div>
+              </div>
+              <div class="radar-desc">RANGE 100km · SCAN AKTIF</div>
+            </div>
+
+            <div class="monthly-recap-card glass-panel">
+              <div class="chart-header" style="margin-bottom:0.5rem;">
+                <span>Rekap Juni 2026</span>
+              </div>
+              <div class="recap-details">
+                <div class="recap-row">
+                  <span class="recap-label">Ancaman Dinetralisir</span>
+                  <span class="recap-val">8,410</span>
+                </div>
+                <div class="recap-row">
+                  <span class="recap-label">Vektor Terbanyak</span>
+                  <span class="recap-val text-sm">DDoS (42%)</span>
+                </div>
+                <div class="recap-row">
+                  <span class="recap-label">Target Utama</span>
+                  <span class="recap-val text-sm">QNL</span>
+                </div>
+                <div class="recap-row">
+                  <span class="recap-label">Resp. Waktu Rata-rata</span>
+                  <span class="recap-val text-sm">1.2 detik</span>
+                </div>
+              </div>
+              <button class="action-btn sub-action-btn"
+                onclick="alert('Laporan Intelijen Ancaman diunduh (Simulasi)')">
+                <i class="lucide-download" style="width:13px;height:13px;"></i>
+                Unduh Laporan
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ───────────── INTERNAL CHAT (All pages) ───────────── -->
+      <div class="chat-section-wrapper glass-panel" style="margin-top:2.5rem;">
+        <div class="chat-section-header">
+          <div class="section-eyebrow">Terenkripsi E2EE</div>
+          <div class="chat-section-title">Portal Komunikasi Internal</div>
+          <div class="chat-section-sub">Khusus administrator — memerlukan autentikasi email + MFA</div>
+        </div>
+        <div id="chat-app-container">
+          <div class="chat-locked-panel">
+            <div class="lock-icon-bubble">
+              <i class="lucide-lock" style="width:26px;height:26px;"></i>
+            </div>
+            <div class="chat-locked-title">Komunikasi Internal Terkunci</div>
+            <p class="chat-locked-desc">
+              Masuk ke Portal Keamanan dengan email terverifikasi dan kode OTP MFA untuk mengakses jaringan obrolan terenkripsi internal.
+            </p>
+            <button onclick="window.cyberAuth.openAuthModal()" class="action-btn">
+              <i class="lucide-shield" style="width:14px;height:14px;"></i> Masuk Sekarang
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Floating Audio HUD -->
+    <div id="cyber-audio-hub"></div>
+
+  </div><!-- end #app-shell -->
+
+  <!-- ═════════════ AUTH MODAL ═════════════ -->
+  <div id="auth-modal" class="modal-wrapper">
+    <div class="modal-content-card glass-panel">
+      <button class="close-modal" aria-label="Tutup">&times;</button>
+
+      <!-- Step 1: Email -->
+      <form id="login-form">
+        <div class="modal-icon-top">
+          <i class="lucide-shield" style="width:24px;height:24px;"></i>
+        </div>
+        <div class="modal-title">Portal Keamanan NCN</div>
+        <div class="modal-subtitle">Masukkan email administratif untuk menerima kode verifikasi MFA.</div>
+        <div class="form-group">
+          <label for="auth-email" class="form-label">Email Administrator</label>
+          <input type="email" id="auth-email" class="form-input" placeholder="nama@ncn-group.co" required>
+        </div>
+        <button type="submit" class="action-btn" style="width:100%;justify-content:center;padding:0.75rem;">
+          Kirim Kode Verifikasi
+          <i class="lucide-arrow-right" style="width:14px;height:14px;"></i>
+        </button>
+      </form>
+
+      <!-- Step 2: OTP MFA -->
+      <form id="mfa-form" class="hidden">
+        <div class="modal-icon-top">
+          <i class="lucide-lock" style="width:24px;height:24px;"></i>
+        </div>
+        <div class="modal-title">Kode MFA — 2FA</div>
+        <div class="modal-subtitle">Masukkan 6 digit kode OTP yang dikirim ke email Anda.</div>
+        <div class="form-group">
+          <label for="auth-otp" class="form-label">Kode OTP</label>
+          <input type="text" id="auth-otp" class="form-input" placeholder="_ _ _ _ _ _" maxlength="6" required
+            style="text-align:center;font-family:'DM Mono',monospace;font-size:1.3rem;letter-spacing:0.3em;">
+        </div>
+        <div style="text-align:center;margin-bottom:1rem;">
+          <span id="mfa-timer" class="text-xs font-mono" style="color:var(--rose-400);">Kode kedaluwarsa dalam: 60s</span>
+        </div>
+        <button type="submit" class="action-btn" style="width:100%;justify-content:center;padding:0.75rem;">
+          <i class="lucide-shield-check" style="width:14px;height:14px;"></i>
+          Verifikasi Identitas
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ═════════════ PROJECT DETAIL MODAL ═════════════ -->
+  <div id="project-modal" class="modal-wrapper">
+    <div class="modal-content-card glass-panel" style="max-width:480px;">
+      <button class="close-project-modal" aria-label="Tutup">&times;</button>
+      <div class="section-eyebrow">Detail Proyek</div>
+      <h2 id="modal-project-title" class="page-title" style="font-size:1.4rem;margin-bottom:0.75rem;"></h2>
+      <p id="modal-project-desc" class="text-sm" style="color:var(--text-muted);line-height:1.65;margin-bottom:1.25rem;"></p>
+      <div style="margin-bottom:1.5rem;">
+        <div class="progress-header">
+          <span class="text-sm">Progress Berjalan</span>
+          <span id="modal-project-progress" class="progress-percent"></span>
+        </div>
+        <div class="progress-bar-outer">
+          <div id="modal-project-bar" class="progress-bar-inner striped"></div>
+        </div>
+      </div>
+      <div class="section-eyebrow" style="margin-bottom:0.65rem;">Dokumen Sistem</div>
+      <div id="modal-project-files"></div>
+    </div>
+  </div>
+
+</body>
+</html>
