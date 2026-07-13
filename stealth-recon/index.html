@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stealth Recon — OSINT Intelligence System | Zenith Prime Labs</title>
+  <meta name="description" content="Stealth Recon: Platform OSINT untuk mencari identitas digital seseorang berdasarkan nama dan foto. Zenith Prime Labs — StarLive Group.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Background Canvas -->
+  <canvas id="bg-canvas"></canvas>
+
+  <div id="app">
+
+    <!-- HEADER -->
+    <header class="sr-header">
+      <div class="sr-logo">
+        <div class="logo-icon-ring">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/><circle cx="11" cy="11" r="3"/></svg>
+        </div>
+        <div>
+          <div class="logo-name">Stealth <span>Recon</span></div>
+          <div class="logo-sub">OSINT Intelligence · Zenith Prime Labs</div>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="system-status">
+          <span class="pulse-dot green"></span>
+          SISTEM AKTIF
+        </span>
+        <a href="../index.html" class="back-link">
+          ← Kembali ke ZPL Portal
+        </a>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="sr-main">
+
+      <!-- SEARCH PANEL -->
+      <section id="search-panel" class="glass-card search-panel">
+        <div class="panel-eyebrow">
+          <span class="eyebrow-tag">OSINT INTELLIGENCE</span>
+        </div>
+        <h1 class="panel-title">Identifikasi Target Digital</h1>
+        <p class="panel-desc">Masukkan nama dan atau foto target. Sistem akan melakukan pencarian menyeluruh secara otomatis di seluruh platform digital yang tersedia.</p>
+
+        <div class="search-form">
+          <div class="form-row">
+            <div class="form-col">
+              <label class="form-label">Nama Target</label>
+              <input type="text" id="target-name" class="form-input" placeholder="Contoh: John Doe atau nama lengkap..." autocomplete="off">
+            </div>
+            <div class="form-col">
+              <label class="form-label">Nama Alias / Variasi</label>
+              <input type="text" id="target-alias" class="form-input" placeholder="Nama panggilan, username, dll..." autocomplete="off">
+            </div>
+          </div>
+
+          <!-- Photo Upload -->
+          <div class="photo-upload-area" id="photo-drop-zone">
+            <div class="upload-icon">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+            </div>
+            <div class="upload-title">Upload Foto Target</div>
+            <div class="upload-subtitle">Klik atau seret foto ke sini — JPG, PNG, WEBP</div>
+            <input type="file" id="photo-input" accept="image/*" style="display:none">
+            <div id="photo-preview-container" class="photo-preview-container" style="display:none;">
+              <img id="photo-preview-img" src="" alt="Preview">
+              <button id="remove-photo-btn" class="remove-photo-btn">✕</button>
+            </div>
+          </div>
+
+          <!-- Catatan Pencari -->
+          <div class="form-group">
+            <label class="form-label">Catatan Tambahan Pencari <span style="color:var(--text-faint);font-weight:400;">(opsional, akan masuk laporan)</span></label>
+            <textarea id="searcher-notes" class="form-textarea" placeholder="Tambahkan konteks, tujuan pencarian, atau informasi tambahan yang relevan..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Nama Pencari</label>
+            <input type="text" id="searcher-name" class="form-input" placeholder="Nama agen / operator..." value="">
+          </div>
+
+          <button id="start-scan-btn" class="scan-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            Mulai Pencarian Intelijen
+          </button>
+        </div>
+      </section>
+
+      <!-- SCANNING OVERLAY -->
+      <div id="scanning-overlay" class="scanning-overlay" style="display:none;">
+        <div class="scan-anim-container">
+          <div class="scan-ring r1"></div>
+          <div class="scan-ring r2"></div>
+          <div class="scan-ring r3"></div>
+          <div class="scan-center">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          </div>
+        </div>
+        <div id="scan-status-text" class="scan-status-text">Menginisialisasi pencarian...</div>
+        <div class="scan-platform-row" id="scan-platform-feed"></div>
+        <div class="scan-progress-bar-outer">
+          <div id="scan-progress-bar" class="scan-progress-bar-inner"></div>
+        </div>
+        <div id="scan-percent" class="scan-percent">0%</div>
+      </div>
+
+      <!-- RESULTS SECTION -->
+      <section id="results-section" style="display:none;">
+
+        <!-- Result Header -->
+        <div class="result-header glass-card">
+          <div class="result-target-info">
+            <div id="result-photo-area" class="result-photo-area">
+              <img id="result-photo" src="" alt="" class="result-photo-img" style="display:none;">
+              <div id="result-photo-placeholder" class="result-photo-placeholder">?</div>
+            </div>
+            <div class="result-target-meta">
+              <div class="result-eyebrow">TARGET TERIDENTIFIKASI</div>
+              <div id="result-target-name" class="result-target-name">—</div>
+              <div id="result-alias-row" class="result-alias-row"></div>
+              <div class="result-scan-time" id="result-scan-time"></div>
+            </div>
+          </div>
+          <div class="result-actions">
+            <button id="export-pdf-btn" class="export-btn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Export PDF
+            </button>
+            <button id="new-search-btn" class="new-search-btn">
+              + Pencarian Baru
+            </button>
+          </div>
+        </div>
+
+        <!-- Summary Stats -->
+        <div class="summary-stats-row" id="summary-stats-row"></div>
+
+        <!-- Tabs -->
+        <div class="result-tabs">
+          <button class="result-tab active" data-tab="platforms">🌐 Platform Digital</button>
+          <button class="result-tab" data-tab="images">🖼️ Foto Terindikasi</button>
+          <button class="result-tab" data-tab="ai-analysis">🤖 Analisis AI</button>
+          <button class="result-tab" data-tab="report">📋 Laporan</button>
+        </div>
+
+        <!-- Tab: Platforms -->
+        <div id="tab-platforms" class="tab-pane active">
+          <div id="platform-results-grid" class="platform-results-grid"></div>
+        </div>
+
+        <!-- Tab: Images -->
+        <div id="tab-images" class="tab-pane" style="display:none;">
+          <div class="images-header">
+            <div class="images-title">Foto Terindikasi dari Internet</div>
+            <div class="images-subtitle">Foto-foto yang terindikasi menyerupai atau terhubung dengan target berdasarkan reverse image search dan pencarian nama.</div>
+          </div>
+          <div id="image-results-grid" class="image-results-grid"></div>
+
+          <div class="reverse-search-section">
+            <div class="reverse-search-title">🔎 Lakukan Reverse Image Search Langsung</div>
+            <div class="reverse-search-grid" id="reverse-search-grid"></div>
+          </div>
+        </div>
+
+        <!-- Tab: AI Analysis -->
+        <div id="tab-ai-analysis" class="tab-pane" style="display:none;">
+          <div class="ai-analysis-card glass-card" id="ai-analysis-content"></div>
+        </div>
+
+        <!-- Tab: Report Preview -->
+        <div id="tab-report" class="tab-pane" style="display:none;">
+          <div class="report-preview-wrapper" id="report-preview-wrapper">
+            <!-- Report HTML rendered here for export -->
+          </div>
+        </div>
+
+      </section>
+
+      <!-- PDF Hidden Render Area -->
+      <div id="pdf-render-area" style="position:absolute;left:-9999px;top:-9999px;width:800px;background:#fff;"></div>
+
+    </main>
+
+  </div><!-- #app -->
+
+  <script src="app.js"></script>
+  <script src="pdf-report.js"></script>
+</body>
+</html>

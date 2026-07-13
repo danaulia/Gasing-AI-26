@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NCN Group — Nusantara Cyber Nexus</title>
+  <title>Zenith Prime Labs — StarLive Group</title>
 
   <!-- SEO Meta -->
-  <meta name="description" content="Nusantara Cyber Nexus (NCN Group) — Holding company integrating cyber defense, space telemetry, quantum cryptography, and smart energy infrastructure.">
-  <meta name="keywords" content="NCN Group, Nusantara Cyber Nexus, Cyber Security, Aether Orbitals, Quantum Nusantara, EcoTech">
-  <meta name="author" content="NCN Group Admin">
+  <meta name="description" content="Zenith Prime Labs — Divisi Riset dan Pengembangan Teknologi anak perusahaan StarLive Group. Inovasi masa depan dimulai dari sini.">
+  <meta name="keywords" content="Zenith Prime Labs, StarLive Group, Research Development, R&D, Technology Innovation">
+  <meta name="author" content="Zenith Prime Labs Admin">
 
   <!-- Stylesheet -->
   <link rel="stylesheet" href="index.css">
@@ -23,12 +23,20 @@
   <script src="auth-chat.js" defer></script>
   <script src="gallery-ai.js" defer></script>
   <script src="security-dashboard.js" defer></script>
+  <script src="settings.js" defer></script>
+  <script src="chat-sidebar.js" defer></script>
   <script src="app.js" defer></script>
 </head>
-<body>
+<body class="season-spring">
 
   <!-- Cosmic Canvas Background -->
   <canvas id="cosmic-canvas"></canvas>
+
+  <!-- Scene Overlay -->
+  <div id="scene-overlay"></div>
+
+  <!-- Season Particles Canvas -->
+  <canvas id="season-canvas"></canvas>
 
   <div id="app-shell">
 
@@ -37,9 +45,12 @@
       <!-- Logo -->
       <div class="logo-container">
         <div class="logo-icon">
-          <i class="lucide-hexagon" style="width:26px;height:26px;"></i>
+          <i class="lucide-flask-conical" style="width:26px;height:26px;"></i>
         </div>
-        <span class="logo-text">NCN <span>Group</span></span>
+        <div class="logo-text-group">
+          <span class="logo-text">Zenith <span>Prime</span> Labs</span>
+          <span class="logo-sub">StarLive Group</span>
+        </div>
       </div>
 
       <!-- Navigation pill -->
@@ -53,7 +64,7 @@
           <li><a class="nav-link" data-target="agent">Agen</a></li>
           <li><a class="nav-link" data-target="project">Proyek</a></li>
           <li><a class="nav-link" data-target="gallery">Galeri</a></li>
-          <li><a class="nav-link" data-target="dashboard">Dasbor</a></li>
+          <li><a class="nav-link" data-target="dashboard" id="dashboard-nav-link">Dasbor</a></li>
         </ul>
       </nav>
 
@@ -64,8 +75,22 @@
           <span class="text-xxs font-mono opacity-70">Belum Masuk</span>
         </div>
 
-        <button id="theme-toggle-btn" class="action-btn" title="Ganti Tema">
+        <!-- Music Mini HUD -->
+        <div id="music-mini-hud" class="music-mini-hud">
+          <button id="music-hud-prev" class="music-hud-btn" title="Sebelumnya"><i data-lucide="skip-back" style="width:12px;height:12px;"></i></button>
+          <button id="music-hud-play" class="music-hud-btn" title="Play/Pause"><i data-lucide="play" style="width:12px;height:12px;"></i></button>
+          <button id="music-hud-next" class="music-hud-btn" title="Berikutnya"><i data-lucide="skip-forward" style="width:12px;height:12px;"></i></button>
+          <div class="music-hud-info">
+            <span id="hud-track-name" class="hud-track-name">Ethereal Nexus</span>
+          </div>
+        </div>
+
+        <button id="theme-toggle-btn" class="action-btn icon-only" title="Ganti Tema">
           <i class="lucide-moon" style="width:14px;height:14px;"></i>
+        </button>
+
+        <button id="settings-btn" class="action-btn icon-only" title="Pengaturan">
+          <i class="lucide-settings" style="width:14px;height:14px;"></i>
         </button>
 
         <button id="portal-login-btn" class="action-btn">
@@ -82,9 +107,9 @@
       <section id="home" class="app-page active">
 
         <div class="page-title-section">
-          <span class="section-eyebrow">Holding Company</span>
-          <h1 class="page-title">Nusantara Cyber Nexus</h1>
-          <p class="page-subtitle">Ekosistem teknologi keamanan siber, antariksa, dan infrastruktur digital Indonesia</p>
+          <span class="section-eyebrow" id="home-eyebrow">Anak Perusahaan R&D</span>
+          <h1 class="page-title" id="home-page-title">Zenith Prime Labs</h1>
+          <p class="page-subtitle" id="home-page-subtitle">Divisi Riset &amp; Pengembangan Teknologi — StarLive Group</p>
         </div>
 
         <!-- Hero Grid -->
@@ -94,20 +119,20 @@
           <div class="carousel-viewport">
             <div class="carousel-slide active" style="background-image:url('assets/home_slide_1.png');">
               <div class="slide-caption-wrapper">
-                <h3 class="slide-title">Markas Korporasi NCN</h3>
-                <p class="slide-desc">Pusat operasional holding group Nusantara Cyber Nexus, mengintegrasikan keamanan, ruang, dan energi.</p>
+                <h3 class="slide-title">Markas Zenith Prime Labs</h3>
+                <p class="slide-desc">Pusat operasional R&D anak perusahaan StarLive Group, tempat inovasi teknologi masa depan lahir.</p>
               </div>
             </div>
             <div class="carousel-slide" style="background-image:url('assets/home_slide_2.png');">
               <div class="slide-caption-wrapper">
-                <h3 class="slide-title">Tim Aether Orbitals</h3>
-                <p class="slide-desc">Anak perusahaan telemetri satelit yang memimpin transmisi data aman berbasis orbit rendah.</p>
+                <h3 class="slide-title">Tim Peneliti Zenith</h3>
+                <p class="slide-desc">Para peneliti dan insinyur terbaik yang mendorong batas teknologi kecerdasan buatan dan analitik data.</p>
               </div>
             </div>
             <div class="carousel-slide" style="background-image:url('assets/home_slide_3.png');">
               <div class="slide-caption-wrapper">
-                <h3 class="slide-title">Quantum Nusantara Labs</h3>
-                <p class="slide-desc">Laboratorium kriptografi kuantum untuk mengamankan infrastruktur digital nasional masa depan.</p>
+                <h3 class="slide-title">Laboratorium Inovasi</h3>
+                <p class="slide-desc">Fasilitas riset canggih dengan infrastruktur AI terdepan untuk menghasilkan solusi nyata.</p>
               </div>
             </div>
             <div class="carousel-navigation">
@@ -121,12 +146,12 @@
           <div class="company-core-panel glass-panel">
             <div>
               <div class="company-badge">
-                <i class="lucide-zap" style="width:11px;height:11px;"></i>
-                NCN GROUP
+                <i class="lucide-flask-conical" style="width:11px;height:11px;"></i>
+                ZENITH PRIME LABS
               </div>
-              <h2 class="company-title">Ekosistem Teknologi Terpadu</h2>
+              <h2 class="company-title">Inovasi yang Mendefinisikan Masa Depan</h2>
               <p class="company-intro">
-                NCN Group menaungi empat anak perusahaan strategis di bidang keamanan siber, telemetri antariksa, kriptografi kuantum, dan jaringan energi cerdas — bersinergi untuk kedaulatan digital Indonesia.
+                Zenith Prime Labs adalah anak perusahaan riset dan pengembangan dari StarLive Group — menghadirkan terobosan dalam AI, analitik keamanan, dan teknologi intelijen digital untuk ekosistem korporasi StarLive yang terus berkembang.
               </p>
             </div>
             <div class="metric-container">
@@ -135,7 +160,7 @@
                 Koneksi Aktif Real-Time
               </div>
               <div class="live-user-ticker">
-                <span id="realtime-user-count">742</span>
+                <span id="realtime-user-count">342</span>
                 <span class="metric-unit">node aktif</span>
               </div>
             </div>
@@ -143,28 +168,35 @@
         </div>
 
         <!-- Subsidiary Quick Links -->
-        <div class="section-label">Subsidiaries</div>
+        <div class="section-label">Grup Perusahaan</div>
         <div class="sub-quick-grid">
           <div class="quick-card glass-panel" onclick="window.aetheriaApp.navigate('affiliation')">
             <div class="quick-card-icon rose">
-              <i class="lucide-shield-check" style="width:20px;height:20px;"></i>
+              <i class="lucide-star" style="width:20px;height:20px;"></i>
             </div>
-            <div class="quick-title">Nusa Cyber Security</div>
-            <p class="quick-desc">Perlindungan perimeter, threat intelligence, dan respon insiden 24/7.</p>
+            <div class="quick-title">StarLive Group</div>
+            <p class="quick-desc">Induk perusahaan yang menaungi seluruh ekosistem bisnis strategis StarLive.</p>
           </div>
           <div class="quick-card glass-panel" onclick="window.aetheriaApp.navigate('affiliation')">
             <div class="quick-card-icon sky">
-              <i class="lucide-satellite" style="width:20px;height:20px;"></i>
+              <i class="lucide-tv-2" style="width:20px;height:20px;"></i>
             </div>
-            <div class="quick-title">Aether Orbitals</div>
-            <p class="quick-desc">Transmisi data terenkripsi berbasis konstelasi satelit orbit rendah.</p>
+            <div class="quick-title">Solstice Media Info</div>
+            <p class="quick-desc">Divisi media dan informasi terdepan milik StarLive Group.</p>
           </div>
           <div class="quick-card glass-panel" onclick="window.aetheriaApp.navigate('affiliation')">
             <div class="quick-card-icon violet">
-              <i class="lucide-lock" style="width:20px;height:20px;"></i>
+              <i class="lucide-graduation-cap" style="width:20px;height:20px;"></i>
             </div>
-            <div class="quick-title">Quantum Nusantara Labs</div>
-            <p class="quick-desc">R&D kriptografi pasca-kuantum untuk keamanan data tingkat militer.</p>
+            <div class="quick-title">Polaris Academy</div>
+            <p class="quick-desc">Platform pendidikan dan pelatihan berbasis teknologi masa depan.</p>
+          </div>
+          <div class="quick-card glass-panel" onclick="window.aetheriaApp.navigate('affiliation')">
+            <div class="quick-card-icon amber">
+              <i class="lucide-cocktail" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="quick-title">Stellaris Lounge</div>
+            <p class="quick-desc">Divisi hospitality &amp; entertainment premium milik StarLive Group.</p>
           </div>
         </div>
       </section>
@@ -172,130 +204,142 @@
       <!-- ───────────── 2. AFFILIATION ───────────── -->
       <section id="affiliation" class="app-page">
         <div class="page-title-section">
-          <span class="section-eyebrow">Jaringan Korporasi</span>
-          <h1 class="page-title">Afiliasi &amp; Anak Perusahaan</h1>
-          <p class="page-subtitle">Empat pilar teknologi yang memperkuat ekosistem NCN Group</p>
+          <span class="section-eyebrow" id="affil-eyebrow">Jaringan Korporasi</span>
+          <h1 class="page-title" id="affil-page-title">Afiliasi &amp; Perusahaan</h1>
+          <p class="page-subtitle" id="affil-page-subtitle">StarLive Group dan anak-anak perusahaannya</p>
         </div>
 
         <div class="affiliation-grid">
 
-          <!-- NCS -->
-          <div class="subsidiary-card glass-panel">
-            <div class="sub-color-strip strip-rose"></div>
+          <!-- StarLive Group — Parent -->
+          <div class="subsidiary-card glass-panel parent-card">
+            <div class="sub-color-strip strip-gold"></div>
             <div class="sub-icon-row">
-              <div class="sub-icon-badge badge-rose">NCS</div>
-              <span class="sub-status-chip">
-                <span class="pulse-dot green" style="width:5px;height:5px;"></span> AKTIF
-              </span>
+              <div class="sub-icon-badge badge-gold">SLG</div>
+              <div style="display:flex;gap:0.5rem;align-items:center;">
+                <span class="parent-badge">INDUK</span>
+                <span class="sub-status-chip">
+                  <span class="pulse-dot green" style="width:5px;height:5px;"></span> AKTIF
+                </span>
+              </div>
             </div>
-            <div class="sub-name">Nusa Cyber Security</div>
-            <div class="sub-sector">Cyber Defense &amp; Intelligence</div>
-            <p class="sub-body">Melindungi infrastruktur digital nasional melalui analisis threat intelligence OpenCTI, deteksi intrusi otomatis, audit penetrasi, dan mitigasi DDoS real-time.</p>
+            <div class="sub-name">StarLive Group</div>
+            <div class="sub-sector">Holding &amp; Central Managerial</div>
+            <p class="sub-body">Pusat atau induk usaha aliansi. Menangani manajerial terpusat, pengawasan kinerja bisnis, integrasi tata kelola hukum, perencanaan keuangan makro, serta arah strategis jangka panjang.</p>
             <div class="sub-stats-row">
-              <div class="stat-item">
-                <span class="stat-val">99.99%</span>
-                <span class="stat-lbl">Uptime</span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-val">30ms</span>
-                <span class="stat-lbl">Resp. Delay</span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-val">8.4K+</span>
-                <span class="stat-lbl">Insiden/Bulan</span>
-              </div>
+              <div class="stat-item"><span class="stat-val">5</span><span class="stat-lbl">Anak Usaha</span></div>
+              <div class="stat-item"><span class="stat-val">2019</span><span class="stat-lbl">Berdiri</span></div>
             </div>
-            <a href="https://cybersec.example.com" target="_blank" class="action-btn sub-action-btn">
-              Buka Website
-              <i class="lucide-external-link" style="width:13px;height:13px;"></i>
+            <a href="#" class="action-btn sub-action-btn">
+              Profil Grup <i class="lucide-external-link" style="width:13px;height:13px;"></i>
             </a>
           </div>
 
-          <!-- Aether Orbitals -->
+          <!-- Solstice Media Info -->
           <div class="subsidiary-card glass-panel">
             <div class="sub-color-strip strip-sky"></div>
             <div class="sub-icon-row">
-              <div class="sub-icon-badge badge-sky">AO</div>
+              <div class="sub-icon-badge badge-sky">SMI</div>
               <span class="sub-status-chip">
                 <span class="pulse-dot green" style="width:5px;height:5px;"></span> AKTIF
               </span>
             </div>
-            <div class="sub-name">Aether Orbitals</div>
-            <div class="sub-sector">Space Telemetry &amp; Secure Comms</div>
-            <p class="sub-body">Mengoperasikan konstelasi 12 satelit orbit rendah dengan transmisi data terenkripsi kuantum — menghubungkan command center Indonesia dengan kecepatan 4.8 Gbps.</p>
+            <div class="sub-name">Solstice Media Info</div>
+            <div class="sub-sector">Digital Intelligence &amp; Media Industry</div>
+            <p class="sub-body">Bergerak di bidang industri intelijen digital dan media. Mengelola penyiaran berita digital, analisis OSINT media, monitoring opini publik, serta manajemen reputasi cyber aliansi.</p>
             <div class="sub-stats-row">
-              <div class="stat-item">
-                <span class="stat-val">12</span>
-                <span class="stat-lbl">Satelit Aktif</span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-val">4.8 Gbps</span>
-                <span class="stat-lbl">Bandwidth</span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-val">LEO</span>
-                <span class="stat-lbl">Orbit Class</span>
-              </div>
+              <div class="stat-item"><span class="stat-val">Media</span><span class="stat-lbl">Fokus</span></div>
+              <div class="stat-item"><span class="stat-val">Digital</span><span class="stat-lbl">Sektor</span></div>
             </div>
-            <a href="https://orbitals.example.com" target="_blank" class="action-btn sub-action-btn">
-              Buka Website
-              <i class="lucide-external-link" style="width:13px;height:13px;"></i>
+            <a href="#" class="action-btn sub-action-btn">
+              Buka Website <i class="lucide-external-link" style="width:13px;height:13px;"></i>
             </a>
           </div>
 
-          <!-- Quantum Nusantara Labs -->
-          <div class="subsidiary-card glass-panel">
+          <!-- Zenith Prime Labs — Us -->
+          <div class="subsidiary-card glass-panel us-card">
             <div class="sub-color-strip strip-violet"></div>
             <div class="sub-icon-row">
-              <div class="sub-icon-badge badge-violet">QNL</div>
+              <div class="sub-icon-badge badge-violet">ZPL</div>
+              <div style="display:flex;gap:0.5rem;align-items:center;">
+                <span class="us-badge">INI KAMI</span>
+                <span class="sub-status-chip">
+                  <span class="pulse-dot green" style="width:5px;height:5px;"></span> AKTIF
+                </span>
+              </div>
+            </div>
+            <div class="sub-name">Zenith Prime Labs</div>
+            <div class="sub-sector">Research &amp; Development Technology</div>
+            <p class="sub-body">Divisi R&D utama StarLive Group — mengembangkan teknologi AI, analitik intelijen, sistem keamanan digital, dan alat investigasi berbasis machine learning untuk masa depan yang lebih cerdas.</p>
+            <div class="sub-stats-row">
+              <div class="stat-item"><span class="stat-val">5+</span><span class="stat-lbl">Proyek Aktif</span></div>
+              <div class="stat-item"><span class="stat-val">8</span><span class="stat-lbl">Admin</span></div>
+            </div>
+            <a href="#" class="action-btn sub-action-btn">
+              Portal ZPL <i class="lucide-flask-conical" style="width:13px;height:13px;"></i>
+            </a>
+          </div>
+
+          <!-- Polaris Academy -->
+          <div class="subsidiary-card glass-panel">
+            <div class="sub-color-strip strip-rose"></div>
+            <div class="sub-icon-row">
+              <div class="sub-icon-badge badge-rose">PA</div>
               <span class="sub-status-chip">
                 <span class="pulse-dot green" style="width:5px;height:5px;"></span> AKTIF
               </span>
             </div>
-            <div class="sub-name">Quantum Nusantara Labs</div>
-            <div class="sub-sector">Quantum Cryptography &amp; R&D</div>
-            <p class="sub-body">Mengembangkan algoritma kriptografi tahan-kuantum (PQC) dan distribusi kunci kuantum (QKD) untuk memproteksi data keuangan dan data negara dari ancaman komputasi kuantum.</p>
+            <div class="sub-name">Polaris Academy</div>
+            <div class="sub-sector">Education &amp; Training Industry</div>
+            <p class="sub-body">Bergerak di industri pendidikan dan pelatihan digital. Memberikan kurikulum intensif pertahanan siber, sertifikasi kompetensi developer, dan inkubasi talenta riset.</p>
             <div class="sub-stats-row">
-              <div class="stat-item">
-                <span class="stat-val">Qubit v4</span>
-                <span class="stat-lbl">Arsitektur</span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-val">AES-Q512</span>
-                <span class="stat-lbl">Enkripsi</span>
-              </div>
+              <div class="stat-item"><span class="stat-val">Edukasi</span><span class="stat-lbl">Fokus</span></div>
+              <div class="stat-item"><span class="stat-val">Pelatihan</span><span class="stat-lbl">Sektor</span></div>
             </div>
-            <a href="https://quantum.example.com" target="_blank" class="action-btn sub-action-btn">
-              Buka Website
-              <i class="lucide-external-link" style="width:13px;height:13px;"></i>
+            <a href="#" class="action-btn sub-action-btn">
+              Buka Website <i class="lucide-external-link" style="width:13px;height:13px;"></i>
             </a>
           </div>
 
-          <!-- EcoTech CyberGrid -->
+          <!-- Stellaris Lounge -->
           <div class="subsidiary-card glass-panel">
             <div class="sub-color-strip strip-amber"></div>
             <div class="sub-icon-row">
-              <div class="sub-icon-badge badge-amber">ECG</div>
+              <div class="sub-icon-badge badge-amber">SL</div>
               <span class="sub-status-chip">
                 <span class="pulse-dot green" style="width:5px;height:5px;"></span> AKTIF
               </span>
             </div>
-            <div class="sub-name">EcoTech CyberGrid</div>
-            <div class="sub-sector">Industrial IoT &amp; Smart Energy</div>
-            <p class="sub-body">Mengintegrasikan SCADA dan Industrial IoT dengan jaringan energi pintar terbarukan — seluruh transmisi diproteksi mesh VPN militer berbasis HSM.</p>
+            <div class="sub-name">Stellaris Lounge</div>
+            <div class="sub-sector">Food &amp; Beverage Industry</div>
+            <p class="sub-body">Bergerak di bidang bisnis FnB premium. Tempat istirahat eksekutif, networking informal pakar siber, serta lounge interaksi strategis aliansi StarLive Group.</p>
             <div class="sub-stats-row">
-              <div class="stat-item">
-                <span class="stat-val">140+</span>
-                <span class="stat-lbl">Smart Nodes</span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-val">Zero</span>
-                <span class="stat-lbl">Outage</span>
-              </div>
+              <div class="stat-item"><span class="stat-val">FnB</span><span class="stat-lbl">Fokus</span></div>
+              <div class="stat-item"><span class="stat-val">Premium</span><span class="stat-lbl">Tier</span></div>
             </div>
-            <a href="https://cybergrid.example.com" target="_blank" class="action-btn sub-action-btn">
-              Buka Website
-              <i class="lucide-external-link" style="width:13px;height:13px;"></i>
+            <a href="#" class="action-btn sub-action-btn">
+              Buka Website <i class="lucide-external-link" style="width:13px;height:13px;"></i>
+            </a>
+          </div>
+
+          <!-- Nova Creative Studio -->
+          <div class="subsidiary-card glass-panel">
+            <div class="sub-color-strip strip-mint"></div>
+            <div class="sub-icon-row">
+              <div class="sub-icon-badge badge-mint">NCS</div>
+              <span class="sub-status-chip">
+                <span class="pulse-dot green" style="width:5px;height:5px;"></span> AKTIF
+              </span>
+            </div>
+            <div class="sub-name">Nova Creative Studio</div>
+            <div class="sub-sector">Entertainment &amp; Creative Industry</div>
+            <p class="sub-body">Bergerak di industri hiburan (entertainment) dan produksi kreatif. Mengembangkan media hiburan audio visual, kekayaan intelektual (IP) digital, serta grafis multimedia interaktif.</p>
+            <div class="sub-stats-row">
+              <div class="stat-item"><span class="stat-val">Hiburan</span><span class="stat-lbl">Fokus</span></div>
+              <div class="stat-item"><span class="stat-val">Animasi</span><span class="stat-lbl">Karya</span></div>
+            </div>
+            <a href="#" class="action-btn sub-action-btn">
+              Buka Website <i class="lucide-external-link" style="width:13px;height:13px;"></i>
             </a>
           </div>
 
@@ -305,71 +349,159 @@
       <!-- ───────────── 3. AGENT ───────────── -->
       <section id="agent" class="app-page">
         <div class="page-title-section">
-          <span class="section-eyebrow">Direktori Personel</span>
-          <h1 class="page-title">Administrator &amp; Agen</h1>
-          <p class="page-subtitle">Pemimpin dan pengelola sistem Nusantara Cyber Nexus</p>
+          <span class="section-eyebrow" id="agent-eyebrow">Direktori Personel</span>
+          <h1 class="page-title" id="agent-page-title">Administrator</h1>
+          <p class="page-subtitle" id="agent-page-subtitle">Pengelola sistem Zenith Prime Labs</p>
         </div>
 
         <div class="agent-grid">
 
-          <!-- CEO -->
+          <!-- Danny -->
           <div class="agent-card glass-panel">
             <div class="agent-avatar-ring">
               <div class="avatar-gradient-ring"></div>
-              <div class="agent-photo-placeholder">EM</div>
+              <div class="agent-photo-placeholder" style="background:linear-gradient(135deg,#f43f5e,#a78bfa);">DN</div>
             </div>
-            <div class="agent-name">Evelyn Mercer</div>
-            <div class="agent-role">Chief Executive Officer</div>
+            <div class="agent-name">Danny</div>
+            <div class="agent-role">Chief Administrator</div>
+            <div class="agent-fraction-badge">Zenith Prime Labs</div>
             <div class="agent-status-tag">
-              <span class="pulse-dot green"></span> Online — Command Room
+              <span class="pulse-dot green"></span> Online — Lab Alpha
             </div>
-            <p class="agent-desc">Mengomandoi visi teknologi NCN Group. 15+ tahun di bidang manajemen kapital ventura dan tata kelola perusahaan teknologi antariksa.</p>
-            <div class="agent-pgp-block">
-              <button class="action-btn copy-pgp-btn"
-                data-pgp="-----BEGIN PGP PUBLIC KEY BLOCK-----&#10;mQINBFT3SgUBEADU4s2mCx...&#10;-----END PGP PUBLIC KEY BLOCK-----">
-                <i class="lucide-copy" style="width:13px;height:13px;"></i> Salin PGP Key
-              </button>
+            <div class="agent-badges-row">
+              <span class="achieve-badge">👑 Founder</span>
+              <span class="achieve-badge">🔬 Researcher</span>
             </div>
+            <p class="agent-desc">Kepala administrator dan pendiri operasional Zenith Prime Labs. Memimpin pengembangan proyek intelijen digital dan keamanan siber.</p>
           </div>
 
-          <!-- CISO -->
+          <!-- Noah -->
           <div class="agent-card glass-panel">
             <div class="agent-avatar-ring">
               <div class="avatar-gradient-ring"></div>
-              <div class="agent-photo-placeholder">BH</div>
+              <div class="agent-photo-placeholder" style="background:linear-gradient(135deg,#38bdf8,#34d399);">NH</div>
             </div>
-            <div class="agent-name">Prof. Budi Hartono</div>
-            <div class="agent-role">Chief Information Security Officer</div>
+            <div class="agent-name">Noah</div>
+            <div class="agent-role">Senior Developer</div>
+            <div class="agent-fraction-badge">StarLive Group</div>
+            <div class="agent-status-tag">
+              <span class="pulse-dot green"></span> Online — Dev Hub
+            </div>
+            <div class="agent-badges-row">
+              <span class="achieve-badge">⚡ Veteran</span>
+              <span class="achieve-badge">💻 Full-Stack</span>
+            </div>
+            <p class="agent-desc">Senior developer spesialis AI pipeline dan sistem backend. Arsitek utama infrastruktur data Zenith Prime Labs.</p>
+          </div>
+
+          <!-- Alan -->
+          <div class="agent-card glass-panel">
+            <div class="agent-avatar-ring">
+              <div class="avatar-gradient-ring"></div>
+              <div class="agent-photo-placeholder" style="background:linear-gradient(135deg,#fbbf24,#f97316);">AL</div>
+            </div>
+            <div class="agent-name">Alan</div>
+            <div class="agent-role">Security Analyst</div>
+            <div class="agent-fraction-badge">Polaris Academy</div>
             <div class="agent-status-tag" style="background:rgba(244,63,94,0.07);border-color:rgba(244,63,94,0.2);color:var(--rose-400);">
-              <span class="pulse-dot red"></span> Sibuk — War Room Aktif
+              <span class="pulse-dot red"></span> Sibuk — War Room
             </div>
-            <p class="agent-desc">Pakar kriptografi kuantum dan arsitek utama Garuda Shield Cyber Mesh. Mantan penasihat keamanan siber institusi pertahanan nasional.</p>
-            <div class="agent-pgp-block">
-              <button class="action-btn copy-pgp-btn"
-                data-pgp="-----BEGIN PGP PUBLIC KEY BLOCK-----&#10;mQINBFT99aUBEAD12z2xCx...&#10;-----END PGP PUBLIC KEY BLOCK-----">
-                <i class="lucide-copy" style="width:13px;height:13px;"></i> Salin PGP Key
-              </button>
+            <div class="agent-badges-row">
+              <span class="achieve-badge">🛡️ Guardian</span>
             </div>
+            <p class="agent-desc">Analis keamanan yang berfokus pada threat intelligence dan penetration testing. Koordinator penangkalan ancaman siber real-time.</p>
           </div>
 
-          <!-- AI KRONOS -->
+          <!-- Said -->
           <div class="agent-card glass-panel">
             <div class="agent-avatar-ring">
               <div class="avatar-gradient-ring"></div>
-              <div class="agent-photo-placeholder" style="font-size:1rem;">AI</div>
+              <div class="agent-photo-placeholder" style="background:linear-gradient(135deg,#8b5cf6,#ec4899);">SD</div>
             </div>
-            <div class="agent-name">KRONOS-V.9</div>
-            <div class="agent-role">System Intelligence AI</div>
-            <div class="agent-status-tag" style="background:rgba(167,139,250,0.08);border-color:rgba(167,139,250,0.2);color:var(--violet-400);">
-              <span class="pulse-dot green"></span> AI Core Active
+            <div class="agent-name">Said</div>
+            <div class="agent-role">Data Scientist</div>
+            <div class="agent-fraction-badge">Zenith Prime Labs</div>
+            <div class="agent-status-tag">
+              <span class="pulse-dot green"></span> Online — Data Lab
             </div>
-            <p class="agent-desc">Entitas AI terpusat yang memantau anomali lalu lintas data, mendeteksi vektor ancaman asing secara real-time, dan menjaga integritas ekosistem NCN.</p>
-            <div class="agent-pgp-block">
-              <button class="action-btn copy-pgp-btn"
-                data-pgp="-----BEGIN PGP PUBLIC KEY BLOCK-----&#10;AI-KRONOS-V9-DIGITAL-SIGNATURE-KEY&#10;-----END PGP PUBLIC KEY BLOCK-----">
-                <i class="lucide-cpu" style="width:13px;height:13px;"></i> Salin Digital Sign
-              </button>
+            <div class="agent-badges-row">
+              <span class="achieve-badge">📊 Analyst</span>
+              <span class="achieve-badge">🤖 ML Expert</span>
             </div>
+            <p class="agent-desc">Data scientist spesialis machine learning dan analitik prediktif. Mengembangkan model AI untuk proyek OSINT dan media analysis.</p>
+          </div>
+
+          <!-- Arvian -->
+          <div class="agent-card glass-panel">
+            <div class="agent-avatar-ring">
+              <div class="avatar-gradient-ring"></div>
+              <div class="agent-photo-placeholder" style="background:linear-gradient(135deg,#14b8a6,#3b82f6);">AV</div>
+            </div>
+            <div class="agent-name">Arvian</div>
+            <div class="agent-role">Media Intelligence</div>
+            <div class="agent-fraction-badge">Solstice Media Info</div>
+            <div class="agent-status-tag" style="background:rgba(148,163,184,0.07);border-color:rgba(148,163,184,0.2);color:var(--text-faint);">
+              <span class="pulse-dot" style="background:#94a3b8;"></span> Offline
+            </div>
+            <div class="agent-badges-row">
+              <span class="achieve-badge">📡 Broadcast</span>
+            </div>
+            <p class="agent-desc">Spesialis intelijen media dan verifikasi konten digital. Ahli dalam analisis media sosial dan deteksi informasi palsu.</p>
+          </div>
+
+          <!-- Lumina -->
+          <div class="agent-card glass-panel">
+            <div class="agent-avatar-ring">
+              <div class="avatar-gradient-ring"></div>
+              <div class="agent-photo-placeholder" style="background:linear-gradient(135deg,#f9a8d4,#c084fc);">LM</div>
+            </div>
+            <div class="agent-name">Lumina</div>
+            <div class="agent-role">AI Research Lead</div>
+            <div class="agent-fraction-badge">Zenith Prime Labs</div>
+            <div class="agent-status-tag">
+              <span class="pulse-dot green"></span> Online — AI Core
+            </div>
+            <div class="agent-badges-row">
+              <span class="achieve-badge">🌟 Elite</span>
+              <span class="achieve-badge">🧠 AI Lead</span>
+            </div>
+            <p class="agent-desc">Kepala peneliti AI yang mengawasi pengembangan model kecerdasan buatan. Pemimpin tim Stealth Recon dan AI Media Analyzer.</p>
+          </div>
+
+          <!-- Honoka -->
+          <div class="agent-card glass-panel">
+            <div class="agent-avatar-ring">
+              <div class="avatar-gradient-ring"></div>
+              <div class="agent-photo-placeholder" style="background:linear-gradient(135deg,#fb923c,#f472b6);">HK</div>
+            </div>
+            <div class="agent-name">Honoka</div>
+            <div class="agent-role">Systems Engineer</div>
+            <div class="agent-fraction-badge">Zenith Prime Labs</div>
+            <div class="agent-status-tag">
+              <span class="pulse-dot green"></span> Online — Sys Core
+            </div>
+            <div class="agent-badges-row">
+              <span class="achieve-badge">⚙️ Engineer</span>
+            </div>
+            <p class="agent-desc">Insinyur sistem yang memastikan infrastruktur Zenith Prime Labs berjalan optimal. Spesialis deployment dan pemantauan performa sistem.</p>
+          </div>
+
+          <!-- Evan -->
+          <div class="agent-card glass-panel">
+            <div class="agent-avatar-ring">
+              <div class="avatar-gradient-ring"></div>
+              <div class="agent-photo-placeholder" style="background:linear-gradient(135deg,#6366f1,#06b6d4);">EV</div>
+            </div>
+            <div class="agent-name">Evan</div>
+            <div class="agent-role">Operations Manager</div>
+            <div class="agent-fraction-badge">Stellaris Lounge</div>
+            <div class="agent-status-tag" style="background:rgba(148,163,184,0.07);border-color:rgba(148,163,184,0.2);color:var(--text-faint);">
+              <span class="pulse-dot" style="background:#94a3b8;"></span> Offline
+            </div>
+            <div class="agent-badges-row">
+              <span class="achieve-badge">📋 Manager</span>
+            </div>
+            <p class="agent-desc">Manajer operasional yang mengkoordinasikan aktivitas lintas divisi StarLive Group. Penghubung antara Zenith Prime Labs dan Stellaris Lounge.</p>
           </div>
 
         </div>
@@ -378,62 +510,107 @@
       <!-- ───────────── 4. PROJECT ───────────── -->
       <section id="project" class="app-page">
         <div class="page-title-section">
-          <span class="section-eyebrow">Status Pengerjaan</span>
-          <h1 class="page-title">Proyek Aktif</h1>
-          <p class="page-subtitle">Klik kartu untuk melihat detail dokumen dan status teknis proyek</p>
+          <span class="section-eyebrow" id="project-eyebrow">Status Pengerjaan</span>
+          <h1 class="page-title" id="project-page-title">Proyek R&amp;D</h1>
+          <p class="page-subtitle" id="project-page-subtitle">Klik kartu untuk detail spesifikasi alat riset dan link instansinya</p>
         </div>
 
         <div class="project-grid">
 
-          <div class="project-card glass-panel">
+          <!-- Stealth Recon -->
+          <div class="project-card glass-panel featured-project" data-project-modal="stealth-recon">
             <div class="project-header">
-              <h2 class="project-title">Garuda Shield v4</h2>
-              <span class="project-code-tag">SECURITY</span>
+              <div>
+                <div class="project-featured-tag">⭐ DIREKOMENDASIKAN</div>
+                <h2 class="project-title">Stealth Recon</h2>
+              </div>
+              <span class="project-code-tag osint">OSINT APP</span>
             </div>
-            <p class="project-desc">Sistem pertahanan perimeter komprehensif berbasis AI yang mendeteksi dan merespons serangan Zero-Day secara otomatis di seluruh anak perusahaan NCN.</p>
+            <p class="project-desc">Platform pelacak jejak digital komprehensif berbasis nama dan foto target dengan pelaporan intelijen format PDF.</p>
+            <div class="project-modules-row">
+              <span class="module-tag">🔍 OSINT Engine</span>
+              <span class="module-tag">📋 PDF Report</span>
+            </div>
             <div class="project-progress-wrapper">
               <div class="progress-header">
-                <span>Progress Integrasi</span>
-                <span class="progress-percent">87%</span>
+                <span>Status Kesiapan</span>
+                <span class="progress-percent">100%</span>
               </div>
               <div class="progress-bar-outer">
-                <div class="progress-bar-inner striped" style="width:87%;"></div>
+                <div class="progress-bar-inner striped" style="width:100%;"></div>
               </div>
             </div>
+            <button class="action-btn project-detail-btn" data-project-modal="stealth-recon">
+              <i class="lucide-info" style="width:14px;height:14px;"></i> Detail Alat &amp; Link
+            </button>
           </div>
 
-          <div class="project-card glass-panel">
+          <!-- AI Media Analyzer -->
+          <div class="project-card glass-panel featured-project" data-project-modal="ai-media-analyzer">
             <div class="project-header">
-              <h2 class="project-title">Satria Quantum</h2>
-              <span class="project-code-tag">SPACE R&D</span>
+              <div>
+                <div class="project-featured-tag">⭐ UNGGULAN</div>
+                <h2 class="project-title">AI Media Analyzer</h2>
+              </div>
+              <span class="project-code-tag ai">AI / CV</span>
             </div>
-            <p class="project-desc">Jalur komunikasi serat optik udara aman dengan modul penerimaan satelit berbasis distribusi kunci kuantum (QKD) untuk eliminasi ancaman man-in-the-middle.</p>
+            <p class="project-desc">Detektor keaslian media digital untuk mendeteksi rekayasa AI, deepfake, dan manipulasi piksel.</p>
+            <div class="project-modules-row">
+              <span class="module-tag">👁️ Computer Vision</span>
+              <span class="module-tag">🔬 Forensics</span>
+            </div>
             <div class="project-progress-wrapper">
               <div class="progress-header">
-                <span>Progress Integrasi</span>
-                <span class="progress-percent">62%</span>
+                <span>Status Kesiapan</span>
+                <span class="progress-percent">90%</span>
               </div>
               <div class="progress-bar-outer">
-                <div class="progress-bar-inner striped" style="width:62%;"></div>
+                <div class="progress-bar-inner striped" style="width:90%;"></div>
               </div>
             </div>
+            <button class="action-btn project-detail-btn" data-project-modal="ai-media-analyzer">
+              <i class="lucide-info" style="width:14px;height:14px;"></i> Detail Alat &amp; Link
+            </button>
           </div>
 
-          <div class="project-card glass-panel">
+          <!-- Cheap Hunter -->
+          <div class="project-card glass-panel" data-project-modal="cheap-hunter">
             <div class="project-header">
-              <h2 class="project-title">Nusantara Green Grid</h2>
-              <span class="project-code-tag">INFRASTRUCTURE</span>
+              <h2 class="project-title">Cheap Hunter</h2>
+              <span class="project-code-tag scrape">SCRAPER</span>
             </div>
-            <p class="project-desc">Pemasangan 140+ sensor cerdas di jaringan transmisi listrik EcoTech — seluruh komunikasi diproteksi enkripsi berbasis Hardware Security Module (HSM).</p>
+            <p class="project-desc">Sistem scraper pemantau harga komoditas global real-time untuk membandingkan biaya pasar.</p>
+            <div class="project-modules-row">
+              <span class="module-tag">📈 Price Tracker</span>
+              <span class="module-tag">🕷️ Crawler</span>
+            </div>
             <div class="project-progress-wrapper">
-              <div class="progress-header">
-                <span>Progress Integrasi</span>
-                <span class="progress-percent">95%</span>
-              </div>
-              <div class="progress-bar-outer">
-                <div class="progress-bar-inner striped" style="width:95%;"></div>
-              </div>
+              <div class="progress-header"><span>Status Kesiapan</span><span class="progress-percent">85%</span></div>
+              <div class="progress-bar-outer"><div class="progress-bar-inner striped" style="width:85%;"></div></div>
             </div>
+            <button class="action-btn project-detail-btn" data-project-modal="cheap-hunter">
+              <i class="lucide-info" style="width:14px;height:14px;"></i> Detail Alat &amp; Link
+            </button>
+          </div>
+
+          <!-- Quantum Key Distribution -->
+          <div class="project-card glass-panel" data-project-modal="quantum-key">
+            <div class="project-header">
+              <h2 class="project-title">Quantum Key Distribution</h2>
+              <span class="project-code-tag security">CRYPTOGRAPHY</span>
+            </div>
+            <p class="project-desc">Distribusi kunci kriptografi kuantum RSA-Q4096 untuk enkripsi pertahanan komunikasi data.</p>
+            <div class="project-modules-row">
+              <span class="module-tag">🔐 QKD Engine</span>
+              <span class="module-tag">⚛️ Quantum Shield</span>
+            </div>
+            <div class="project-progress-wrapper">
+              <div class="progress-header"><span>Status Kesiapan</span><span class="progress-percent">95%</span></div>
+              <div class="progress-bar-outer"><div class="progress-bar-inner striped" style="width:95%;"></div></div>
+            </div>
+            <button class="action-btn project-detail-btn" data-project-modal="quantum-key">
+              <i class="lucide-info" style="width:14px;height:14px;"></i> Detail Alat &amp; Link
+            </button>
           </div>
 
         </div>
@@ -442,68 +619,62 @@
       <!-- ───────────── 5. GALLERY ───────────── -->
       <section id="gallery" class="app-page">
         <div class="page-title-section">
-          <span class="section-eyebrow">Dokumentasi Kegiatan</span>
-          <h1 class="page-title">Galeri &amp; Pemindai AI</h1>
-          <p class="page-subtitle">Klik "Deteksi AI" untuk mengaktifkan scanner identitas berbasis kecerdasan buatan</p>
+          <span class="section-eyebrow" id="gallery-eyebrow">Dokumentasi Kegiatan</span>
+          <h1 class="page-title" id="gallery-page-title">Galeri Ilustrasi</h1>
+          <p class="page-subtitle" id="gallery-page-subtitle">Visualisasi operasional tim Zenith Prime Labs</p>
         </div>
 
         <div class="gallery-grid">
 
-          <div class="gallery-card glass-panel" id="gallery-item-1">
-            <div class="gallery-image-viewport">
-              <img src="assets/gallery_1.png" alt="NCN Cyber Command Center" class="gallery-img">
-              <div class="scanner-overlay">
-                <div class="scan-line"></div>
-                <div class="bounding-boxes-container"></div>
+          <div class="gallery-card glass-panel" data-gallery-src="assets/gallery_anime_1.png" data-gallery-title="Laboratorium Holografik" data-gallery-desc="Peneliti utama ZPL sedang merancang model pemindaian data OSINT Stealth Recon pada terminal hologram.">
+            <div class="gallery-img-wrapper">
+              <img src="assets/gallery_anime_1.png" alt="Laboratorium Holografik" class="gallery-img">
+              <div class="gallery-overlay">
+                <i class="lucide-zoom-in" style="width:28px;height:28px;color:#fff;"></i>
               </div>
             </div>
-            <div class="gallery-info-panel">
-              <div>
-                <div class="gallery-photo-title">NCN Command War Room</div>
-                <div class="gallery-photo-desc">Aktivitas mitigasi insiden siber nasional — Tim NCS</div>
-              </div>
-              <div class="scan-console-hud">
-                <div class="scan-console-output text-xxs font-mono" style="color:var(--text-faint);">
-                  SCANNER STANDBY — Menunggu inisiasi pemindaian...
-                </div>
-              </div>
-              <div class="gallery-actions">
-                <button class="action-btn gallery-action-btn start-scan-btn">
-                  <i class="lucide-scan-face" style="width:14px;height:14px;"></i> Deteksi AI
-                </button>
-                <button class="action-btn gallery-action-btn reset-scan-btn hidden" style="background:var(--bg-input);color:var(--text-muted);">
-                  <i class="lucide-rotate-ccw" style="width:14px;height:14px;"></i> Reset
-                </button>
-              </div>
+            <div class="gallery-caption">
+              <div class="gallery-photo-title">Laboratorium Holografik</div>
+              <div class="gallery-photo-desc">Pengembangan terminal hologram OSINT</div>
             </div>
           </div>
 
-          <div class="gallery-card glass-panel" id="gallery-item-2">
-            <div class="gallery-image-viewport">
-              <img src="assets/gallery_2.png" alt="Quantum Laboratory" class="gallery-img">
-              <div class="scanner-overlay">
-                <div class="scan-line"></div>
-                <div class="bounding-boxes-container"></div>
+          <div class="gallery-card glass-panel" data-gallery-src="assets/gallery_anime_2.png" data-gallery-title="Ruang Kendali Utama" data-gallery-desc="Tim administrator mengawasi parameter ancaman siber aliansi StarLive Group dari ruang kontrol utama.">
+            <div class="gallery-img-wrapper">
+              <img src="assets/gallery_anime_2.png" alt="Ruang Kendali Utama" class="gallery-img">
+              <div class="gallery-overlay">
+                <i class="lucide-zoom-in" style="width:28px;height:28px;color:#fff;"></i>
               </div>
             </div>
-            <div class="gallery-info-panel">
-              <div>
-                <div class="gallery-photo-title">Quantum Laboratory Inspection</div>
-                <div class="gallery-photo-desc">Audit berkala reaktor komputasi kuantum QNL</div>
+            <div class="gallery-caption">
+              <div class="gallery-photo-title">Ruang Kendali Utama</div>
+              <div class="gallery-photo-desc">Pusat monitoring ancaman real-time</div>
+            </div>
+          </div>
+
+          <div class="gallery-card glass-panel" data-gallery-src="assets/gallery_anime_3.png" data-gallery-title="Strategic Meeting" data-gallery-desc="Pertemuan evaluasi taktis sistem mitigasi enkripsi kuantum bersama delegasi StarLive Group.">
+            <div class="gallery-img-wrapper">
+              <img src="assets/gallery_anime_3.png" alt="Strategic Meeting" class="gallery-img">
+              <div class="gallery-overlay">
+                <i class="lucide-zoom-in" style="width:28px;height:28px;color:#fff;"></i>
               </div>
-              <div class="scan-console-hud">
-                <div class="scan-console-output text-xxs font-mono" style="color:var(--text-faint);">
-                  SCANNER STANDBY — Menunggu inisiasi pemindaian...
-                </div>
+            </div>
+            <div class="gallery-caption">
+              <div class="gallery-photo-title">Strategic Meeting</div>
+              <div class="gallery-photo-desc">Evaluasi taktis sistem QKD siber</div>
+            </div>
+          </div>
+
+          <div class="gallery-card glass-panel" data-gallery-src="assets/gallery_anime_4.png" data-gallery-title="AI Core Inspection" data-gallery-desc="Pemeriksaan rutin reaktor inti kecerdasan buatan utama yang menopang neural engine ZPL.">
+            <div class="gallery-img-wrapper">
+              <img src="assets/gallery_anime_4.png" alt="AI Core Inspection" class="gallery-img">
+              <div class="gallery-overlay">
+                <i class="lucide-zoom-in" style="width:28px;height:28px;color:#fff;"></i>
               </div>
-              <div class="gallery-actions">
-                <button class="action-btn gallery-action-btn start-scan-btn">
-                  <i class="lucide-scan-face" style="width:14px;height:14px;"></i> Deteksi AI
-                </button>
-                <button class="action-btn gallery-action-btn reset-scan-btn hidden" style="background:var(--bg-input);color:var(--text-muted);">
-                  <i class="lucide-rotate-ccw" style="width:14px;height:14px;"></i> Reset
-                </button>
-              </div>
+            </div>
+            <div class="gallery-caption">
+              <div class="gallery-photo-title">AI Core Inspection</div>
+              <div class="gallery-photo-desc">Pemeriksaan reaktor neural ZPL</div>
             </div>
           </div>
 
@@ -513,165 +684,215 @@
       <!-- ───────────── 6. DASHBOARD ───────────── -->
       <section id="dashboard" class="app-page">
         <div class="page-title-section">
-          <span class="section-eyebrow">OpenCTI Live</span>
-          <h1 class="page-title">Dasbor Ancaman Siber</h1>
-          <p class="page-subtitle">Deteksi serangan real-time, grafik frekuensi, dan rekap bulanan</p>
+          <span class="section-eyebrow" id="dashboard-eyebrow">Admin Only</span>
+          <h1 class="page-title" id="dashboard-page-title">Dasbor Keamanan</h1>
+          <p class="page-subtitle" id="dashboard-page-subtitle">Analisis dan deteksi ancaman real-time</p>
         </div>
 
-        <!-- Stats cards -->
-        <div class="security-stats-row">
-          <div class="stat-card glass-panel">
-            <div class="stat-icon-wrapper icon-rose">
-              <i class="lucide-shield-alert" style="width:20px;height:20px;"></i>
-            </div>
-            <div>
-              <div class="stat-label">Total Ancaman Ditangkal</div>
-              <div class="stat-value rose" id="total-threats-count">14,382</div>
-            </div>
+        <!-- Dashboard locked state (shown when not admin) -->
+        <div id="dashboard-locked" class="dashboard-locked-panel glass-panel">
+          <div class="lock-icon-bubble">
+            <i class="lucide-lock" style="width:36px;height:36px;"></i>
           </div>
-          <div class="stat-card glass-panel">
-            <div class="stat-icon-wrapper icon-violet">
-              <i class="lucide-activity" style="width:20px;height:20px;"></i>
-            </div>
-            <div>
-              <div class="stat-label">Insiden Aktif Sekarang</div>
-              <div class="stat-value" id="active-incidents-count">0</div>
-            </div>
-          </div>
-          <div class="stat-card glass-panel">
-            <div class="stat-icon-wrapper icon-mint">
-              <i class="lucide-shield-check" style="width:20px;height:20px;"></i>
-            </div>
-            <div>
-              <div class="stat-label">Tingkat Keberhasilan Mitigasi</div>
-              <div class="stat-value green" id="mitigation-rate-percent">99.98%</div>
-            </div>
-          </div>
+          <div class="chat-locked-title">Dasbor Admin Terkunci</div>
+          <p class="chat-locked-desc">Masuk sebagai administrator Zenith Prime Labs untuk mengakses dasbor keamanan, data ancaman real-time, dan panel administrasi sistem.</p>
+          <button onclick="window.cyberAuth.openAuthModal()" class="action-btn">
+            <i class="lucide-shield" style="width:14px;height:14px;"></i> Masuk Sekarang
+          </button>
         </div>
 
-        <!-- Charts + Radar -->
-        <div class="dashboard-grid">
-          <div class="dashboard-center-panel">
+        <!-- Dashboard content (shown when admin) -->
+        <div id="dashboard-content" style="display:none;">
 
-            <div class="chart-row">
-              <div class="chart-card glass-panel">
-                <div class="chart-header">
-                  <span>Frekuensi Serangan Minggu Ini</span>
-                  <span class="pulse-dot green"></span>
+          <!-- Sub Tab Navigation -->
+          <div class="dashboard-tabs-nav">
+            <button class="dash-tab-btn active" data-dash-tab="threats">
+              <i class="lucide-shield-alert" style="width:14px;height:14px;"></i> Ancaman
+            </button>
+            <button class="dash-tab-btn" data-dash-tab="opencti">
+              <i class="lucide-globe" style="width:14px;height:14px;"></i> OpenCTI
+            </button>
+            <button class="dash-tab-btn" data-dash-tab="users">
+              <i class="lucide-users" style="width:14px;height:14px;"></i> Akun User
+            </button>
+            <button class="dash-tab-btn" data-dash-tab="chat-monitor">
+              <i class="lucide-message-square" style="width:14px;height:14px;"></i> Pantau Chat
+            </button>
+          </div>
+
+          <!-- TAB: Threats -->
+          <div id="dash-tab-threats" class="dash-tab-pane active">
+            <!-- Stats cards -->
+            <div class="security-stats-row">
+              <div class="stat-card glass-panel">
+                <div class="stat-icon-wrapper icon-rose">
+                  <i class="lucide-shield-alert" style="width:20px;height:20px;"></i>
                 </div>
-                <div class="chart-viewport">
-                  <canvas id="threat-frequency-chart"></canvas>
+                <div>
+                  <div class="stat-label">Total Ancaman Ditangkal</div>
+                  <div class="stat-value rose" id="total-threats-count">14,382</div>
                 </div>
               </div>
-              <div class="chart-card glass-panel">
-                <div class="chart-header">
-                  <span>Metode Serangan Bulan Ini</span>
+              <div class="stat-card glass-panel">
+                <div class="stat-icon-wrapper icon-violet">
+                  <i class="lucide-activity" style="width:20px;height:20px;"></i>
                 </div>
-                <div class="chart-viewport">
-                  <canvas id="threat-vector-chart"></canvas>
+                <div>
+                  <div class="stat-label">Insiden Aktif Sekarang</div>
+                  <div class="stat-value" id="active-incidents-count">0</div>
+                </div>
+              </div>
+              <div class="stat-card glass-panel">
+                <div class="stat-icon-wrapper icon-mint">
+                  <i class="lucide-shield-check" style="width:20px;height:20px;"></i>
+                </div>
+                <div>
+                  <div class="stat-label">Tingkat Keberhasilan Mitigasi</div>
+                  <div class="stat-value green" id="mitigation-rate-percent">99.98%</div>
+                </div>
+              </div>
+              <div class="stat-card glass-panel">
+                <div class="stat-icon-wrapper icon-sky">
+                  <i class="lucide-clock" style="width:20px;height:20px;"></i>
+                </div>
+                <div>
+                  <div class="stat-label">Rekap Terakhir</div>
+                  <div class="stat-value" id="last-recap-time" style="font-size:1rem;">09:00 Hari ini</div>
                 </div>
               </div>
             </div>
 
-            <!-- Incident Feed -->
-            <div class="incident-table-card glass-panel">
+            <!-- Charts + Radar -->
+            <div class="dashboard-grid">
+              <div class="dashboard-center-panel">
+                <div class="chart-row">
+                  <div class="chart-card glass-panel">
+                    <div class="chart-header">
+                      <span>Frekuensi Ancaman Harian</span>
+                      <span class="pulse-dot green"></span>
+                    </div>
+                    <div class="chart-viewport">
+                      <canvas id="threat-frequency-chart"></canvas>
+                    </div>
+                  </div>
+                  <div class="chart-card glass-panel">
+                    <div class="chart-header"><span>Metode Serangan Bulan Ini</span></div>
+                    <div class="chart-viewport">
+                      <canvas id="threat-vector-chart"></canvas>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Incident Feed -->
+                <div class="incident-table-card glass-panel">
+                  <div class="chart-header">
+                    <span>Feed Deteksi Ancaman Real-Time</span>
+                    <div style="display:flex;gap:0.75rem;align-items:center;">
+                      <span class="sub-status-chip">
+                        <span class="pulse-dot green" style="width:5px;height:5px;"></span> LIVE
+                      </span>
+                      <button id="export-recap-btn" class="action-btn" style="padding:0.3rem 0.75rem;font-size:0.75rem;">
+                        <i class="lucide-download" style="width:12px;height:12px;"></i> Export Rekap
+                      </button>
+                    </div>
+                  </div>
+                  <div class="table-scroll-container">
+                    <table class="incident-table">
+                      <thead>
+                        <tr>
+                          <th>Waktu</th>
+                          <th>IP Sumber</th>
+                          <th>Target</th>
+                          <th>Vektor Serangan</th>
+                          <th>Bahaya</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody id="security-incident-feed"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Radar Sidebar -->
+              <div class="radar-sidebar">
+                <div class="radar-card glass-panel">
+                  <div class="radar-label">Radar Aktivitas Siber</div>
+                  <div class="radar-viewport">
+                    <div class="radar-sweep"></div>
+                    <div class="radar-circle c1"></div>
+                    <div class="radar-circle c2"></div>
+                    <div class="radar-crosshair-x"></div>
+                    <div class="radar-crosshair-y"></div>
+                    <div class="radar-blip b1"></div>
+                    <div class="radar-blip b2"></div>
+                  </div>
+                  <div class="radar-desc">RANGE 100km · SCAN AKTIF</div>
+                </div>
+
+                <div class="monthly-recap-card glass-panel">
+                  <div class="chart-header" style="margin-bottom:0.5rem;">
+                    <span>Rekap Juli 2026</span>
+                  </div>
+                  <div class="recap-details">
+                    <div class="recap-row"><span class="recap-label">Ancaman Dinetralkan</span><span class="recap-val">8,410</span></div>
+                    <div class="recap-row"><span class="recap-label">Vektor Terbanyak</span><span class="recap-val text-sm">DDoS (42%)</span></div>
+                    <div class="recap-row"><span class="recap-label">Target Utama</span><span class="recap-val text-sm">ZPL Core</span></div>
+                    <div class="recap-row"><span class="recap-label">Resp. Rata-rata</span><span class="recap-val text-sm">1.2 detik</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB: OpenCTI -->
+          <div id="dash-tab-opencti" class="dash-tab-pane">
+            <div class="opencti-panel glass-panel">
               <div class="chart-header">
-                <span>Feed Deteksi Serangan Real-Time</span>
-                <span class="sub-status-chip">
-                  <span class="pulse-dot green" style="width:5px;height:5px;"></span> LIVE
-                </span>
+                <span>🌐 OpenCTI — Feed Ancaman Global Real-Time</span>
+                <span class="sub-status-chip"><span class="pulse-dot green" style="width:5px;height:5px;"></span> LIVE</span>
+              </div>
+              <div class="cti-feed-container" id="cti-global-feed"></div>
+            </div>
+          </div>
+
+          <!-- TAB: User Accounts -->
+          <div id="dash-tab-users" class="dash-tab-pane">
+            <div class="glass-panel" style="padding:1.5rem;">
+              <div class="chart-header" style="margin-bottom:1rem;">
+                <span>👥 Daftar Akun User Terdaftar</span>
+                <span class="sub-status-chip" id="user-count-chip">0 akun</span>
               </div>
               <div class="table-scroll-container">
                 <table class="incident-table">
                   <thead>
                     <tr>
-                      <th>Waktu</th>
-                      <th>IP Sumber</th>
-                      <th>Target Subsidiari</th>
-                      <th>Vektor Serangan</th>
-                      <th>Bahaya</th>
+                      <th>Nama</th>
+                      <th>Email</th>
+                      <th>Fraksi</th>
+                      <th>Registrasi</th>
                       <th>Status</th>
                     </tr>
                   </thead>
-                  <tbody id="security-incident-feed"></tbody>
+                  <tbody id="user-accounts-table"></tbody>
                 </table>
               </div>
             </div>
-
           </div>
 
-          <!-- Radar Sidebar -->
-          <div class="radar-sidebar">
-
-            <div class="radar-card glass-panel">
-              <div class="radar-label">Radar Aktivitas Siber</div>
-              <div class="radar-viewport">
-                <div class="radar-sweep"></div>
-                <div class="radar-circle c1"></div>
-                <div class="radar-circle c2"></div>
-                <div class="radar-crosshair-x"></div>
-                <div class="radar-crosshair-y"></div>
-                <div class="radar-blip b1"></div>
-                <div class="radar-blip b2"></div>
+          <!-- TAB: Chat Monitor -->
+          <div id="dash-tab-chat-monitor" class="dash-tab-pane">
+            <div class="glass-panel" style="padding:1.5rem;">
+              <div class="chart-header" style="margin-bottom:1rem;">
+                <span>💬 Pemantauan Chat Global</span>
+                <span class="sub-status-chip"><span class="pulse-dot green" style="width:5px;height:5px;"></span> LIVE</span>
               </div>
-              <div class="radar-desc">RANGE 100km · SCAN AKTIF</div>
+              <div class="chat-monitor-feed" id="chat-monitor-feed"></div>
             </div>
-
-            <div class="monthly-recap-card glass-panel">
-              <div class="chart-header" style="margin-bottom:0.5rem;">
-                <span>Rekap Juni 2026</span>
-              </div>
-              <div class="recap-details">
-                <div class="recap-row">
-                  <span class="recap-label">Ancaman Dinetralisir</span>
-                  <span class="recap-val">8,410</span>
-                </div>
-                <div class="recap-row">
-                  <span class="recap-label">Vektor Terbanyak</span>
-                  <span class="recap-val text-sm">DDoS (42%)</span>
-                </div>
-                <div class="recap-row">
-                  <span class="recap-label">Target Utama</span>
-                  <span class="recap-val text-sm">QNL</span>
-                </div>
-                <div class="recap-row">
-                  <span class="recap-label">Resp. Waktu Rata-rata</span>
-                  <span class="recap-val text-sm">1.2 detik</span>
-                </div>
-              </div>
-              <button class="action-btn sub-action-btn"
-                onclick="alert('Laporan Intelijen Ancaman diunduh (Simulasi)')">
-                <i class="lucide-download" style="width:13px;height:13px;"></i>
-                Unduh Laporan
-              </button>
-            </div>
-
           </div>
+
         </div>
       </section>
-
-      <!-- ───────────── INTERNAL CHAT (All pages) ───────────── -->
-      <div class="chat-section-wrapper glass-panel" style="margin-top:2.5rem;">
-        <div class="chat-section-header">
-          <div class="section-eyebrow">Terenkripsi E2EE</div>
-          <div class="chat-section-title">Portal Komunikasi Internal</div>
-          <div class="chat-section-sub">Khusus administrator — memerlukan autentikasi email + MFA</div>
-        </div>
-        <div id="chat-app-container">
-          <div class="chat-locked-panel">
-            <div class="lock-icon-bubble">
-              <i class="lucide-lock" style="width:26px;height:26px;"></i>
-            </div>
-            <div class="chat-locked-title">Komunikasi Internal Terkunci</div>
-            <p class="chat-locked-desc">
-              Masuk ke Portal Keamanan dengan email terverifikasi dan kode OTP MFA untuk mengakses jaringan obrolan terenkripsi internal.
-            </p>
-            <button onclick="window.cyberAuth.openAuthModal()" class="action-btn">
-              <i class="lucide-shield" style="width:14px;height:14px;"></i> Masuk Sekarang
-            </button>
-          </div>
-        </div>
-      </div>
 
     </main>
 
@@ -679,6 +900,174 @@
     <div id="cyber-audio-hub"></div>
 
   </div><!-- end #app-shell -->
+
+  <!-- ═════════════ CHAT SIDEBAR (Right) ═════════════ -->
+  <div id="chat-sidebar-right" class="chat-sidebar-right">
+    <div class="chat-sidebar-header">
+      <div class="chat-sidebar-title">
+        <i data-lucide="message-circle" style="width:16px;height:16px;"></i>
+        Pesan
+      </div>
+      <div class="chat-tabs">
+        <button id="chat-tab-global" class="chat-tab-btn active">
+          <span id="global-tab-badge" class="tab-badge" style="display:none;"></span>
+          Global
+        </button>
+        <button id="chat-tab-friend" class="chat-tab-btn">
+          <span id="friend-tab-badge" class="tab-badge" style="display:none;"></span>
+          Teman
+        </button>
+      </div>
+    </div>
+
+    <!-- Global Chat Pane -->
+    <div id="chat-pane-global" class="chat-pane active">
+      <div id="global-chat-feed" class="global-chat-feed"></div>
+      <div class="chat-input-row">
+        <input type="text" id="global-chat-input" class="sidebar-chat-input" placeholder="Tulis pesan global...">
+        <button id="global-chat-send-btn" class="sidebar-send-btn">
+          <i data-lucide="send" style="width:14px;height:14px;"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Friend Chat Pane -->
+    <div id="chat-pane-friend" class="chat-pane">
+      <!-- Friend List -->
+      <div id="friend-list" class="friend-list-container"></div>
+      <!-- Friend Chat View -->
+      <div id="friend-chat-area" class="friend-chat-area" style="display:none;">
+        <div class="friend-chat-header-bar">
+          <button id="friend-back-btn" class="back-btn">
+            <i data-lucide="arrow-left" style="width:14px;height:14px;"></i>
+          </button>
+          <div id="friend-chat-header" class="friend-chat-header-info"></div>
+        </div>
+        <div id="friend-chat-feed" class="global-chat-feed"></div>
+        <div class="chat-input-row">
+          <input type="text" id="friend-chat-input" class="sidebar-chat-input" placeholder="Kirim pesan...">
+          <button id="friend-chat-send-btn" class="sidebar-send-btn">
+            <i data-lucide="send" style="width:14px;height:14px;"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chat Sidebar Toggle Button -->
+  <button id="chat-sidebar-toggle-btn" class="chat-sidebar-toggle" title="Chat">
+    <i data-lucide="message-circle" style="width:20px;height:20px;"></i>
+    <span id="chat-sidebar-badge" class="chat-toggle-badge" style="display:none;"></span>
+  </button>
+
+  <!-- ═════════════ SETTINGS PANEL ═════════════ -->
+  <div id="settings-overlay" class="settings-overlay"></div>
+  <div id="settings-panel" class="settings-panel glass-panel">
+    <div class="settings-header">
+      <div class="settings-title">
+        <i data-lucide="settings" style="width:18px;height:18px;"></i>
+        Pengaturan
+      </div>
+      <button id="close-settings-btn" class="close-settings-btn">
+        <i data-lucide="x" style="width:16px;height:16px;"></i>
+      </button>
+    </div>
+
+    <!-- Settings Tabs -->
+    <div class="settings-tabs-nav">
+      <button class="settings-tab-btn active" data-tab="lang">🌐 Bahasa</button>
+      <button class="settings-tab-btn" data-tab="theme">🌸 Tema</button>
+      <button class="settings-tab-btn" data-tab="music">🎵 Musik</button>
+      <button class="settings-tab-btn" data-tab="scene">🖼️ Latar</button>
+    </div>
+
+    <!-- Lang Tab -->
+    <div id="settings-tab-lang" class="settings-tab-pane active">
+      <div class="settings-section-label">Pilih Bahasa Antarmuka</div>
+      <div class="lang-options-grid">
+        <button class="lang-option-btn active" data-lang="id">🇮🇩 Indonesia</button>
+        <button class="lang-option-btn" data-lang="en_uk">🇬🇧 English UK</button>
+        <button class="lang-option-btn" data-lang="en_us">🇺🇸 English US</button>
+        <button class="lang-option-btn" data-lang="zh">🇨🇳 中文</button>
+        <button class="lang-option-btn" data-lang="ja">🇯🇵 日本語</button>
+        <button class="lang-option-btn" data-lang="ko">🇰🇷 한국어</button>
+        <button class="lang-option-btn" data-lang="de">🇩🇪 Deutsch</button>
+        <button class="lang-option-btn" data-lang="ru">🇷🇺 Русский</button>
+      </div>
+    </div>
+
+    <!-- Theme Tab -->
+    <div id="settings-tab-theme" class="settings-tab-pane">
+      <div class="settings-section-label">Pilih Tema Musim</div>
+      <div class="season-options-grid">
+        <button class="season-option-btn active" data-season="spring">
+          <div class="season-preview spring-prev">🌸</div>
+          <div class="season-label">Spring</div>
+          <div class="season-desc">Sakura</div>
+        </button>
+        <button class="season-option-btn" data-season="summer">
+          <div class="season-preview summer-prev">☘️</div>
+          <div class="season-label">Summer</div>
+          <div class="season-desc">Clover</div>
+        </button>
+        <button class="season-option-btn" data-season="autumn">
+          <div class="season-preview autumn-prev">🍁</div>
+          <div class="season-label">Autumn</div>
+          <div class="season-desc">Maple</div>
+        </button>
+        <button class="season-option-btn" data-season="winter">
+          <div class="season-preview winter-prev">❄️</div>
+          <div class="season-label">Winter</div>
+          <div class="season-desc">Snow</div>
+        </button>
+      </div>
+      <div class="settings-section-label" style="margin-top:1.5rem;">Mode Gelap / Terang</div>
+      <button id="theme-toggle-settings-btn" class="action-btn" style="width:100%;justify-content:center;">
+        <i data-lucide="moon" style="width:14px;height:14px;"></i>
+        Toggle Dark Mode
+      </button>
+    </div>
+
+    <!-- Music Tab -->
+    <div id="settings-tab-music" class="settings-tab-pane">
+      <div class="settings-section-label">Player Musik</div>
+      <div class="music-controls">
+        <button id="music-prev-btn" class="music-ctrl-btn"><i data-lucide="skip-back" style="width:16px;height:16px;"></i></button>
+        <button id="music-play-pause-btn" class="music-ctrl-btn play-btn"><i data-lucide="play" style="width:20px;height:20px;"></i></button>
+        <button id="music-next-btn" class="music-ctrl-btn"><i data-lucide="skip-forward" style="width:16px;height:16px;"></i></button>
+      </div>
+      <div class="volume-row">
+        <i data-lucide="volume-2" style="width:14px;height:14px;"></i>
+        <input type="range" id="music-volume-slider" class="volume-slider" min="0" max="100" value="40">
+      </div>
+      <div id="music-status-msg" class="music-status-msg" style="opacity:0;"></div>
+      <div class="settings-section-label">Daftar Lagu</div>
+      <div id="music-track-list" class="music-track-list"></div>
+      <!-- Admin upload section -->
+      <div id="music-admin-section" class="admin-only-show" style="display:none;margin-top:1rem;">
+        <div class="settings-section-label">Upload Musik Baru (Admin)</div>
+        <button id="admin-music-upload-btn" class="action-btn" style="width:100%;justify-content:center;">
+          <i data-lucide="upload" style="width:14px;height:14px;"></i> Pilih File Audio
+        </button>
+        <input type="file" id="admin-music-upload-input" accept="audio/*" style="display:none;">
+      </div>
+    </div>
+
+    <!-- Scene Tab -->
+    <div id="settings-tab-scene" class="settings-tab-pane">
+      <div class="settings-section-label">Pilih Latar Belakang</div>
+      <div id="scene-options-grid" class="scene-options-grid"></div>
+      <!-- Admin upload section -->
+      <div id="scene-admin-section" class="admin-only-show" style="display:none;margin-top:1rem;">
+        <div class="settings-section-label">Upload Scene Baru (Admin)</div>
+        <button id="admin-scene-upload-btn" class="action-btn" style="width:100%;justify-content:center;">
+          <i data-lucide="image-plus" style="width:14px;height:14px;"></i> Pilih Gambar
+        </button>
+        <input type="file" id="admin-scene-upload-input" accept="image/*" style="display:none;">
+      </div>
+    </div>
+
+  </div>
 
   <!-- ═════════════ AUTH MODAL ═════════════ -->
   <div id="auth-modal" class="modal-wrapper">
@@ -690,11 +1079,11 @@
         <div class="modal-icon-top">
           <i class="lucide-shield" style="width:24px;height:24px;"></i>
         </div>
-        <div class="modal-title">Portal Keamanan NCN</div>
-        <div class="modal-subtitle">Masukkan email administratif untuk menerima kode verifikasi MFA.</div>
+        <div class="modal-title">Portal Keamanan ZPL</div>
+        <div class="modal-subtitle">Masukkan email administratif Zenith Prime Labs untuk menerima kode verifikasi MFA.</div>
         <div class="form-group">
           <label for="auth-email" class="form-label">Email Administrator</label>
-          <input type="email" id="auth-email" class="form-input" placeholder="nama@ncn-group.co" required>
+          <input type="email" id="auth-email" class="form-input" placeholder="nama@zenith-prime.id" required>
         </div>
         <button type="submit" class="action-btn" style="width:100%;justify-content:center;padding:0.75rem;">
           Kirim Kode Verifikasi
@@ -725,24 +1114,62 @@
     </div>
   </div>
 
-  <!-- ═════════════ PROJECT DETAIL MODAL ═════════════ -->
-  <div id="project-modal" class="modal-wrapper">
-    <div class="modal-content-card glass-panel" style="max-width:480px;">
-      <button class="close-project-modal" aria-label="Tutup">&times;</button>
-      <div class="section-eyebrow">Detail Proyek</div>
-      <h2 id="modal-project-title" class="page-title" style="font-size:1.4rem;margin-bottom:0.75rem;"></h2>
-      <p id="modal-project-desc" class="text-sm" style="color:var(--text-muted);line-height:1.65;margin-bottom:1.25rem;"></p>
-      <div style="margin-bottom:1.5rem;">
-        <div class="progress-header">
-          <span class="text-sm">Progress Berjalan</span>
-          <span id="modal-project-progress" class="progress-percent"></span>
+  <!-- ═════════════ PROFILE MODAL ═════════════ -->
+  <div id="profile-modal" class="modal-wrapper">
+    <div class="modal-content-card glass-panel" style="max-width:460px;padding:0;overflow:hidden;">
+      <button class="close-modal close-profile-modal" aria-label="Tutup">&times;</button>
+      <!-- Cover Photo -->
+      <div class="profile-cover" id="profile-cover-area">
+        <div class="profile-cover-overlay"></div>
+        <label class="profile-cover-edit" title="Ganti foto cover" id="profile-cover-edit-btn">
+          <i data-lucide="camera" style="width:14px;height:14px;"></i>
+          <input type="file" id="profile-cover-input" accept="image/*" style="display:none;">
+        </label>
+      </div>
+      <!-- Avatar -->
+      <div class="profile-avatar-area">
+        <div class="profile-avatar-ring">
+          <div id="profile-avatar-display" class="profile-avatar">DA</div>
         </div>
-        <div class="progress-bar-outer">
-          <div id="modal-project-bar" class="progress-bar-inner striped"></div>
+        <label class="profile-avatar-edit" title="Ganti foto profil" id="profile-avatar-edit-btn">
+          <i data-lucide="camera" style="width:12px;height:12px;"></i>
+          <input type="file" id="profile-avatar-input" accept="image/*" style="display:none;">
+        </label>
+      </div>
+      <div class="profile-info">
+        <div class="profile-name" id="profile-display-name">Danny</div>
+        <div class="profile-fraction" id="profile-display-fraction">
+          <i data-lucide="flask-conical" style="width:12px;height:12px;"></i> Zenith Prime Labs
+        </div>
+        <div class="profile-registered" id="profile-display-registered">
+          <i data-lucide="calendar" style="width:11px;height:11px;"></i> Bergabung: Juli 2026
+        </div>
+        <div class="profile-badges" id="profile-display-badges">
+          <span class="achieve-badge">👑 Founder</span>
+          <span class="achieve-badge">🛡️ Admin</span>
+          <span class="achieve-badge">🔬 Researcher</span>
         </div>
       </div>
-      <div class="section-eyebrow" style="margin-bottom:0.65rem;">Dokumen Sistem</div>
-      <div id="modal-project-files"></div>
+    </div>
+  </div>
+
+  <!-- ═════════════ GALLERY LIGHTBOX ═════════════ -->
+  <div id="gallery-lightbox" class="modal-wrapper">
+    <div class="lightbox-content">
+      <button class="lightbox-close">&times;</button>
+      <img id="lightbox-img" src="" alt="">
+      <div class="lightbox-caption">
+        <div id="lightbox-title" class="lightbox-title"></div>
+        <div id="lightbox-desc" class="lightbox-desc"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═════════════ PROJECT VIRTUAL MODAL ═════════════ -->
+  <div id="project-virtual-modal" class="modal-wrapper">
+    <div class="modal-content-card glass-panel" style="max-width:640px;">
+      <button class="close-modal" aria-label="Tutup" id="close-project-virtual">&times;</button>
+      <div id="project-virtual-content"></div>
     </div>
   </div>
 
