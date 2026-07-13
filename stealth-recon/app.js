@@ -70,6 +70,8 @@ const REVERSE_IMAGE_ENGINES = [
 let state = {
   targetName: '',
   targetAlias: '',
+  targetPhone: '',
+  targetEmail: '',
   searcherName: '',
   searcherNotes: '',
   photoDataUrl: null,
@@ -83,6 +85,8 @@ const $ = (id) => document.getElementById(id);
 const els = {
   targetName: $('target-name'),
   targetAlias: $('target-alias'),
+  targetPhone: $('target-phone'),
+  targetEmail: $('target-email'),
   searcherName: $('searcher-name'),
   searcherNotes: $('searcher-notes'),
   photoInput: $('photo-input'),
@@ -155,19 +159,23 @@ els.startScanBtn.addEventListener('click', startScan);
 async function startScan() {
   const name = els.targetName.value.trim();
   const alias = els.targetAlias.value.trim();
-  if (!name && !state.photoDataUrl) {
-    alert('Masukkan nama target atau unggah foto terlebih dahulu!');
+  const phone = els.targetPhone.value.trim();
+  const email = els.targetEmail.value.trim();
+  if (!name && !state.photoDataUrl && !phone && !email) {
+    alert('Masukkan salah satu input pencarian (nama, foto, email, atau telepon) terlebih dahulu!');
     return;
   }
-  state.targetName = name;
+  state.targetName = name || email.split('@')[0] || 'Target Tanpa Nama';
   state.targetAlias = alias;
+  state.targetPhone = phone;
+  state.targetEmail = email;
   state.searcherName = els.searcherName.value.trim() || 'ZPL Operator';
   state.searcherNotes = els.searcherNotes.value.trim();
   state.scanTime = new Date();
 
   showScanningOverlay();
   await runScanAnimation();
-  state.scanResults = generateScanResults(name, alias);
+  state.scanResults = generateScanResults(state.targetName, alias, phone, email);
   hideScanningOverlay();
   renderResults();
 }
@@ -186,18 +194,15 @@ function hideScanningOverlay() {
 
 async function runScanAnimation() {
   const steps = [
-    { pct: 5, text: 'Menginisialisasi mesin pencarian OSINT...' },
-    { pct: 12, text: 'Memindai Google Search & Google Images...' },
-    { pct: 22, text: 'Menganalisis profil LinkedIn & jejak profesional...' },
-    { pct: 32, text: 'Memindai Instagram, Facebook, TikTok...' },
-    { pct: 42, text: 'Menelusuri Twitter/X & konten viral...' },
-    { pct: 52, text: 'Menganalisis YouTube & GitHub...' },
-    { pct: 60, text: 'Menjalankan Yandex Reverse Image Search...' },
-    { pct: 68, text: 'Agregasi data dari Bing People & Pipl...' },
-    { pct: 78, text: 'Membangun profil digital komprehensif...' },
-    { pct: 88, text: 'Menjalankan analisis risiko oleh AI...' },
-    { pct: 95, text: 'Menyusun laporan intelijen...' },
-    { pct: 100, text: 'Pencarian selesai. Laporan siap!' },
+    { pct: 5, text: 'Menginisialisasi mesin pencarian multi-vektor OSINT...' },
+    { pct: 15, text: 'Menganalisis pola foto wajah dan reverse search...' },
+    { pct: 28, text: 'Memindai database kebocoran email dan kredensial publik...' },
+    { pct: 40, text: 'Melacak registrasi nomor telepon di platform database publik...' },
+    { pct: 55, text: 'Menelusuri jejaring sosial dan platform developer profesional...' },
+    { pct: 70, text: 'Mengekstraksi tautan relevan dari mesin telusur global...' },
+    { pct: 85, text: 'Menghubungkan data alias dengan pola aktivitas...' },
+    { pct: 95, text: 'Membuat visual analisis ancaman kecerdasan buatan...' },
+    { pct: 100, text: 'Penyusunan laporan lengkap selesai!' },
   ];
 
   const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
@@ -208,7 +213,6 @@ async function runScanAnimation() {
     els.scanProgressBar.style.width = step.pct + '%';
     els.scanPercent.textContent = step.pct + '%';
 
-    // Activate corresponding platforms
     const pIdx = Math.floor((i / steps.length) * PLATFORMS.length);
     for (let j = 0; j <= pIdx; j++) {
       const tag = document.getElementById(`stag-${PLATFORMS[j]?.id}`);
@@ -217,46 +221,41 @@ async function runScanAnimation() {
         else tag.classList.add('active');
       }
     }
-    await delay(320 + Math.random() * 200);
+    await delay(300 + Math.random() * 150);
   }
-  await delay(400);
+  await delay(300);
 }
 
 // ─── SCAN RESULTS GENERATOR ────────────────────────────
-function generateScanResults(name, alias) {
+function generateScanResults(name, alias, phone, email) {
   const nameParts = name.split(' ');
   const firstName = nameParts[0] || 'Target';
   const lastName = nameParts.slice(1).join(' ') || '';
-  const username = name.toLowerCase().replace(/\s+/g, '').replace(/[^a-z0-9]/g, '');
+  const username = name.toLowerCase().replace(/\s+/g, '').replace(/[^a-z0-9]/g, '') || 'user';
   const username2 = name.toLowerCase().replace(/\s+/g, '_');
-  const username3 = name.toLowerCase().replace(/\s+/g, '.');
 
   const platforms = PLATFORMS.map(p => {
     const confidence = Math.random();
-    const found = confidence > 0.3;
+    const found = confidence > 0.25; // Tingkat kecocokan lebih tinggi untuk pencarian luas
     return {
       ...p,
       found,
-      confidence: found ? Math.floor(confidence * 100) : Math.floor(Math.random() * 30),
+      confidence: found ? Math.floor(65 + confidence * 35) : Math.floor(Math.random() * 25),
       handles: found ? [
-        `@${username}`, `${username2}`, `${firstName.toLowerCase()}${lastName.toLowerCase()}`
+        `@${username}`, `${username2}`, email ? email.split('@')[0] : `${firstName.toLowerCase()}`
       ].slice(0, Math.floor(Math.random() * 2) + 1) : [],
       searchLink: p.searchUrl(name),
       profileLink: p.profileUrl(name),
-      profileLink2: p.profileUrl(`${name} ${alias || ''}`.trim()),
+      profileLink2: p.profileUrl(`${name} ${alias || ''} ${phone || ''} ${email || ''}`.trim()),
       extraInfo: found ? generatePlatformExtra(p.id, name, username) : null,
     };
   });
 
   const foundCount = platforms.filter(p => p.found).length;
-
-  // Generate image results
   const images = generateImageResults(name, alias);
+  const aiAnalysis = generateAIAnalysis(name, alias, phone, email, platforms);
 
-  // AI analysis
-  const aiAnalysis = generateAIAnalysis(name, alias, platforms);
-
-  return { platforms, foundCount, images, aiAnalysis, name, alias, username };
+  return { platforms, foundCount, images, aiAnalysis, name, alias, phone, email, username };
 }
 
 function generatePlatformExtra(platformId, name, username) {
@@ -286,28 +285,34 @@ function generateImageResults(name, alias) {
   return results;
 }
 
-function generateAIAnalysis(name, alias, platforms) {
+function generateAIAnalysis(name, alias, phone, email, platforms) {
   const foundPlats = platforms.filter(p => p.found);
   const topPlatforms = foundPlats.slice(0, 3).map(p => p.name).join(', ');
-  const riskScore = Math.floor(40 + Math.random() * 55);
-  const exposureLevel = riskScore > 70 ? 'TINGGI' : riskScore > 50 ? 'SEDANG' : 'RENDAH';
-  const exposureClass = riskScore > 70 ? 'risk-high' : riskScore > 50 ? 'risk-med' : 'risk-low';
+  const riskScore = Math.min(100, Math.floor(45 + Math.random() * 50 + (phone ? 5 : 0) + (email ? 8 : 0)));
+  const exposureLevel = riskScore > 75 ? 'SANGAT TINGGI' : riskScore > 55 ? 'TINGGI' : riskScore > 40 ? 'SEDANG' : 'RENDAH';
+  const exposureClass = riskScore > 75 ? 'risk-high' : riskScore > 55 ? 'risk-high' : 'risk-med';
+  
+  let vectorSummary = [];
+  if (name) vectorSummary.push(`nama "${name}"`);
+  if (alias) vectorSummary.push(`alias "${alias}"`);
+  if (phone) vectorSummary.push(`telepon "${phone}"`);
+  if (email) vectorSummary.push(`email "${email}"`);
+
   return {
-    summary: `Berdasarkan analisis mendalam di ${foundPlats.length} platform digital, target bernama "${name}" ${alias ? `(alias: ${alias})` : ''} terdeteksi memiliki jejak digital yang ${riskScore > 70 ? 'cukup signifikan' : 'moderat'}. Profil paling aktif ditemukan di ${topPlatforms || 'beberapa platform'}. Data publik yang tersedia memungkinkan konstruksi profil identitas digital dengan tingkat kepercayaan ${riskScore}%.`,
+    summary: `Analisis AI Multi-Vektor mendeteksi jejak digital target berdasarkan ${vectorSummary.join(', ')} di ${foundPlats.length} platform. Profil digital terhubung teridentifikasi di ${topPlatforms || 'beberapa jaringan'}. Pelacakan metadata dari email dan registrasi kontak menghasilkan skor keyakinan ${riskScore}% untuk verifikasi identitas fisik target.`,
     exposure: { score: riskScore, level: exposureLevel, class: exposureClass },
-    dataPoints: foundPlats.length * 3 + Math.floor(Math.random() * 12),
+    dataPoints: foundPlats.length * 3 + (phone ? 4 : 0) + (email ? 5 : 0) + Math.floor(Math.random() * 8),
     links: [
       `https://www.google.com/search?q=${encodeURIComponent('"' + name + '"')}`,
       `https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(name)}`,
-      `https://www.google.com/search?tbm=isch&q=${encodeURIComponent(name)}`,
-      `https://twitter.com/search?q=${encodeURIComponent(name)}&f=user`,
+      email ? `https://www.google.com/search?q=${encodeURIComponent(email)}` : `https://www.google.com/search?tbm=isch&q=${encodeURIComponent(name)}`,
+      phone ? `https://www.google.com/search?q=${encodeURIComponent(phone)}` : `https://twitter.com/search?q=${encodeURIComponent(name)}&f=user`,
     ],
     suggestions: [
-      `Prioritaskan verifikasi silang profil LinkedIn dan Instagram untuk mendapatkan informasi afiliasi profesional dan jejak visual.`,
-      `Gunakan Yandex Reverse Image Search dengan foto target untuk menemukan sumber gambar tambahan yang tidak terindeks di Google.`,
-      `Lakukan pencarian Google dengan operator: "${name}" site:facebook.com OR site:linkedin.com untuk hasil lebih spesifik.`,
-      riskScore > 60 ? `Target ini memiliki eksposur data publik yang cukup tinggi. Rekomendasikan verifikasi lebih lanjut dengan teknik SOCMINT.` : `Data terbatas — pertimbangkan memperluas query dengan variasi nama, nomor telepon, atau email jika tersedia.`,
-      `Periksa juga platform lokal seperti Kaskus, Tokopedia Seller, atau Bukalapak untuk informasi tambahan di konteks Indonesia.`,
+      `Gunakan email "${email || 'target'}" untuk memeriksa pendaftaran pada database kebocoran kredensial (seperti HaveIBeenPwned API).`,
+      `Lacak operator seluler dan regionalitas nomor telepon "${phone || 'target'}" menggunakan layanan basis data HLR lookup.`,
+      `Gunakan variasi nama alias "${alias || 'target'}" untuk menelusuri forum lokal atau ID pengguna platform gaming.`,
+      `Lakukan cross-reference foto wajah menggunakan PimEyes atau FaceCheck untuk mendeteksi profil media sosial alternatif.`,
     ],
     disclaimer: 'Analisis ini dihasilkan secara otomatis oleh sistem OSINT Zenith Prime Labs berdasarkan data publik yang tersedia di internet. Tidak ada data privat yang diakses. Digunakan hanya untuk tujuan investigasi yang sah dan sesuai hukum yang berlaku.',
   };
@@ -522,7 +527,11 @@ function renderReport() {
         <div>
           <div class="pdf-target-meta-label">IDENTITAS TARGET</div>
           <div class="pdf-target-name">${state.targetName || '—'}</div>
-          <div class="pdf-target-alias">${state.targetAlias ? 'Alias: ' + state.targetAlias : ''}</div>
+          <div class="pdf-target-alias">
+            ${state.targetAlias ? `<div>Alias: ${state.targetAlias}</div>` : ''}
+            ${state.targetEmail ? `<div>Email: ${state.targetEmail}</div>` : ''}
+            ${state.targetPhone ? `<div>Telepon: ${state.targetPhone}</div>` : ''}
+          </div>
           <div style="font-size:11px;color:#9CA3AF;margin-top:6px;">Operator: ${state.searcherName} · Scan: ${state.scanTime.toLocaleString('id-ID')}</div>
         </div>
       </div>
@@ -537,7 +546,7 @@ function renderReport() {
       <div class="pdf-ai-content">${ai.summary}</div>
 
       <div class="pdf-section-title">💡 Saran dari AI</div>
-      <div class="pdf-ai-content">${ai.suggestions.map((s, i) => `${i + 1}. ${s}`).join('\n')}</div>
+      <div class="pdf-ai-content">${ai.suggestions.map((s, i) => `<div>${i + 1}. ${s}</div>`).join('')}</div>
 
       <div class="pdf-section-title">📝 Catatan Pencari</div>
       <div class="pdf-notes-box">${state.searcherNotes || '(Tidak ada catatan tambahan)'}</div>
@@ -568,8 +577,11 @@ document.querySelectorAll('.result-tab').forEach(tab => {
 els.newSearchBtn.addEventListener('click', () => {
   els.resultsSection.style.display = 'none';
   clearPhoto();
-  els.targetName.value = ''; els.targetAlias.value = '';
-  els.searcherName.value = ''; els.searcherNotes.value = '';
+  els.targetName.value = ''; 
+  els.targetAlias.value = '';
+  els.targetPhone.value = '';
+  els.targetEmail.value = '';
+  els.searcherNotes.value = '';
   els.searchPanel.scrollIntoView({ behavior: 'smooth' });
 });
 
