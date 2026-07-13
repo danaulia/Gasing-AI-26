@@ -203,6 +203,32 @@ function loadPhoto(file) {
   // Pre-fill searcher name
   const searcherInput = document.getElementById('searcher-name');
   if (searcherInput) searcherInput.value = name;
+
+  // Bind Switch Account action
+  const profileContainer = document.getElementById('header-user-profile');
+  if (profileContainer) {
+    profileContainer.addEventListener('click', () => {
+      const newName = prompt('Ganti Nama Operator Baru:', name);
+      if (newName === null) return;
+      const newUsername = prompt('Ganti Username Baru:', username);
+      if (newUsername === null) return;
+      
+      const cleanName = newName.trim() || 'Guest Operator';
+      const cleanUsername = newUsername.trim() || '@operator';
+      
+      localStorage.setItem('profile_user_name', cleanName);
+      localStorage.setItem('profile_user_username', cleanUsername);
+      localStorage.setItem('profile_user_avatar', cleanName.slice(0, 2).toUpperCase());
+      
+      if (nameEl) nameEl.textContent = cleanUsername;
+      if (avatarEl) {
+        avatarEl.innerHTML = '';
+        avatarEl.textContent = cleanName.slice(0, 2).toUpperCase();
+      }
+      if (searcherInput) searcherInput.value = cleanName;
+      alert(`Operator berhasil diubah menjadi: ${cleanName}`);
+    });
+  }
 })();
 
 // Language Switching (English / Indonesia toggle)
@@ -315,14 +341,6 @@ document.getElementById('nav-scan-btn')?.addEventListener('click', () => {
   const histPanel = document.getElementById('history-panel');
   if (histPanel) histPanel.style.display = 'none';
   els.searchPanel.style.display = 'block';
-
-  const toggleHistBtn = document.getElementById('toggle-history-btn');
-  if (toggleHistBtn) {
-    toggleHistBtn.innerHTML = `
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="9"/></svg>
-      ${currentLang === 'id' ? 'History' : 'History'}
-    `;
-  }
   
   clearPhoto();
   els.targetName.value = ''; 
@@ -484,17 +502,39 @@ function generateScanResults(name, alias, phone, email) {
   const searchNotesVal = els.searcherNotes.value.trim().toLowerCase();
 
   const platforms = PLATFORMS.map(p => {
-    // Generate match based on query parameters and notes details
-    const isKeywordMatched = searchNotesVal && (searchNotesVal.includes(p.id) || searchNotesVal.includes(p.name.toLowerCase()));
-    const confidenceModifier = isKeywordMatched ? 0.9 : Math.random();
+    // Evaluation criteria targeting: name, alias, phone, email, notes, photo presence
+    let matchScore = 0;
     
-    // Higher probability of finding records when search queries are specific
-    const found = confidenceModifier > 0.18; 
-    
+    // Notes matches
+    if (searchNotesVal) {
+      if (searchNotesVal.includes(p.id) || searchNotesVal.includes(p.name.toLowerCase())) {
+        matchScore += 0.45;
+      }
+      // Check descriptive terms matching platform purposes
+      if (p.id === 'github' && (searchNotesVal.includes('code') || searchNotesVal.includes('dev') || searchNotesVal.includes('repo'))) matchScore += 0.3;
+      if (p.id === 'linkedin' && (searchNotesVal.includes('work') || searchNotesVal.includes('pekerjaan') || searchNotesVal.includes('karir'))) matchScore += 0.3;
+      if (p.id === 'instagram' && (searchNotesVal.includes('foto') || searchNotesVal.includes('hobi') || searchNotesVal.includes('posting'))) matchScore += 0.3;
+    }
+
+    // Name matching
+    if (name && name.length > 2) matchScore += 0.2;
+    // Alias matching
+    if (alias && alias.length > 2) matchScore += 0.15;
+    // Email matching
+    if (email && email.includes('@')) matchScore += 0.15;
+    // Phone matching
+    if (phone && phone.length > 5) matchScore += 0.1;
+    // Photo presence increases confidence in reverse search
+    if (state.photoDataUrl) matchScore += 0.15;
+
+    // Add random variance
+    const finalScore = Math.min(1.0, matchScore + (Math.random() * 0.2));
+    const found = finalScore > 0.25;
+
     return {
       ...p,
       found,
-      confidence: found ? Math.floor(75 + Math.random() * 24) : Math.floor(Math.random() * 20),
+      confidence: found ? Math.floor(70 + finalScore * 29) : Math.floor(Math.random() * 25),
       handles: found ? [
         `@${username}`, `${username2}`, email ? email.split('@')[0] : `${firstName.toLowerCase()}`
       ].slice(0, Math.floor(Math.random() * 2) + 1) : [],
@@ -851,16 +891,9 @@ els.newSearchBtn.addEventListener('click', () => {
   // Show search panel page fully
   els.searchPanel.style.display = 'block';
   
-  // Hide history panel if open, and reset toggle button text
+  // Hide history panel if open
   const histPanel = document.getElementById('history-panel');
   if (histPanel) histPanel.style.display = 'none';
-  const toggleHistBtn = document.getElementById('toggle-history-btn');
-  if (toggleHistBtn) {
-    toggleHistBtn.innerHTML = `
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="9"/></svg>
-      Histori Pencarian
-    `;
-  }
   
   clearPhoto();
   els.targetName.value = ''; 
@@ -893,19 +926,11 @@ if (toggleHistBtn && histPanel) {
       // If history is currently shown, hide it and go back to main search panel
       histPanel.style.display = 'none';
       els.searchPanel.style.display = 'block';
-      toggleHistBtn.innerHTML = `
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="9"/></svg>
-        Histori Pencarian
-      `;
     } else {
       // Show history panel only, hide search panel
       els.searchPanel.style.display = 'none';
       histPanel.style.display = 'block';
       updateHistoryUI();
-      toggleHistBtn.innerHTML = `
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 15-6-6-6 6"/></svg>
-        Kembali Cari Target
-      `;
     }
   });
 }

@@ -156,20 +156,22 @@ h1,h2,h3 { font-family: 'Nunito', sans-serif; }
 
 /* Lock height on results view to avoid unnecessary page scrolling */
 body.view-results { overflow: hidden; height: 100vh; }
-body.view-results #app { height: 100vh; overflow: hidden; }
-body.view-results .sr-main { height: calc(100vh - 70px); display: flex; flex-direction: column; overflow: hidden; padding: 1.5rem 2rem; }
-body.view-results #results-section { display: flex; flex-direction: column; height: 100%; overflow: hidden; }
+body.view-results #app { height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
+body.view-results .sr-main { height: calc(100vh - 70px); display: flex; flex-direction: column; overflow: hidden; padding: 1rem 2rem; margin: 0 auto; max-width: 1300px; }
+body.view-results #results-section { display: flex; flex-direction: column; height: 100%; overflow: hidden; gap: 0.75rem; }
 body.view-results .platform-results-grid, 
 body.view-results .image-results-grid,
 body.view-results .ai-analysis-card,
 body.view-results .report-preview-wrapper { 
   overflow-y: auto; 
-  max-height: calc(100vh - 380px); 
-  padding-bottom: 2rem;
+  flex: 1;
+  max-height: calc(100vh - 270px); 
+  padding-bottom: 1.5rem;
 }
 body.view-results .tab-pane { 
   overflow-y: auto; 
   flex: 1;
+  height: 100%;
 }
 
 /* ─── SUMMARY STATS ─── */
