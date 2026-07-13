@@ -164,38 +164,7 @@
           </div>
         </div>
 
-        <!-- Subsidiary Quick Links -->
-        <div class="section-label">Grup Perusahaan</div>
-        <div class="sub-quick-grid">
-          <div class="quick-card glass-panel" onclick="window.aetheriaApp.navigate('affiliation')">
-            <div class="quick-card-icon rose">
-              <i class="lucide-star" style="width:20px;height:20px;"></i>
-            </div>
-            <div class="quick-title">StarLive Group</div>
-            <p class="quick-desc">Induk perusahaan yang menaungi seluruh ekosistem bisnis strategis StarLive.</p>
-          </div>
-          <div class="quick-card glass-panel" onclick="window.aetheriaApp.navigate('affiliation')">
-            <div class="quick-card-icon sky">
-              <i class="lucide-tv-2" style="width:20px;height:20px;"></i>
-            </div>
-            <div class="quick-title">Solstice Media Info</div>
-            <p class="quick-desc">Divisi media dan informasi terdepan milik StarLive Group.</p>
-          </div>
-          <div class="quick-card glass-panel" onclick="window.aetheriaApp.navigate('affiliation')">
-            <div class="quick-card-icon violet">
-              <i class="lucide-graduation-cap" style="width:20px;height:20px;"></i>
-            </div>
-            <div class="quick-title">Polaris Academy</div>
-            <p class="quick-desc">Platform pendidikan dan pelatihan berbasis teknologi masa depan.</p>
-          </div>
-          <div class="quick-card glass-panel" onclick="window.aetheriaApp.navigate('affiliation')">
-            <div class="quick-card-icon amber">
-              <i class="lucide-cocktail" style="width:20px;height:20px;"></i>
-            </div>
-            <div class="quick-title">Stellaris Lounge</div>
-            <p class="quick-desc">Divisi hospitality &amp; entertainment premium milik StarLive Group.</p>
-          </div>
-        </div>
+
 
         <!-- Latest News Section -->
         <div class="section-label" style="margin-top:2.5rem;">Berita R&D Terbaru</div>
@@ -403,6 +372,14 @@
             </div>
             <div class="agent-name">Danny</div>
             <div class="agent-role">Chief Administrator</div>
+            <div class="agent-fraction-badge">Zenith Prime          <!-- Danny -->
+          <div class="agent-card glass-panel" onclick="window.aetheriaApp.openAgentModal('danny')">
+            <div class="agent-avatar-ring">
+              <div class="avatar-gradient-ring"></div>
+              <div class="agent-photo-placeholder" style="background:linear-gradient(135deg,#f43f5e,#a78bfa);">DN</div>
+            </div>
+            <div class="agent-name">Danny</div>
+            <div class="agent-role">Chief Administrator</div>
             <div class="agent-fraction-badge">Zenith Prime Labs</div>
             <div class="agent-status-tag">
               <span class="pulse-dot green"></span> Online — Lab Alpha
@@ -411,7 +388,6 @@
               <span class="achieve-badge">👑 Founder</span>
               <span class="achieve-badge">🔬 Researcher</span>
             </div>
-            <p class="agent-desc">Kepala administrator dan pendiri operasional Zenith Prime Labs. Memimpin pengembangan proyek intelijen digital dan keamanan siber.</p>
           </div>
 
           <!-- Noah -->
@@ -430,7 +406,6 @@
               <span class="achieve-badge">⚡ Veteran</span>
               <span class="achieve-badge">💻 Full-Stack</span>
             </div>
-            <p class="agent-desc">Senior developer spesialis AI pipeline dan sistem backend. Arsitek utama infrastruktur data Zenith Prime Labs.</p>
           </div>
 
           <!-- Alan -->
@@ -448,7 +423,6 @@
             <div class="agent-badges-row">
               <span class="achieve-badge">🛡️ Guardian</span>
             </div>
-            <p class="agent-desc">Analis keamanan yang berfokus pada threat intelligence dan penetration testing. Koordinator penangkalan ancaman siber real-time.</p>
           </div>
 
           <!-- Said -->
@@ -467,7 +441,6 @@
               <span class="achieve-badge">📊 Analyst</span>
               <span class="achieve-badge">🤖 ML Expert</span>
             </div>
-            <p class="agent-desc">Data scientist spesialis machine learning dan analitik prediktif. Mengembangkan model AI untuk proyek OSINT dan media analysis.</p>
           </div>
 
           <!-- Arvian -->
@@ -485,7 +458,6 @@
             <div class="agent-badges-row">
               <span class="achieve-badge">📡 Broadcast</span>
             </div>
-            <p class="agent-desc">Spesialis intelijen media dan verifikasi konten digital. Ahli dalam analisis media sosial dan deteksi informasi palsu.</p>
           </div>
 
           <!-- Lumina -->
@@ -504,7 +476,6 @@
               <span class="achieve-badge">🌟 Elite</span>
               <span class="achieve-badge">🧠 AI Lead</span>
             </div>
-            <p class="agent-desc">Kepala peneliti AI yang mengawasi pengembangan model kecerdasan buatan. Pemimpin tim Stealth Recon dan AI Media Analyzer.</p>
           </div>
 
           <!-- Honoka -->
@@ -522,7 +493,6 @@
             <div class="agent-badges-row">
               <span class="achieve-badge">⚙️ Engineer</span>
             </div>
-            <p class="agent-desc">Insinyur sistem yang memastikan infrastruktur Zenith Prime Labs berjalan optimal. Spesialis deployment dan pemantauan performa sistem.</p>
           </div>
 
           <!-- Evan -->
@@ -540,7 +510,6 @@
             <div class="agent-badges-row">
               <span class="achieve-badge">📋 Manager</span>
             </div>
-            <p class="agent-desc">Manajer operasional yang mengkoordinasikan aktivitas lintas divisi StarLive Group. Penghubung antara Zenith Prime Labs dan Stellaris Lounge.</p>
           </div>
 
         </div>
@@ -1192,35 +1161,36 @@
       <div class="profile-info" style="padding:20px;">
         <!-- Editable Name & Bio -->
         <div class="form-group" style="margin-bottom:0.75rem;">
-          <label class="form-label" style="font-size:0.7rem;color:var(--text-faint);">Nama Lengkap (Bisa Edit)</label>
+          <label class="form-label" style="font-size:0.7rem;color:var(--text-faint);">Nama Lengkap</label>
           <input type="text" id="profile-edit-name" class="form-input" style="font-size:1.1rem;font-weight:700;padding:0.35rem 0.65rem;" value="User Utama">
         </div>
 
-        <div class="form-group" style="margin-bottom:1rem;">
-          <label class="form-label" style="font-size:0.7rem;color:var(--text-faint);">Bio Deskripsi (Bisa Edit)</label>
-          <textarea id="profile-edit-bio" class="form-input" style="font-size:0.82rem;line-height:1.5;min-height:50px;padding:0.4rem 0.65rem;" placeholder="Tulis bio singkat Anda..."></textarea>
+        <div class="form-group" style="margin-bottom:1.25rem;">
+          <label class="form-label" style="font-size:0.7rem;color:var(--text-faint);">Bio Deskripsi (Max 300 Karakter)</label>
+          <textarea id="profile-edit-bio" class="form-input" style="font-size:0.85rem;line-height:1.6;min-height:90px;padding:0.5rem 0.75rem;width:100%;resize:vertical;" maxlength="300" placeholder="Tulis bio singkat Anda..."></textarea>
+          <div id="profile-bio-charcount" style="font-size:0.65rem;color:var(--text-faint);text-align:right;margin-top:0.25rem;">0 / 300</div>
         </div>
 
-        <!-- Readonly Fields -->
+        <!-- System Role & Corporate Info (Admin can edit, user read-only) -->
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:0.85rem;">
           <div>
-            <div style="font-size:0.65rem;color:var(--text-faint);text-transform:uppercase;font-family:'DM Mono',monospace;">Username</div>
-            <div id="profile-display-username" style="font-size:0.82rem;font-weight:600;color:var(--text-body);">@danaulia</div>
+            <div style="font-size:0.65rem;color:var(--text-faint);text-transform:uppercase;font-family:'DM Mono',monospace;margin-bottom:0.25rem;">Username</div>
+            <input type="text" id="profile-edit-username" class="form-input" style="font-size:0.82rem;font-weight:600;padding:0.3rem 0.5rem;" value="@danaulia" readonly>
           </div>
           <div>
-            <div style="font-size:0.65rem;color:var(--text-faint);text-transform:uppercase;font-family:'DM Mono',monospace;">Email</div>
-            <div id="profile-display-email" style="font-size:0.82rem;font-weight:600;color:var(--text-body);">danaulia@starlive.id</div>
+            <div style="font-size:0.65rem;color:var(--text-faint);text-transform:uppercase;font-family:'DM Mono',monospace;margin-bottom:0.25rem;">Email</div>
+            <input type="email" id="profile-edit-email" class="form-input" style="font-size:0.82rem;font-weight:600;padding:0.3rem 0.5rem;" value="danaulia@starlive.id" readonly>
           </div>
         </div>
 
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:0.85rem;">
           <div>
-            <div style="font-size:0.65rem;color:var(--text-faint);text-transform:uppercase;font-family:'DM Mono',monospace;">Fraksi Perusahaan</div>
-            <div id="profile-display-fraction" style="font-size:0.82rem;font-weight:600;color:var(--text-body);">Zenith Prime Labs</div>
+            <div style="font-size:0.65rem;color:var(--text-faint);text-transform:uppercase;font-family:'DM Mono',monospace;margin-bottom:0.25rem;">Fraksi Perusahaan</div>
+            <input type="text" id="profile-edit-fraction" class="form-input" style="font-size:0.82rem;font-weight:600;padding:0.3rem 0.5rem;" value="Zenith Prime Labs" readonly>
           </div>
           <div>
-            <div style="font-size:0.65rem;color:var(--text-faint);text-transform:uppercase;font-family:'DM Mono',monospace;">Role / Jabatan</div>
-            <div id="profile-display-role" style="font-size:0.82rem;font-weight:600;color:var(--text-body);">Guest Administrator</div>
+            <div style="font-size:0.65rem;color:var(--text-faint);text-transform:uppercase;font-family:'DM Mono',monospace;margin-bottom:0.25rem;">Role / Jabatan</div>
+            <input type="text" id="profile-edit-role" class="form-input" style="font-size:0.82rem;font-weight:600;padding:0.3rem 0.5rem;" value="Guest Administrator" readonly>
           </div>
         </div>
 

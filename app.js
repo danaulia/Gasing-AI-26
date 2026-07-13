@@ -517,19 +517,37 @@ class AetheriaApp {
     const avatarInput = document.getElementById('profile-avatar-input');
     const saveBtn = document.getElementById('profile-save-btn');
 
+    // Inputs
+    const nameInput = document.getElementById('profile-edit-name');
+    const bioTextarea = document.getElementById('profile-edit-bio');
+    const coverArea = document.getElementById('profile-cover-area');
+    const avatarDisplay = document.getElementById('profile-avatar-display');
+    const charCounter = document.getElementById('profile-bio-charcount');
+
+    const usernameInput = document.getElementById('profile-edit-username');
+    const emailInput = document.getElementById('profile-edit-email');
+    const fractionInput = document.getElementById('profile-edit-fraction');
+    const roleInput = document.getElementById('profile-edit-role');
+
     // Load initial edit fields from state/localStorage
     const localName = localStorage.getItem('profile_user_name') || 'User Utama';
     const localBio = localStorage.getItem('profile_user_bio') || 'Guest Administrator of StarLive Group. Cyber security enthusiast.';
     const localCover = localStorage.getItem('profile_user_cover') || 'assets/scene_nte_night.png';
     const localAvatar = localStorage.getItem('profile_user_avatar') || 'US';
 
-    const nameInput = document.getElementById('profile-edit-name');
-    const bioTextarea = document.getElementById('profile-edit-bio');
-    const coverArea = document.getElementById('profile-cover-area');
-    const avatarDisplay = document.getElementById('profile-avatar-display');
+    const localUsername = localStorage.getItem('profile_user_username') || '@danaulia';
+    const localEmail = localStorage.getItem('profile_user_email') || 'danaulia@starlive.id';
+    const localFraction = localStorage.getItem('profile_user_fraction') || 'Zenith Prime Labs';
+    const localRole = localStorage.getItem('profile_user_role') || 'Guest Administrator';
 
     if (nameInput) nameInput.value = localName;
-    if (bioTextarea) bioTextarea.value = localBio;
+    if (bioTextarea) {
+      bioTextarea.value = localBio;
+      if (charCounter) charCounter.textContent = `${localBio.length} / 300`;
+      bioTextarea.addEventListener('input', () => {
+        if (charCounter) charCounter.textContent = `${bioTextarea.value.length} / 300`;
+      });
+    }
     if (coverArea && localCover) coverArea.style.backgroundImage = `url('${localCover}')`;
     if (avatarDisplay) {
       if (localAvatar.startsWith('data:image')) {
@@ -538,6 +556,37 @@ class AetheriaApp {
         avatarDisplay.textContent = localAvatar;
       }
     }
+
+    if (usernameInput) usernameInput.value = localUsername;
+    if (emailInput) emailInput.value = localEmail;
+    if (fractionInput) fractionInput.value = localFraction;
+    if (roleInput) roleInput.value = localRole;
+
+    // Check if current user is Admin to allow full edit
+    const checkAdminPrivileges = () => {
+      const isAdmin = document.body.classList.contains('admin-logged-in') || localRole.toLowerCase().includes('admin') || localRole.toLowerCase().includes('founder');
+      if (isAdmin) {
+        if (usernameInput) usernameInput.removeAttribute('readonly');
+        if (emailInput) emailInput.removeAttribute('readonly');
+        if (fractionInput) fractionInput.removeAttribute('readonly');
+        if (roleInput) roleInput.removeAttribute('readonly');
+      } else {
+        if (usernameInput) usernameInput.setAttribute('readonly', 'true');
+        if (emailInput) emailInput.setAttribute('readonly', 'true');
+        if (fractionInput) fractionInput.setAttribute('readonly', 'true');
+        if (roleInput) roleInput.setAttribute('readonly', 'true');
+      }
+    };
+
+    // Check on modal open / trigger
+    document.addEventListener('click', (e) => {
+      const profileBtn = e.target.closest('#open-profile-btn') || e.target.closest('#profile-hud-name');
+      if (profileBtn) {
+        checkAdminPrivileges();
+        const modal = document.getElementById('profile-modal');
+        if (modal) modal.classList.add('active');
+      }
+    });
 
     if (coverInput) {
       coverInput.addEventListener('change', (e) => {
@@ -571,9 +620,22 @@ class AetheriaApp {
       saveBtn.addEventListener('click', () => {
         const nameVal = nameInput ? nameInput.value.trim() : 'User Utama';
         const bioVal = bioTextarea ? bioTextarea.value.trim() : '';
-        
+
         localStorage.setItem('profile_user_name', nameVal);
         localStorage.setItem('profile_user_bio', bioVal);
+
+        // Save admin editable fields if modified
+        const isAdmin = document.body.classList.contains('admin-logged-in') || localRole.toLowerCase().includes('admin') || localRole.toLowerCase().includes('founder');
+        if (isAdmin) {
+          if (usernameInput) localStorage.setItem('profile_user_username', usernameInput.value.trim());
+          if (emailInput) localStorage.setItem('profile_user_email', emailInput.value.trim());
+          if (fractionInput) localStorage.setItem('profile_user_fraction', fractionInput.value.trim());
+          if (roleInput) {
+            localStorage.setItem('profile_user_role', roleInput.value.trim());
+            // If they edited their own role, update local state
+            checkAdminPrivileges();
+          }
+        }
 
         // Update display on settings panel if open
         const hudName = document.getElementById('profile-hud-name');
