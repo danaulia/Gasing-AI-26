@@ -220,9 +220,9 @@ const SCENES = [
 ];
 
 const DEFAULT_TRACKS = [
-  { id: '1', name: 'Moonlight Sonata (Beethoven)', artist: 'Ludwig van Beethoven', duration: '5:36', src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
-  { id: '2', name: 'Symphony No. 5 (Beethoven)', artist: 'Ludwig van Beethoven', duration: '7:21', src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3' },
-  { id: '3', name: 'Fur Elise (Beethoven)', artist: 'Ludwig van Beethoven', duration: '3:04', src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3' }
+  { id: '1', name: 'Moonlight Sonata (Beethoven)', artist: 'Ludwig van Beethoven', duration: '5:36', src: 'https://cctrax.com/music/classical/beethoven/moonlight_sonata.mp3' || 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
+  { id: '2', name: 'Symphony No. 5 (Beethoven)', artist: 'Ludwig van Beethoven', duration: '7:21', src: 'https://upload.wikimedia.org/wikipedia/commons/7/77/Beethoven_-_Symphony_No._5_in_C_minor_-_I._Allegro_con_brio.ogg' },
+  { id: '3', name: 'Fur Elise (Beethoven)', artist: 'Ludwig van Beethoven', duration: '3:04', src: 'https://upload.wikimedia.org/wikipedia/commons/0/07/Ludwig_van_Beethoven_-_F%C3%BCr_Elise.ogg' }
 ];
 
 // ─────────────────────────────────────────
@@ -438,6 +438,28 @@ class ZenithSettings {
     apply('dashboard-eyebrow', 'dashboard_eyebrow');
     apply('dashboard-page-title', 'dashboard_title');
     apply('dashboard-page-subtitle', 'dashboard_subtitle');
+
+    // Portal login btn i18n
+    const loginBtn = document.getElementById('portal-login-btn');
+    if (loginBtn && t.login_btn) {
+      const isLogged = document.body.classList.contains('admin-logged-in');
+      loginBtn.innerHTML = isLogged
+        ? `<i class="lucide-log-out" style="width:14px;height:14px;"></i> ${t.logout_btn || 'Keluar'}`
+        : `<i class="lucide-shield" style="width:14px;height:14px;"></i> ${t.login_btn || 'Portal Login'}`;
+    }
+
+    // User status text
+    const statusText = document.querySelector('#user-status-indicator span.text-xxs');
+    if (statusText && t.status_offline) {
+      const isLogged = document.body.classList.contains('admin-logged-in');
+      statusText.textContent = isLogged ? (t.status_online || 'Aman') : (t.status_offline || 'Belum Masuk');
+    }
+
+    // Settings title
+    const settingsTitle = document.querySelector('.settings-title');
+    if (settingsTitle && t.settings_title) settingsTitle.textContent = t.settings_title;
+    
+    if (window.initIcons) window.initIcons();
   }
 
   setSeason(season) {

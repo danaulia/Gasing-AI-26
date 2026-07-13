@@ -121,12 +121,17 @@
                 <p class="slide-desc">Para peneliti dan insinyur terbaik yang mendorong batas teknologi kecerdasan buatan dan analitik data.</p>
               </div>
             </div>
-            <div class="carousel-slide" style="background-image:url('assets/home_slide_3.png');">
+            <div class="carousel-slide" style="background-image:url('assets/gallery_anime_3.png');">
               <div class="slide-caption-wrapper">
-                <h3 class="slide-title">Laboratorium Inovasi</h3>
-                <p class="slide-desc">Fasilitas riset canggih dengan infrastruktur AI terdepan untuk menghasilkan solusi nyata.</p>
+                <h3 class="slide-title">Penghargaan Agen Zenith</h3>
+                <p class="slide-desc">Lima agen berprestasi berfoto bersama piagam penghargaan atas kontribusi luar biasa dalam bidang inovasi.</p>
               </div>
             </div>
+            
+            <!-- Manual navigation buttons -->
+            <button id="carousel-prev-btn" class="carousel-arrow-btn prev" aria-label="Previous"><i class="lucide-chevron-left"></i></button>
+            <button id="carousel-next-btn" class="carousel-arrow-btn next" aria-label="Next"><i class="lucide-chevron-right"></i></button>
+
             <div class="carousel-navigation">
               <button class="carousel-dot active" data-slide-to="0" aria-label="Slide 1"></button>
               <button class="carousel-dot" data-slide-to="1" aria-label="Slide 2"></button>
@@ -191,6 +196,48 @@
             <p class="quick-desc">Divisi hospitality &amp; entertainment premium milik StarLive Group.</p>
           </div>
         </div>
+
+        <!-- Latest News Section -->
+        <div class="section-label" style="margin-top:2.5rem;">Berita R&D Terbaru</div>
+        <div class="news-grid">
+          <div class="news-card glass-panel" onclick="window.aetheriaApp.openNewsModal('news-1')">
+            <div class="news-thumbnail" style="background-image:url('assets/gallery_anime_1.png');">
+              <span class="news-badge">TERBARU</span>
+            </div>
+            <div class="news-content">
+              <span class="news-date">13 Juli 2026</span>
+              <h3 class="news-title">Peluncuran Portal Investigasi Stealth Recon V4 Terkini</h3>
+              <p class="news-summary">Zenith Prime Labs meluncurkan portal deteksi multi-vektor dengan optimalisasi pencarian wajah dan data email...</p>
+              <span class="news-more">Baca Selengkapnya →</span>
+            </div>
+          </div>
+
+          <div class="news-card glass-panel" onclick="window.aetheriaApp.openNewsModal('news-2')">
+            <div class="news-thumbnail placeholder violet">
+              <i class="lucide-cpu" style="width:28px;height:28px;"></i>
+              <span class="news-badge">R&D</span>
+            </div>
+            <div class="news-content">
+              <span class="news-date">10 Juli 2026</span>
+              <h3 class="news-title">Uji Coba Pengaman Enkripsi Quantum Key Distribusi RSA-Q4096</h3>
+              <p class="news-summary">Implementasi pengamanan transmisi serat optik antar divisi anak perusahaan StarLive Group berhasil...</p>
+              <span class="news-more">Baca Selengkapnya →</span>
+            </div>
+          </div>
+
+          <div class="news-card glass-panel" onclick="window.aetheriaApp.openNewsModal('news-3')">
+            <div class="news-thumbnail placeholder rose">
+              <i class="lucide-network" style="width:28px;height:28px;"></i>
+              <span class="news-badge">SINKRONISASI</span>
+            </div>
+            <div class="news-content">
+              <span class="news-date">07 Juli 2026</span>
+              <h3 class="news-title">Integrasi Algoritma Deteksi AI Media Analyzer</h3>
+              <p class="news-summary">Divisi Riset memfinalisasi modul pengenalan pixel rekayasa untuk menyaring hoaks visual secara otomatis...</p>
+              <span class="news-more">Baca Selengkapnya →</span>
+            </div>
+          </div>
+        </div>
       </section>
 
       <!-- ───────────── 2. AFFILIATION ───────────── -->
@@ -204,7 +251,7 @@
         <div class="affiliation-grid">
 
           <!-- StarLive Group — Parent -->
-          <div class="subsidiary-card glass-panel parent-card">
+          <div class="subsidiary-card glass-panel parent-card" onclick="window.aetheriaApp.openCompanyModal('starlive-group')">
             <div class="sub-color-strip strip-gold"></div>
             <div class="sub-icon-row">
               <div class="sub-icon-badge badge-gold">SLG</div>
@@ -217,18 +264,18 @@
             </div>
             <div class="sub-name">StarLive Group</div>
             <div class="sub-sector">Holding &amp; Central Managerial</div>
-            <p class="sub-body">Pusat atau induk usaha aliansi. Menangani manajerial terpusat, pengawasan kinerja bisnis, integrasi tata kelola hukum, perencanaan keuangan makro, serta arah strategis jangka panjang.</p>
+            <p class="sub-body">Pusat atau induk usaha aliansi. Menangani manajerial terpusat, pengawasan kinerja bisnis... <span class="read-more-link">baca selengkapnya</span></p>
             <div class="sub-stats-row">
               <div class="stat-item"><span class="stat-val">5</span><span class="stat-lbl">Anak Usaha</span></div>
               <div class="stat-item"><span class="stat-val">2019</span><span class="stat-lbl">Berdiri</span></div>
             </div>
-            <a href="#" class="action-btn sub-action-btn">
+            <button class="action-btn sub-action-btn" style="pointer-events:none;">
               Profil Grup <i class="lucide-external-link" style="width:13px;height:13px;"></i>
-            </a>
+            </button>
           </div>
 
           <!-- Solstice Media Info -->
-          <div class="subsidiary-card glass-panel">
+          <div class="subsidiary-card glass-panel" onclick="window.aetheriaApp.openCompanyModal('solstice-media')">
             <div class="sub-color-strip strip-sky"></div>
             <div class="sub-icon-row">
               <div class="sub-icon-badge badge-sky">SMI</div>
@@ -238,18 +285,18 @@
             </div>
             <div class="sub-name">Solstice Media Info</div>
             <div class="sub-sector">Digital Intelligence &amp; Media Industry</div>
-            <p class="sub-body">Bergerak di bidang industri intelijen digital dan media. Mengelola penyiaran berita digital, analisis OSINT media, monitoring opini publik, serta manajemen reputasi cyber aliansi.</p>
+            <p class="sub-body">Bergerak di bidang industri intelijen digital dan media. Mengelola penyiaran berita... <span class="read-more-link">baca selengkapnya</span></p>
             <div class="sub-stats-row">
               <div class="stat-item"><span class="stat-val">Media</span><span class="stat-lbl">Fokus</span></div>
               <div class="stat-item"><span class="stat-val">Digital</span><span class="stat-lbl">Sektor</span></div>
             </div>
-            <a href="#" class="action-btn sub-action-btn">
+            <button class="action-btn sub-action-btn" style="pointer-events:none;">
               Buka Website <i class="lucide-external-link" style="width:13px;height:13px;"></i>
-            </a>
+            </button>
           </div>
 
           <!-- Zenith Prime Labs — Us -->
-          <div class="subsidiary-card glass-panel us-card">
+          <div class="subsidiary-card glass-panel us-card" onclick="window.aetheriaApp.openCompanyModal('zenith-prime')">
             <div class="sub-color-strip strip-violet"></div>
             <div class="sub-icon-row">
               <div class="sub-icon-badge badge-violet">ZPL</div>
@@ -262,18 +309,18 @@
             </div>
             <div class="sub-name">Zenith Prime Labs</div>
             <div class="sub-sector">Research &amp; Development Technology</div>
-            <p class="sub-body">Divisi R&D utama StarLive Group — mengembangkan teknologi AI, analitik intelijen, sistem keamanan digital, dan alat investigasi berbasis machine learning untuk masa depan yang lebih cerdas.</p>
+            <p class="sub-body">Divisi R&D utama StarLive Group — mengembangkan teknologi AI, analitik intelijen... <span class="read-more-link">baca selengkapnya</span></p>
             <div class="sub-stats-row">
               <div class="stat-item"><span class="stat-val">5+</span><span class="stat-lbl">Proyek Aktif</span></div>
               <div class="stat-item"><span class="stat-val">8</span><span class="stat-lbl">Admin</span></div>
             </div>
-            <a href="#" class="action-btn sub-action-btn">
+            <button class="action-btn sub-action-btn" style="pointer-events:none;">
               Portal ZPL <i class="lucide-flask-conical" style="width:13px;height:13px;"></i>
-            </a>
+            </button>
           </div>
 
           <!-- Polaris Academy -->
-          <div class="subsidiary-card glass-panel">
+          <div class="subsidiary-card glass-panel" onclick="window.aetheriaApp.openCompanyModal('polaris-academy')">
             <div class="sub-color-strip strip-rose"></div>
             <div class="sub-icon-row">
               <div class="sub-icon-badge badge-rose">PA</div>
@@ -283,18 +330,18 @@
             </div>
             <div class="sub-name">Polaris Academy</div>
             <div class="sub-sector">Education &amp; Training Industry</div>
-            <p class="sub-body">Bergerak di industri pendidikan dan pelatihan digital. Memberikan kurikulum intensif pertahanan siber, sertifikasi kompetensi developer, dan inkubasi talenta riset.</p>
+            <p class="sub-body">Bergerak di industri pendidikan dan pelatihan digital. Memberikan kurikulum intensif... <span class="read-more-link">baca selengkapnya</span></p>
             <div class="sub-stats-row">
               <div class="stat-item"><span class="stat-val">Edukasi</span><span class="stat-lbl">Fokus</span></div>
               <div class="stat-item"><span class="stat-val">Pelatihan</span><span class="stat-lbl">Sektor</span></div>
             </div>
-            <a href="#" class="action-btn sub-action-btn">
+            <button class="action-btn sub-action-btn" style="pointer-events:none;">
               Buka Website <i class="lucide-external-link" style="width:13px;height:13px;"></i>
-            </a>
+            </button>
           </div>
 
           <!-- Stellaris Lounge -->
-          <div class="subsidiary-card glass-panel">
+          <div class="subsidiary-card glass-panel" onclick="window.aetheriaApp.openCompanyModal('stellaris-lounge')">
             <div class="sub-color-strip strip-amber"></div>
             <div class="sub-icon-row">
               <div class="sub-icon-badge badge-amber">SL</div>
@@ -304,18 +351,18 @@
             </div>
             <div class="sub-name">Stellaris Lounge</div>
             <div class="sub-sector">Food &amp; Beverage Industry</div>
-            <p class="sub-body">Bergerak di bidang bisnis FnB premium. Tempat istirahat eksekutif, networking informal pakar siber, serta lounge interaksi strategis aliansi StarLive Group.</p>
+            <p class="sub-body">Bergerak di bidang bisnis FnB premium. Tempat istirahat eksekutif, networking... <span class="read-more-link">baca selengkapnya</span></p>
             <div class="sub-stats-row">
               <div class="stat-item"><span class="stat-val">FnB</span><span class="stat-lbl">Fokus</span></div>
               <div class="stat-item"><span class="stat-val">Premium</span><span class="stat-lbl">Tier</span></div>
             </div>
-            <a href="#" class="action-btn sub-action-btn">
+            <button class="action-btn sub-action-btn" style="pointer-events:none;">
               Buka Website <i class="lucide-external-link" style="width:13px;height:13px;"></i>
-            </a>
+            </button>
           </div>
 
           <!-- Nova Creative Studio -->
-          <div class="subsidiary-card glass-panel">
+          <div class="subsidiary-card glass-panel" onclick="window.aetheriaApp.openCompanyModal('nova-creative')">
             <div class="sub-color-strip strip-mint"></div>
             <div class="sub-icon-row">
               <div class="sub-icon-badge badge-mint">NCS</div>
@@ -325,14 +372,14 @@
             </div>
             <div class="sub-name">Nova Creative Studio</div>
             <div class="sub-sector">Entertainment &amp; Creative Industry</div>
-            <p class="sub-body">Bergerak di industri hiburan (entertainment) dan produksi kreatif. Mengembangkan media hiburan audio visual, kekayaan intelektual (IP) digital, serta grafis multimedia interaktif.</p>
+            <p class="sub-body">Bergerak di industri hiburan (entertainment) dan produksi kreatif. Mengembangkan media... <span class="read-more-link">baca selengkapnya</span></p>
             <div class="sub-stats-row">
               <div class="stat-item"><span class="stat-val">Hiburan</span><span class="stat-lbl">Fokus</span></div>
               <div class="stat-item"><span class="stat-val">Animasi</span><span class="stat-lbl">Karya</span></div>
             </div>
-            <a href="#" class="action-btn sub-action-btn">
+            <button class="action-btn sub-action-btn" style="pointer-events:none;">
               Buka Website <i class="lucide-external-link" style="width:13px;height:13px;"></i>
-            </a>
+            </button>
           </div>
 
         </div>
@@ -349,7 +396,7 @@
         <div class="agent-grid">
 
           <!-- Danny -->
-          <div class="agent-card glass-panel">
+          <div class="agent-card glass-panel" onclick="window.aetheriaApp.openAgentModal('danny')">
             <div class="agent-avatar-ring">
               <div class="avatar-gradient-ring"></div>
               <div class="agent-photo-placeholder" style="background:linear-gradient(135deg,#f43f5e,#a78bfa);">DN</div>
@@ -368,7 +415,7 @@
           </div>
 
           <!-- Noah -->
-          <div class="agent-card glass-panel">
+          <div class="agent-card glass-panel" onclick="window.aetheriaApp.openAgentModal('noah')">
             <div class="agent-avatar-ring">
               <div class="avatar-gradient-ring"></div>
               <div class="agent-photo-placeholder" style="background:linear-gradient(135deg,#38bdf8,#34d399);">NH</div>
@@ -387,7 +434,7 @@
           </div>
 
           <!-- Alan -->
-          <div class="agent-card glass-panel">
+          <div class="agent-card glass-panel" onclick="window.aetheriaApp.openAgentModal('alan')">
             <div class="agent-avatar-ring">
               <div class="avatar-gradient-ring"></div>
               <div class="agent-photo-placeholder" style="background:linear-gradient(135deg,#fbbf24,#f97316);">AL</div>
@@ -405,7 +452,7 @@
           </div>
 
           <!-- Said -->
-          <div class="agent-card glass-panel">
+          <div class="agent-card glass-panel" onclick="window.aetheriaApp.openAgentModal('said')">
             <div class="agent-avatar-ring">
               <div class="avatar-gradient-ring"></div>
               <div class="agent-photo-placeholder" style="background:linear-gradient(135deg,#8b5cf6,#ec4899);">SD</div>
@@ -424,7 +471,7 @@
           </div>
 
           <!-- Arvian -->
-          <div class="agent-card glass-panel">
+          <div class="agent-card glass-panel" onclick="window.aetheriaApp.openAgentModal('arvian')">
             <div class="agent-avatar-ring">
               <div class="avatar-gradient-ring"></div>
               <div class="agent-photo-placeholder" style="background:linear-gradient(135deg,#14b8a6,#3b82f6);">AV</div>
@@ -442,7 +489,7 @@
           </div>
 
           <!-- Lumina -->
-          <div class="agent-card glass-panel">
+          <div class="agent-card glass-panel" onclick="window.aetheriaApp.openAgentModal('lumina')">
             <div class="agent-avatar-ring">
               <div class="avatar-gradient-ring"></div>
               <div class="agent-photo-placeholder" style="background:linear-gradient(135deg,#f9a8d4,#c084fc);">LM</div>
@@ -461,7 +508,7 @@
           </div>
 
           <!-- Honoka -->
-          <div class="agent-card glass-panel">
+          <div class="agent-card glass-panel" onclick="window.aetheriaApp.openAgentModal('honoka')">
             <div class="agent-avatar-ring">
               <div class="avatar-gradient-ring"></div>
               <div class="agent-photo-placeholder" style="background:linear-gradient(135deg,#fb923c,#f472b6);">HK</div>
@@ -479,7 +526,7 @@
           </div>
 
           <!-- Evan -->
-          <div class="agent-card glass-panel">
+          <div class="agent-card glass-panel" onclick="window.aetheriaApp.openAgentModal('evan')">
             <div class="agent-avatar-ring">
               <div class="avatar-gradient-ring"></div>
               <div class="agent-photo-placeholder" style="background:linear-gradient(135deg,#6366f1,#06b6d4);">EV</div>
@@ -1121,40 +1168,98 @@
 
   <!-- ═════════════ PROFILE MODAL ═════════════ -->
   <div id="profile-modal" class="modal-wrapper">
-    <div class="modal-content-card glass-panel" style="max-width:460px;padding:0;overflow:hidden;">
-      <button class="close-modal close-profile-modal" aria-label="Tutup">&times;</button>
+    <div class="modal-content-card glass-panel" style="max-width:480px;padding:0;overflow:hidden;">
+      <button class="close-modal close-profile-modal" aria-label="Tutup" id="close-profile-modal-btn">&times;</button>
       <!-- Cover Photo -->
-      <div class="profile-cover" id="profile-cover-area">
-        <div class="profile-cover-overlay"></div>
-        <label class="profile-cover-edit" title="Ganti foto cover" id="profile-cover-edit-btn">
-          <i data-lucide="camera" style="width:14px;height:14px;"></i>
+      <div class="profile-cover" id="profile-cover-area" style="background-image:url('assets/scene_nte_night.png');background-size:cover;height:120px;position:relative;">
+        <div class="profile-cover-overlay" style="position:absolute;inset:0;background:rgba(0,0,0,0.3);"></div>
+        <label class="profile-cover-edit" title="Ganti foto cover" id="profile-cover-edit-btn" style="position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,0.6);padding:4px 8px;border-radius:4px;color:#fff;cursor:pointer;font-size:0.7rem;display:flex;align-items:center;gap:4px;">
+          <i data-lucide="camera" style="width:12px;height:12px;"></i> Ubah Cover
           <input type="file" id="profile-cover-input" accept="image/*" style="display:none;">
         </label>
       </div>
       <!-- Avatar -->
-      <div class="profile-avatar-area">
-        <div class="profile-avatar-ring">
-          <div id="profile-avatar-display" class="profile-avatar">DA</div>
+      <div class="profile-avatar-area" style="margin-top:-40px;padding:0 20px;display:flex;align-items:flex-end;gap:12px;position:relative;z-index:2;">
+        <div class="profile-avatar-ring" style="width:80px;height:80px;border-radius:50%;border:3px solid var(--bg-card);overflow:hidden;background:#a78bfa;">
+          <div id="profile-avatar-display" class="profile-avatar" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:800;color:#fff;background:linear-gradient(135deg, var(--season-accent), var(--season-accent2));">US</div>
         </div>
-        <label class="profile-avatar-edit" title="Ganti foto profil" id="profile-avatar-edit-btn">
-          <i data-lucide="camera" style="width:12px;height:12px;"></i>
+        <label class="profile-avatar-edit" title="Ganti foto profil" id="profile-avatar-edit-btn" style="background:rgba(0,0,0,0.6);padding:4px;border-radius:50%;color:#fff;cursor:pointer;margin-bottom:4px;margin-left:-25px;display:flex;align-items:center;justify-content:center;width:24px;height:24px;">
+          <i data-lucide="camera" style="width:10px;height:10px;"></i>
           <input type="file" id="profile-avatar-input" accept="image/*" style="display:none;">
         </label>
       </div>
-      <div class="profile-info">
-        <div class="profile-name" id="profile-display-name">Danny</div>
-        <div class="profile-fraction" id="profile-display-fraction">
-          <i data-lucide="flask-conical" style="width:12px;height:12px;"></i> Zenith Prime Labs
+      
+      <div class="profile-info" style="padding:20px;">
+        <!-- Editable Name & Bio -->
+        <div class="form-group" style="margin-bottom:0.75rem;">
+          <label class="form-label" style="font-size:0.7rem;color:var(--text-faint);">Nama Lengkap (Bisa Edit)</label>
+          <input type="text" id="profile-edit-name" class="form-input" style="font-size:1.1rem;font-weight:700;padding:0.35rem 0.65rem;" value="User Utama">
         </div>
-        <div class="profile-registered" id="profile-display-registered">
-          <i data-lucide="calendar" style="width:11px;height:11px;"></i> Bergabung: Juli 2026
+
+        <div class="form-group" style="margin-bottom:1rem;">
+          <label class="form-label" style="font-size:0.7rem;color:var(--text-faint);">Bio Deskripsi (Bisa Edit)</label>
+          <textarea id="profile-edit-bio" class="form-input" style="font-size:0.82rem;line-height:1.5;min-height:50px;padding:0.4rem 0.65rem;" placeholder="Tulis bio singkat Anda..."></textarea>
         </div>
-        <div class="profile-badges" id="profile-display-badges">
-          <span class="achieve-badge">👑 Founder</span>
-          <span class="achieve-badge">🛡️ Admin</span>
-          <span class="achieve-badge">🔬 Researcher</span>
+
+        <!-- Readonly Fields -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:0.85rem;">
+          <div>
+            <div style="font-size:0.65rem;color:var(--text-faint);text-transform:uppercase;font-family:'DM Mono',monospace;">Username</div>
+            <div id="profile-display-username" style="font-size:0.82rem;font-weight:600;color:var(--text-body);">@danaulia</div>
+          </div>
+          <div>
+            <div style="font-size:0.65rem;color:var(--text-faint);text-transform:uppercase;font-family:'DM Mono',monospace;">Email</div>
+            <div id="profile-display-email" style="font-size:0.82rem;font-weight:600;color:var(--text-body);">danaulia@starlive.id</div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:0.85rem;">
+          <div>
+            <div style="font-size:0.65rem;color:var(--text-faint);text-transform:uppercase;font-family:'DM Mono',monospace;">Fraksi Perusahaan</div>
+            <div id="profile-display-fraction" style="font-size:0.82rem;font-weight:600;color:var(--text-body);">Zenith Prime Labs</div>
+          </div>
+          <div>
+            <div style="font-size:0.65rem;color:var(--text-faint);text-transform:uppercase;font-family:'DM Mono',monospace;">Role / Jabatan</div>
+            <div id="profile-display-role" style="font-size:0.82rem;font-weight:600;color:var(--text-body);">Guest Administrator</div>
+          </div>
+        </div>
+
+        <div style="margin-bottom:1rem;">
+          <div style="font-size:0.65rem;color:var(--text-faint);text-transform:uppercase;font-family:'DM Mono',monospace;margin-bottom:0.35rem;">Badge Penghargaan (Otomatis/Admin)</div>
+          <div id="profile-display-badges" class="profile-badges" style="display:flex;gap:0.35rem;flex-wrap:wrap;">
+            <span class="achieve-badge" style="font-size:0.65rem;padding:0.15rem 0.45rem;">💎 Elite Operator</span>
+            <span class="achieve-badge" style="font-size:0.65rem;padding:0.15rem 0.45rem;">🌐 Auditor</span>
+          </div>
+        </div>
+
+        <div style="text-align:right;">
+          <button id="profile-save-btn" class="action-btn" style="padding:0.4rem 1.1rem;font-size:0.82rem;">Simpan Profil</button>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- ═════════════ NEWS DETAILED MODAL ═════════════ -->
+  <div id="news-modal" class="modal-wrapper">
+    <div class="modal-content-card glass-panel" style="max-width:560px;padding:25px;">
+      <button class="close-modal" aria-label="Tutup" id="close-news-modal-btn">&times;</button>
+      <div id="news-modal-content"></div>
+    </div>
+  </div>
+
+  <!-- ═════════════ COMPANY DETAILED MODAL ═════════════ -->
+  <div id="company-modal" class="modal-wrapper">
+    <div class="modal-content-card glass-panel" style="max-width:540px;padding:25px;">
+      <button class="close-modal" aria-label="Tutup" id="close-company-modal-btn">&times;</button>
+      <div id="company-modal-content"></div>
+    </div>
+  </div>
+
+  <!-- ═════════════ AGENT DETAILED MODAL ═════════════ -->
+  <div id="agent-modal" class="modal-wrapper">
+    <div class="modal-content-card glass-panel" style="max-width:480px;padding:0;overflow:hidden;">
+      <button class="close-modal" aria-label="Tutup" id="close-agent-modal-btn" style="position:absolute;top:10px;right:15px;z-index:10;color:#fff;font-size:1.5rem;background:none;border:none;">&times;</button>
+      <div id="agent-modal-content"></div>
     </div>
   </div>
 
